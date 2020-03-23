@@ -1,0 +1,45 @@
+{
+  "name": "bukvarko",
+  "version": "1.0.0",
+  "description": "Teach kids alphabet in a fun way.",
+  "private": true,
+  "scripts": {
+    "format": "prettier --write 'src/**/*.{ts,tsx}'",
+    "start": "parcel src/index.html",
+    "build": "tsc && parcel build src/index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mristin/bukvarko.git"
+  },
+  "keywords": [
+    "teach",
+    "kids",
+    "learn",
+    "alphabet",
+    "game"
+  ],
+  "author": "Marko Ristin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mristin/bukvarko/issues"
+  },
+  "homepage": "https://github.com/mristin/bukvarko#readme",
+  "devDependencies": {
+    "parcel-bundler": "^1.12.4",
+    "prettier": "2.0.1",
+    "source-map-loader": "^0.2.4",
+    "ts-loader": "^6.2.2",
+    "typescript": "^3.8.3"
+  },
+  "dependencies": {
+    "@material-ui/core": "^4.9.7",
+    "@material-ui/icons": "^4.9.1",
+    "@types/react": "^16.9.25",
+    "@types/react-dom": "^16.9.5",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "style.css": "^1.0.0",
+    "typeface-roboto": "0.0.75"
+  }
+}
