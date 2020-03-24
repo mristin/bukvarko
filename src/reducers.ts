@@ -1,11 +1,13 @@
+import {enableMapSet} from "immer";
+enableMapSet();  //  See https://immerjs.github.io/immer/docs/installation#pick-your-immer-version
+
 import {produce} from 'immer';
 
-import {QuestionID, questionBank} from './QuestionBank';
-import {CHANGE_ANSWER, Action} from './actions';
+import {questionBank, QuestionID} from './QuestionBank';
+import {Action, CHANGE_ANSWER, GOTO_NEXT_QUESTION, GOTO_PREVIOUS_QUESTION} from './actions';
 
 
-
-interface State {
+export interface State {
     readonly currentQuestion: QuestionID;
     readonly answers: Map<QuestionID, string>;
 }
@@ -22,6 +24,7 @@ function verifyState(state: State) {
     }
 }
 
+// TODO: add state storing/retrieving from the URL
 function initializeState(): State {
     if (questionBank.questions.length === 0) {
         throw Error("Unexpected empty list of questions");
@@ -46,11 +49,15 @@ export function bukvarkoApp(state: State = initialState, action: Action): State 
             case CHANGE_ANSWER:
                 draft.answers.set(state.currentQuestion, action.answer);
                 break;
+            case GOTO_PREVIOUS_QUESTION:
+                draft.currentQuestion = questionBank.previous(state.currentQuestion);
+                break;
+            case GOTO_NEXT_QUESTION:
+                draft.currentQuestion = questionBank.next(state.currentQuestion);
+                break;
         }
     });
 
     verifyState(result);
     return result;
 }
-
-// TODO: continue with https://redux.js.org/basics/example and https://redux.js.org/recipes/usage-with-typescript

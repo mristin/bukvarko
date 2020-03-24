@@ -5,10 +5,7 @@ import { createStore } from 'redux';
 import 'typeface-roboto';
 
 import {bukvarkoApp} from './reducers';
-import {App} from './components';
-
-
-
+import {App} from './components/App';
 
 const store = createStore(bukvarkoApp);
 
