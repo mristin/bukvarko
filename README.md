@@ -10,7 +10,7 @@ If you are unsure about what you wrote, you can have the computer read it out fo
 To avoid confusing the user, I hard-wired the language to Bosnian/Croatian/Serbian
 since this is the language in which my family primarily reads and writes.
 
-![screenshot](https://media.githubusercontent.com/media/mristin/bukvarko/master/screenshot.png)
+![screenshot](https://raw.githubusercontent.com/mristin/bukvarko/master/screenshot.png)
 
 Bug reports, feature suggestions *etc.* are highly welcome. Please create 
 [an issue](https://github.com/mristin/bukvarko/issues/new). 
