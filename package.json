@@ -25,9 +25,17 @@
     "url": "https://github.com/mristin/bukvarko/issues"
   },
   "homepage": "https://github.com/mristin/bukvarko#readme",
+  "importSort": {
+    ".js, .jsx, .ts, .tsx": {
+      "style": "module",
+      "parser": "typescript"
+    }
+  },
   "devDependencies": {
+    "import-sort-style-module": "^6.0.0",
     "parcel-bundler": "^1.12.4",
-    "prettier": "2.0.1",
+    "prettier": "^2.0.1",
+    "prettier-plugin-import-sort": "0.0.4",
     "source-map-loader": "^0.2.4",
     "ts-loader": "^6.2.2",
     "typescript": "^3.8.3"
@@ -43,6 +51,7 @@
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.0",
     "redux": "^4.0.5",
+    "redux-persist": "^6.0.0",
     "style.css": "^1.0.0",
     "typeface-roboto": "0.0.75"
   }
