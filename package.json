@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "format": "prettier --write 'src/**/*.{ts,tsx}'",
-    "check": "tsc --noEmit && prettier 'src/**/*.{ts,tsx}'",
+    "check": "prettier --check 'src/**/*.{ts,tsx}' && tsc --noEmit",
     "start": "parcel src/index.html",
     "build": "parcel build src/index.html"
   },
