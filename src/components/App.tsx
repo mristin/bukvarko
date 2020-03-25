@@ -1,4 +1,4 @@
-import { Container, Grid, Paper, Typography } from "@material-ui/core";
+import { Container, Grid, Paper } from "@material-ui/core";
 import * as React from "react";
 import { Component } from "react";
 
@@ -16,11 +16,6 @@ export class App extends Component<{}, {}> {
       <Container>
         <Paper elevation={3} style={{ padding: "1em" }}>
           <Grid container>
-            <Grid item xs={12}>
-              <Typography variant="h1" align="center">
-                Bukvarko
-              </Typography>
-            </Grid>
             <Grid item xs={1}>
               <PreviousQuestion />
             </Grid>
@@ -36,18 +31,14 @@ export class App extends Component<{}, {}> {
               <div style={{ marginTop: "1em" }}>
                 <Judge />
               </div>
+
+              <div style={{ marginTop: "1em" }}>
+                <Score />
+              </div>
             </Grid>
 
             <Grid item xs={1}>
               <NextQuestion />
-            </Grid>
-          </Grid>
-
-          <Grid container style={{ marginTop: "2em" }}>
-            <Grid item xs={12}>
-              <div style={{ textAlign: "center" }}>
-                <Score />
-              </div>
             </Grid>
           </Grid>
         </Paper>
