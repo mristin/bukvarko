@@ -45,5 +45,5 @@ npm run build
 ```
 
 The current code is just a prototype implemented on a very tight 
-time budget (~2x4 hours) so I tested only manually.
+time budget (~2x4 hours) so I designed by contract and tested only manually.
 The automatic tests will be added once (and if) the game concept matures.

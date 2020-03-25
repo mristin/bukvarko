@@ -12,25 +12,15 @@ const mapStateToProps = (state: State) => {
     questionBank.questions.length
   );
 
-  let currentIndex = -1;
-
   for (const [i, question] of questionBank.questions.entries()) {
     const answer = state.answers.get(question.id) || "";
 
     const hit = compareAnswers(question.expectedAnswer, answer);
 
     hitsIDs[i] = [hit, question.id];
-
-    if (question.id === state.currentQuestion) {
-      currentIndex = i;
-    }
   }
 
-  if (currentIndex < 0) {
-    throw Error(
-      `Expected current question to match an index in questions: ${state.currentQuestion}`
-    );
-  }
+  const currentIndex = questionBank.index(state.currentQuestion);
 
   return { hitsIDs, currentIndex };
 };
