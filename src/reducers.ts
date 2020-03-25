@@ -30,7 +30,6 @@ function verifyState(state: State) {
   }
 }
 
-// TODO: add state storing/retrieving from the URL
 function initializeState(): State {
   if (questionBank.questions.length === 0) {
     throw Error("Unexpected empty list of questions");
