@@ -22,8 +22,13 @@ const component = (props: Props) => (
   <TextField
     variant="outlined"
     inputProps={{
-      maxLength: 30,
-      size: 30,
+      maxLength: 15,
+      size: 15,
+      style: {
+        fontSize: 40,
+        fontFamily: "Lucida console, Monaco, monospace",
+        letterSpacing: "0.2em",
+      },
     }}
     onChange={(e) => {
       props.changeAnswer(e.target.value);
