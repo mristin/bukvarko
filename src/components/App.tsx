@@ -1,6 +1,5 @@
 import { Container, Grid, Paper } from "@material-ui/core";
 import * as React from "react";
-import { Component } from "react";
 
 import { Answer } from "./Answer";
 import { Judge } from "./Judge";
@@ -10,39 +9,37 @@ import { Question } from "./Question";
 import { Score } from "./Score";
 import { Speaker } from "./Speaker";
 
-export class App extends Component<{}, {}> {
-  render() {
-    return (
-      <Container>
-        <Paper elevation={3} style={{ padding: "1em" }}>
-          <Grid container>
-            <Grid item xs={1}>
-              <PreviousQuestion />
-            </Grid>
-            <Grid item xs={3}>
-              <Question />
-            </Grid>
-
-            <Grid item xs={7}>
-              <Answer />
-
-              <Speaker />
-
-              <div style={{ marginTop: "1em" }}>
-                <Judge />
-              </div>
-
-              <div style={{ marginTop: "1em" }}>
-                <Score />
-              </div>
-            </Grid>
-
-            <Grid item xs={1}>
-              <NextQuestion />
-            </Grid>
+export function App() {
+  return (
+    <Container>
+      <Paper elevation={3} style={{ padding: "1em" }}>
+        <Grid container>
+          <Grid item xs={1}>
+            <PreviousQuestion />
           </Grid>
-        </Paper>
-      </Container>
-    );
-  }
+          <Grid item xs={3}>
+            <Question />
+          </Grid>
+
+          <Grid item xs={7}>
+            <Answer />
+
+            <Speaker />
+
+            <div style={{ marginTop: "1em" }}>
+              <Judge />
+            </div>
+
+            <div style={{ marginTop: "1em" }}>
+              <Score />
+            </div>
+          </Grid>
+
+          <Grid item xs={1}>
+            <NextQuestion />
+          </Grid>
+        </Grid>
+      </Paper>
+    </Container>
+  );
 }
