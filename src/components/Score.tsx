@@ -31,7 +31,7 @@ type Props = ConnectedProps<typeof connector>;
 
 const component = (props: Props) => {
   return (
-    <React.Fragment>
+    <>
       {props.hitsIDs.map(([hit, id], i) => {
         const style = {
           color: hit ? yellow[700] : grey[500],
@@ -40,7 +40,7 @@ const component = (props: Props) => {
 
         return <Star key={id} style={style} />;
       })}
-    </React.Fragment>
+    </>
   );
 };
 
