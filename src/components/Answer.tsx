@@ -1,40 +1,33 @@
 import { TextField } from "@material-ui/core";
 import * as React from "react";
-import { ConnectedProps, connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { changeAnswer } from "../actions";
 import { State } from "../reducers";
 
-const mapStateToProps = (state: State) => {
-  const answer = state.answers.get(state.currentQuestion) || "";
-  return { answer };
-};
+export function Answer() {
+  const answer = useSelector(
+    (state: State) => state.answers.get(state.currentQuestion) || ""
+  );
 
-const mapDispatchToProps = {
-  changeAnswer,
-};
+  const dispatch = useDispatch();
 
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-type Props = ConnectedProps<typeof connector>;
-
-const component = (props: Props) => (
-  <TextField
-    variant="outlined"
-    inputProps={{
-      maxLength: 15,
-      size: 15,
-      style: {
-        fontSize: 40,
-        fontFamily: "Lucida console, Monaco, monospace",
-        letterSpacing: "0.2em",
-      },
-    }}
-    onChange={(e) => {
-      props.changeAnswer(e.target.value);
-    }}
-    value={props.answer}
-  />
-);
-
-export const Answer = connector(component);
+  return (
+    <TextField
+      variant="outlined"
+      inputProps={{
+        maxLength: 15,
+        size: 15,
+        style: {
+          fontSize: 40,
+          fontFamily: "Lucida console, Monaco, monospace",
+          letterSpacing: "0.2em",
+        },
+      }}
+      onChange={(e) => {
+        dispatch(changeAnswer(e.target.value));
+      }}
+      value={answer}
+    />
+  );
+}

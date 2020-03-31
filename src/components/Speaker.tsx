@@ -1,21 +1,9 @@
 import { IconButton } from "@material-ui/core";
 import RecordVoiceOver from "@material-ui/icons/RecordVoiceOver";
 import * as React from "react";
-import { ConnectedProps, connect } from "react-redux";
+import { useSelector } from "react-redux";
 
 import { State } from "../reducers";
-
-const mapStateToProps = (state: State) => {
-  const answer = state.answers.get(state.currentQuestion);
-
-  const text = answer ? `Ovde piše: ${answer}` : "Ovde ništa ne piše.";
-
-  return { text };
-};
-
-const connector = connect(mapStateToProps);
-
-type Props = ConnectedProps<typeof connector>;
 
 function speak(text: string) {
   const u = new SpeechSynthesisUtterance();
@@ -29,10 +17,15 @@ function speak(text: string) {
   speechSynthesis.speak(u);
 }
 
-const component = (props: Props) => (
-  <IconButton style={{ marginLeft: "1em" }} onClick={() => speak(props.text)}>
-    <RecordVoiceOver />
-  </IconButton>
-);
+export function Speaker() {
+  const text = useSelector((state: State) => {
+    const answer = state.answers.get(state.currentQuestion);
+    return answer ? `Ovde piše: ${answer}` : "Ovde ništa ne piše.";
+  });
 
-export const Speaker = connector(component);
+  return (
+    <IconButton style={{ marginLeft: "1em" }} onClick={() => speak(text)}>
+      <RecordVoiceOver />
+    </IconButton>
+  );
+}
