@@ -23,6 +23,7 @@ export function Answer() {
           fontFamily: "Lucida console, Monaco, monospace",
           letterSpacing: "0.2em",
         },
+        "data-testid": "answer",
       }}
       onChange={(e) => {
         dispatch(changeAnswer(e.target.value));

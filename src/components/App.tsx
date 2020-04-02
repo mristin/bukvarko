@@ -6,7 +6,7 @@ import { Judge } from "./Judge";
 import { NextQuestion } from "./NextQuestion";
 import { PreviousQuestion } from "./PreviousQuestion";
 import { Question } from "./Question";
-import { Score } from "./Score";
+import { ScoreBar } from "./ScoreBar";
 import { Speaker } from "./Speaker";
 
 export function App() {
@@ -31,7 +31,7 @@ export function App() {
             </div>
 
             <div style={{ marginTop: "1em" }}>
-              <Score />
+              <ScoreBar />
             </div>
           </Grid>
 

@@ -12,6 +12,7 @@ export function PreviousQuestion() {
       onClick={() => {
         dispatch(gotoPreviousQuestion());
       }}
+      data-testid="previousQuestion"
     >
       <ArrowLeft fontSize="large" />
     </IconButton>

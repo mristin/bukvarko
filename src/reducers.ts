@@ -30,7 +30,7 @@ function verifyState(state: State) {
   }
 }
 
-function initializeState(): State {
+export function initializeState(): State {
   if (questionBank.questions.length === 0) {
     throw Error("Unexpected empty list of questions");
   }

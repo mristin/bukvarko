@@ -5,14 +5,14 @@ import { questionBank } from "../QuestionBank";
 import { State } from "../reducers";
 
 export function Question() {
-  const question = useSelector((state: State) =>
-    questionBank.get(state.currentQuestion)
+  const imageURL = useSelector(
+    (state: State) => questionBank.get(state.currentQuestion).imageURL
   );
 
   return (
     <img
-      src={question.imageURL}
-      alt={question.id}
+      src={imageURL}
+      alt="question image"
       style={{ width: "90%", border: "1px solid black" }}
     />
   );

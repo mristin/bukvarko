@@ -13,6 +13,7 @@ export function NextQuestion() {
       onClick={() => {
         dispatch(gotoNextQuestion());
       }}
+      data-testid="nextQuestion"
     >
       <ArrowRight fontSize="large" />
     </IconButton>
