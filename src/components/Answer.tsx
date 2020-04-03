@@ -4,8 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { changeAnswer } from "../actions";
 import { State } from "../reducers";
+import {Ref} from "react";
 
-export function Answer() {
+export function Answer(props: {refocusEl: Ref<HTMLInputElement>}) {
   const answer = useSelector(
     (state: State) => state.answers.get(state.currentQuestion) || ""
   );
@@ -25,6 +26,7 @@ export function Answer() {
         },
         "data-testid": "answer",
       }}
+      inputRef={props.refocusEl}
       onChange={(e) => {
         dispatch(changeAnswer(e.target.value));
       }}
