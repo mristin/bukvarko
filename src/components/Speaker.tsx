@@ -1,8 +1,9 @@
 import { IconButton } from "@material-ui/core";
 import RecordVoiceOver from "@material-ui/icons/RecordVoiceOver";
 import * as React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
+import { askToRefocus } from "../actions";
 import { State } from "../reducers";
 
 function speak(text: string) {
@@ -17,15 +18,17 @@ function speak(text: string) {
   speechSynthesis.speak(u);
 }
 
-export function Speaker(props: { refocus: () => void }) {
+export function Speaker() {
   const text = useSelector((state: State) => {
     const answer = state.answers.get(state.currentQuestion);
     return answer ? `Ovde piše: ${answer}` : "Ovde ništa ne piše.";
   });
 
+  const dispatch = useDispatch();
+
   const onClick = () => {
     speak(text);
-    props.refocus();
+    dispatch(askToRefocus());
   };
 
   return (

@@ -3,16 +3,16 @@ import ArrowRight from "@material-ui/icons/ArrowRight";
 import * as React from "react";
 import { useDispatch } from "react-redux";
 
-import { gotoNextQuestion } from "../actions";
+import { askToRefocus, gotoNextQuestion } from "../actions";
 
-export function NextQuestion(props: { refocus: () => void }) {
+export function NextQuestion() {
   const dispatch = useDispatch();
 
   return (
     <IconButton
       onClick={() => {
         dispatch(gotoNextQuestion());
-        props.refocus();
+        dispatch(askToRefocus());
       }}
       data-testid="nextQuestion"
     >
