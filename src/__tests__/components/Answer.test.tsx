@@ -14,7 +14,7 @@ it("dispatches the action.", () => {
 
   const rendered = render(
     <Provider store={store}>
-      <Answer refocusEl={React.createRef<HTMLInputElement>()}/>
+      <Answer refocusEl={React.createRef<HTMLInputElement>()} />
     </Provider>
   );
 

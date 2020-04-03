@@ -1,12 +1,12 @@
 import { TextField } from "@material-ui/core";
 import * as React from "react";
+import { Ref } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { changeAnswer } from "../actions";
 import { State } from "../reducers";
-import {Ref} from "react";
 
-export function Answer(props: {refocusEl: Ref<HTMLInputElement>}) {
+export function Answer(props: { refocusEl: Ref<HTMLInputElement> }) {
   const answer = useSelector(
     (state: State) => state.answers.get(state.currentQuestion) || ""
   );
