@@ -1,11 +1,11 @@
-import { fireEvent, render } from "@testing-library/react";
+import {fireEvent, render} from "@testing-library/react";
 import * as React from "react";
-import { Provider } from "react-redux";
-import { createStore } from "redux";
+import {Provider} from "react-redux";
+import {createStore} from "redux";
 
-import { GOTO_NEXT_QUESTION } from "../../actions";
-import { NextQuestion } from "../../components/NextQuestion";
-import { bukvarkoApp } from "../../reducers";
+import {GOTO_NEXT_QUESTION} from "../../actions";
+import {NextQuestion} from "../../components/NextQuestion";
+import {bukvarkoApp} from "../../reducers";
 
 it("dispatches the action.", () => {
   const store = createStore(bukvarkoApp);
@@ -14,7 +14,7 @@ it("dispatches the action.", () => {
 
   const rendered = render(
     <Provider store={store}>
-      <NextQuestion />
+      <NextQuestion refocus={() => void 0}/>
     </Provider>
   );
 
