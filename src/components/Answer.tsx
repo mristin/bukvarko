@@ -1,17 +1,28 @@
 import { TextField } from "@material-ui/core";
 import * as React from "react";
-import { Ref } from "react";
+import { Ref, useEffect } from "react";
+import { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { changeAnswer } from "../actions";
+import { ackRefocus, changeAnswer } from "../actions";
 import { State } from "../reducers";
 
-export function Answer(props: { refocusEl: Ref<HTMLInputElement> }) {
+export function Answer() {
   const answer = useSelector(
     (state: State) => state.answers.get(state.currentQuestion) || ""
   );
 
   const dispatch = useDispatch();
+
+  const inputEl: Ref<HTMLInputElement> = useRef(null);
+  const focused = useSelector((state: State) => state.focused);
+
+  useEffect(() => {
+    if (!focused) {
+      inputEl.current?.focus();
+      dispatch(ackRefocus());
+    }
+  });
 
   return (
     <TextField
@@ -26,7 +37,7 @@ export function Answer(props: { refocusEl: Ref<HTMLInputElement> }) {
         },
         "data-testid": "answer",
       }}
-      inputRef={props.refocusEl}
+      inputRef={inputEl}
       onChange={(e) => {
         dispatch(changeAnswer(e.target.value));
       }}

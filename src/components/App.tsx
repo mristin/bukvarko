@@ -1,6 +1,5 @@
 import { Container, Grid, Paper } from "@material-ui/core";
 import * as React from "react";
-import { Ref, useRef } from "react";
 
 import { Answer } from "./Answer";
 import { Judge } from "./Judge";
@@ -11,26 +10,21 @@ import { ScoreBar } from "./ScoreBar";
 import { Speaker } from "./Speaker";
 
 export function App() {
-  const refocusEl: Ref<HTMLInputElement> = useRef(null);
-  const refocus = () => {
-    refocusEl.current?.focus();
-  };
-
   return (
     <Container>
       <Paper elevation={3} style={{ padding: "1em" }}>
         <Grid container>
           <Grid item xs={1}>
-            <PreviousQuestion refocus={refocus} />
+            <PreviousQuestion />
           </Grid>
           <Grid item xs={3}>
             <Question />
           </Grid>
 
           <Grid item xs={7}>
-            <Answer refocusEl={refocusEl} />
+            <Answer />
 
-            <Speaker refocus={refocus} />
+            <Speaker />
 
             <div style={{ marginTop: "1em" }}>
               <Judge />
@@ -42,7 +36,7 @@ export function App() {
           </Grid>
 
           <Grid item xs={1}>
-            <NextQuestion refocus={refocus} />
+            <NextQuestion />
           </Grid>
         </Grid>
       </Paper>

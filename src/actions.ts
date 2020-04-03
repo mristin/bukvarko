@@ -17,7 +17,24 @@ interface GotoNextQuestion {
   type: typeof GOTO_NEXT_QUESTION;
 }
 
-export type Action = ChangeAnswer | GotoPreviousQuestion | GotoNextQuestion;
+export const ASK_TO_REFOCUS = "ASK_TO_REFOCUS";
+
+interface AskToRefocus {
+  type: typeof ASK_TO_REFOCUS;
+}
+
+export const ACK_REFOCUS = "ACK_REFOCUS";
+
+interface AckRefocus {
+  type: typeof ACK_REFOCUS;
+}
+
+export type Action =
+  | ChangeAnswer
+  | GotoPreviousQuestion
+  | GotoNextQuestion
+  | AskToRefocus
+  | AckRefocus;
 
 export function changeAnswer(answer: string): Action {
   return { type: CHANGE_ANSWER, answer: answer };
@@ -29,4 +46,12 @@ export function gotoPreviousQuestion(): Action {
 
 export function gotoNextQuestion(): Action {
   return { type: GOTO_NEXT_QUESTION };
+}
+
+export function askToRefocus(): Action {
+  return { type: ASK_TO_REFOCUS };
+}
+
+export function ackRefocus(): Action {
+  return { type: ACK_REFOCUS };
 }
