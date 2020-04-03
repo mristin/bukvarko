@@ -14,7 +14,7 @@ it("dispatches the action.", () => {
 
   const rendered = render(
     <Provider store={store}>
-      <PreviousQuestion refocus={() => void 0}/>
+      <PreviousQuestion refocus={() => void 0} />
     </Provider>
   );
 

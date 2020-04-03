@@ -1,9 +1,9 @@
-import {IconButton} from "@material-ui/core";
+import { IconButton } from "@material-ui/core";
 import RecordVoiceOver from "@material-ui/icons/RecordVoiceOver";
 import * as React from "react";
-import {useSelector} from "react-redux";
+import { useSelector } from "react-redux";
 
-import {State} from "../reducers";
+import { State } from "../reducers";
 
 function speak(text: string) {
   const u = new SpeechSynthesisUtterance();
@@ -29,8 +29,8 @@ export function Speaker(props: { refocus: () => void }) {
   };
 
   return (
-    <IconButton style={{marginLeft: "1em"}} onClick={onClick}>
-      <RecordVoiceOver/>
+    <IconButton style={{ marginLeft: "1em" }} onClick={onClick}>
+      <RecordVoiceOver />
     </IconButton>
   );
 }
