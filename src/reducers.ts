@@ -15,7 +15,7 @@ enableMapSet(); //  See https://immerjs.github.io/immer/docs/installation#pick-y
 export interface State {
   readonly currentQuestion: QuestionID;
   readonly answers: Map<QuestionID, string>;
-  readonly focused: boolean;
+  readonly focusPending: boolean;
 }
 
 function verifyState(state: State) {
@@ -40,7 +40,7 @@ export function initializeState(): State {
   const result = {
     currentQuestion: questionBank.questions[0].id,
     answers: new Map<QuestionID, string>(),
-    focused: false,
+    focusPending: true,
   };
 
   verifyState(result);
@@ -66,10 +66,10 @@ export function bukvarkoApp(
         draft.currentQuestion = questionBank.next(state.currentQuestion);
         break;
       case ASK_TO_REFOCUS:
-        draft.focused = false;
+        draft.focusPending = true;
         break;
       case ACK_REFOCUS:
-        draft.focused = true;
+        draft.focusPending = false;
     }
   });
 
