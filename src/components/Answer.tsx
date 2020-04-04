@@ -15,10 +15,10 @@ export function Answer() {
   const dispatch = useDispatch();
 
   const inputEl: Ref<HTMLInputElement> = useRef(null);
-  const focused = useSelector((state: State) => state.focused);
+  const focusPending = useSelector((state: State) => state.focusPending);
 
   useEffect(() => {
-    if (!focused) {
+    if (focusPending) {
       inputEl.current?.focus();
       dispatch(ackRefocus());
     }
