@@ -18,20 +18,6 @@ export interface State {
   readonly focusPending: boolean;
 }
 
-function verifyState(state: State) {
-  if (!questionBank.has(state.currentQuestion)) {
-    throw Error(
-      `Current question is not in the question bank: ${state.currentQuestion}`
-    );
-  }
-
-  for (const id of state.answers.keys()) {
-    if (!questionBank.has(id)) {
-      throw Error(`Answer is given to a question with invalid ID: ${id}`);
-    }
-  }
-}
-
 export function initializeState(): State {
   if (questionBank.questions.length === 0) {
     throw Error("Unexpected empty list of questions");
@@ -42,8 +28,6 @@ export function initializeState(): State {
     answers: new Map<QuestionID, string>(),
     focusPending: true,
   };
-
-  verifyState(result);
 
   return result;
 }
@@ -73,6 +57,5 @@ export function bukvarkoApp(
     }
   });
 
-  verifyState(result);
   return result;
 }
