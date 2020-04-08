@@ -1,7 +1,7 @@
 import deepEqual from "deep-equal";
 
 import { QuestionID, compareAnswers, questionBank } from "./QuestionBank";
-import { State } from "./reducers";
+import { State } from "./reducer";
 
 export function selectHitsIDs(state: State): Array<[boolean, QuestionID]> {
   const result = new Array<[boolean, QuestionID]>(

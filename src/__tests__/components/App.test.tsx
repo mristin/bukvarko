@@ -7,7 +7,7 @@ import { questionBank } from "../../QuestionBank";
 import * as storeFactory from "../../storeFactory";
 
 function renderApp() {
-  const store = storeFactory.produce();
+  const store = storeFactory.produce({ questionBank });
 
   return render(
     <Provider store={store}>

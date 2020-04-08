@@ -1,25 +1,31 @@
-import { gotoNextQuestion, gotoPreviousQuestion } from "../actions";
 import { questionBank } from "../QuestionBank";
-import { bukvarkoApp, initializeState } from "../reducers";
+import * as storeFactory from "../storeFactory";
+import { nextQuestion, previousQuestion } from "../thunks";
+
+const deps = { questionBank };
 
 it("initializes the current question to the first question.", () => {
-  const state = initializeState();
+  const store = storeFactory.produce(deps);
 
-  expect(state.currentQuestion).toBe(questionBank.questions[0].id);
+  expect(store.getState().currentQuestion).toBe(questionBank.questions[0].id);
 });
 
-it("selects the second question on gotoNextQuestion upon initialization.", () => {
-  if (questionBank.questions.length > 1) {
-    const state = bukvarkoApp(undefined, gotoNextQuestion());
+it("selects the second question on going forward upon initialization.", () => {
+  const store = storeFactory.produce(deps);
+  store.dispatch(nextQuestion() as any);
 
-    expect(state.currentQuestion).toBe(questionBank.questions[1].id);
+  if (deps.questionBank.questions.length > 1) {
+    expect(store.getState().currentQuestion).toBe(questionBank.questions[1].id);
   }
 });
 
-it("selects the last question on gotoNextQuestion upon initialization.", () => {
-  const state = bukvarkoApp(undefined, gotoPreviousQuestion());
+it("selects the last question on going backwards upon initialization.", () => {
+  const store = storeFactory.produce(deps);
+  store.dispatch(previousQuestion() as any);
 
-  expect(state.currentQuestion).toBe(
-    questionBank.questions[questionBank.questions.length - 1].id
-  );
+  if (deps.questionBank.questions.length > 0) {
+    expect(store.getState().currentQuestion).toBe(
+      questionBank.questions[questionBank.questions.length - 1].id
+    );
+  }
 });

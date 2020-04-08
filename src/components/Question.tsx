@@ -2,7 +2,7 @@ import * as React from "react";
 import { useSelector } from "react-redux";
 
 import { questionBank } from "../QuestionBank";
-import { State } from "../reducers";
+import { State } from "../reducer";
 
 export function Question() {
   const imageURL = useSelector(

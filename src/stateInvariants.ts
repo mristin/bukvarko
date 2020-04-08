@@ -1,7 +1,7 @@
 import { Action, Dispatch, Middleware, MiddlewareAPI } from "redux";
 
 import { QuestionBank } from "./QuestionBank";
-import { State } from "./reducers";
+import { State } from "./reducer";
 
 export function create(questionBank: QuestionBank) {
   const middleware: Middleware = (api: MiddlewareAPI<Dispatch, State>) => (

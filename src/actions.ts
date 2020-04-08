@@ -1,3 +1,5 @@
+import { QuestionID } from "./QuestionBank";
+
 export const CHANGE_ANSWER = "CHANGE_ANSWER";
 
 interface ChangeAnswer {
@@ -5,16 +7,10 @@ interface ChangeAnswer {
   answer: string;
 }
 
-export const GOTO_PREVIOUS_QUESTION = "GOTO_PREVIOUS_QUESTION";
-
-interface GotoPreviousQuestion {
-  type: typeof GOTO_PREVIOUS_QUESTION;
-}
-
-export const GOTO_NEXT_QUESTION = "GOTO_NEXT_QUESTION";
-
-interface GotoNextQuestion {
-  type: typeof GOTO_NEXT_QUESTION;
+export const GOTO_QUESTION = "GOTO_QUESTION";
+interface GotoQuestion {
+  type: typeof GOTO_QUESTION;
+  questionID: QuestionID;
 }
 
 export const ASK_TO_REFOCUS = "ASK_TO_REFOCUS";
@@ -29,23 +25,14 @@ interface AckRefocus {
   type: typeof ACK_REFOCUS;
 }
 
-export type Action =
-  | ChangeAnswer
-  | GotoPreviousQuestion
-  | GotoNextQuestion
-  | AskToRefocus
-  | AckRefocus;
+export type Action = ChangeAnswer | GotoQuestion | AskToRefocus | AckRefocus;
 
 export function changeAnswer(answer: string): Action {
   return { type: CHANGE_ANSWER, answer: answer };
 }
 
-export function gotoPreviousQuestion(): Action {
-  return { type: GOTO_PREVIOUS_QUESTION };
-}
-
-export function gotoNextQuestion(): Action {
-  return { type: GOTO_NEXT_QUESTION };
+export function gotoQuestion(questionID: QuestionID): Action {
+  return { type: GOTO_QUESTION, questionID: questionID };
 }
 
 export function askToRefocus(): Action {

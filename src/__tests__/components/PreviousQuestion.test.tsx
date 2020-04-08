@@ -1,15 +1,24 @@
 import { fireEvent, render } from "@testing-library/react";
 import * as React from "react";
 import { Provider } from "react-redux";
+import configureMockFactory from "redux-mock-store";
+import thunk from "redux-thunk";
 
-import { ASK_TO_REFOCUS, GOTO_PREVIOUS_QUESTION } from "../../actions";
+import { ASK_TO_REFOCUS } from "../../actions";
 import { PreviousQuestion } from "../../components/PreviousQuestion";
-import * as storeFactory from "../../storeFactory";
+import * as thunks from "../../thunks";
 
-it("dispatches the action.", () => {
-  const store = storeFactory.produce();
+jest.mock("../../thunks");
+
+it("provokes the state change.", async () => {
+  const store = configureMockFactory([thunk])();
+
   const mockDispatch = jest.fn();
   store.dispatch = mockDispatch;
+
+  const dummy = { hello: 1 };
+
+  (thunks.previousQuestion as any).mockResolvedValue(dummy);
 
   const rendered = render(
     <Provider store={store}>
@@ -18,7 +27,8 @@ it("dispatches the action.", () => {
   );
 
   fireEvent.click(rendered.getByTestId("previousQuestion"));
+
   expect(mockDispatch).toHaveBeenCalledTimes(2);
-  expect(mockDispatch.mock.calls[0][0].type).toBe(GOTO_PREVIOUS_QUESTION);
+  expect(await mockDispatch.mock.calls[0][0]).toBe(dummy);
   expect(mockDispatch.mock.calls[1][0].type).toBe(ASK_TO_REFOCUS);
 });
