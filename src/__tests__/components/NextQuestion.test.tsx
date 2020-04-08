@@ -1,14 +1,13 @@
 import { fireEvent, render } from "@testing-library/react";
 import * as React from "react";
 import { Provider } from "react-redux";
-import { createStore } from "redux";
 
 import { ASK_TO_REFOCUS, GOTO_NEXT_QUESTION } from "../../actions";
 import { NextQuestion } from "../../components/NextQuestion";
-import { bukvarkoApp } from "../../reducers";
+import * as storeFactory from "../../storeFactory";
 
 it("dispatches the action.", () => {
-  const store = createStore(bukvarkoApp);
+  const store = storeFactory.produce();
   const mockDispatch = jest.fn();
   store.dispatch = mockDispatch;
 

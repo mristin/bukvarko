@@ -1,14 +1,13 @@
 import { fireEvent, render } from "@testing-library/react";
 import * as React from "react";
 import { Provider } from "react-redux";
-import { createStore } from "redux";
 
 import { App } from "../../components/App";
 import { questionBank } from "../../QuestionBank";
-import { bukvarkoApp } from "../../reducers";
+import * as storeFactory from "../../storeFactory";
 
 function renderApp() {
-  const store = createStore(bukvarkoApp);
+  const store = storeFactory.produce();
 
   return render(
     <Provider store={store}>
@@ -62,5 +61,3 @@ it("handles incorrect answers without problems.", () => {
     target: { value: "incorrect " + questionBank.questions[0].expectedAnswer },
   });
 });
-
-// TODO: test score component in isolation

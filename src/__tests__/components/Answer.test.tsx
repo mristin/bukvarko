@@ -1,14 +1,13 @@
 import { fireEvent, render } from "@testing-library/react";
 import * as React from "react";
 import { Provider } from "react-redux";
-import { createStore } from "redux";
 
 import { ACK_REFOCUS, changeAnswer } from "../../actions";
 import { Answer } from "../../components/Answer";
-import { bukvarkoApp } from "../../reducers";
+import * as storeFactory from "../../storeFactory";
 
 it("dispatches ACK_REFOCUS on initialization.", () => {
-  const store = createStore(bukvarkoApp);
+  const store = storeFactory.produce();
   const mockDispatch = jest.fn();
   store.dispatch = mockDispatch;
 
@@ -23,7 +22,7 @@ it("dispatches ACK_REFOCUS on initialization.", () => {
 });
 
 it("dispatches the actions.", () => {
-  const store = createStore(bukvarkoApp);
+  const store = storeFactory.produce();
   const mockDispatch = jest.fn();
   store.dispatch = mockDispatch;
 

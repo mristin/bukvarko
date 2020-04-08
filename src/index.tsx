@@ -3,12 +3,11 @@ import "typeface-roboto";
 import * as React from "react";
 import { render } from "react-dom";
 import { Provider } from "react-redux";
-import { createStore } from "redux";
 
 import { App } from "./components/App";
-import { bukvarkoApp } from "./reducers";
+import * as storeFactory from "./storeFactory";
 
-const store = createStore(bukvarkoApp);
+const store = storeFactory.produce();
 
 render(
   <Provider store={store}>
