@@ -1,12 +1,17 @@
 import { applyMiddleware, createStore } from "redux";
+import thunk from "redux-thunk";
 
+import { Dependencies } from "./dependencies";
 import { questionBank } from "./QuestionBank";
-import { bukvarkoApp } from "./reducers";
+import * as reducer from "./reducer";
 import * as stateInvariants from "./stateInvariants";
 
-export function produce() {
+export function produce(deps: Dependencies) {
   return createStore(
-    bukvarkoApp,
-    applyMiddleware(stateInvariants.create(questionBank))
+    reducer.create(deps),
+    applyMiddleware(
+      stateInvariants.create(questionBank),
+      thunk.withExtraArgument(deps)
+    )
   );
 }

@@ -6,8 +6,10 @@ import { Provider } from "react-redux";
 
 import { App } from "./components/App";
 import * as storeFactory from "./storeFactory";
+import {questionBank} from "./QuestionBank";
 
-const store = storeFactory.produce();
+const deps = {questionBank};
+const store = storeFactory.produce(deps);
 
 render(
   <Provider store={store}>

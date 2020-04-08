@@ -1,13 +1,17 @@
 import { fireEvent, render } from "@testing-library/react";
 import * as React from "react";
 import { Provider } from "react-redux";
+import configureMockFactory from "redux-mock-store";
 
 import { ACK_REFOCUS, changeAnswer } from "../../actions";
 import { Answer } from "../../components/Answer";
-import * as storeFactory from "../../storeFactory";
 
-it("dispatches ACK_REFOCUS on initialization.", () => {
-  const store = storeFactory.produce();
+it("dispatches ACK_REFOCUS when focus pending.", () => {
+  const store = configureMockFactory()({
+    focusPending: true,
+    answers: new Map(),
+  });
+
   const mockDispatch = jest.fn();
   store.dispatch = mockDispatch;
 
@@ -22,7 +26,11 @@ it("dispatches ACK_REFOCUS on initialization.", () => {
 });
 
 it("dispatches the actions.", () => {
-  const store = storeFactory.produce();
+  const store = configureMockFactory()({
+    focusPending: true,
+    answers: new Map(),
+  });
+
   const mockDispatch = jest.fn();
   store.dispatch = mockDispatch;
 

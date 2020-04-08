@@ -5,7 +5,7 @@ import { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { ackRefocus, changeAnswer } from "../actions";
-import { State } from "../reducers";
+import { State } from "../reducer";
 
 export function Answer() {
   const answer = useSelector(

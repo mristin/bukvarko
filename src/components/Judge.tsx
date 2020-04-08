@@ -4,7 +4,7 @@ import * as React from "react";
 import { useSelector } from "react-redux";
 
 import { compareAnswers, questionBank } from "../QuestionBank";
-import { State } from "../reducers";
+import { State } from "../reducer";
 
 export function Judge() {
   const hit = useSelector((state: State) => {

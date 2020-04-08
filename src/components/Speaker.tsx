@@ -4,7 +4,7 @@ import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { askToRefocus } from "../actions";
-import { State } from "../reducers";
+import { State } from "../reducer";
 
 function speak(text: string) {
   const u = new SpeechSynthesisUtterance();
