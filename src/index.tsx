@@ -5,10 +5,10 @@ import { render } from "react-dom";
 import { Provider } from "react-redux";
 
 import { App } from "./components/App";
+import { questionBank } from "./QuestionBank";
 import * as storeFactory from "./storeFactory";
-import {questionBank} from "./QuestionBank";
 
-const deps = {questionBank};
+const deps = { questionBank };
 const store = storeFactory.produce(deps);
 
 render(

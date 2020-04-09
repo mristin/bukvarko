@@ -1,8 +1,8 @@
+import * as effects from "../effects";
 import { QuestionID, questionBank } from "../QuestionBank";
 import * as reducer from "../reducer";
 import { selectCurrentIndex, selectHitsIDs } from "../selectors";
 import * as storeFactory from "../storeFactory";
-import { nextQuestion, previousQuestion } from "../thunks";
 
 const deps = { questionBank };
 
@@ -42,7 +42,7 @@ it("selects first question on initial state.", () => {
 it("selects the second question on next question upon initialization.", () => {
   if (deps.questionBank.questions.length > 1) {
     const store = storeFactory.produce(deps);
-    store.dispatch(nextQuestion() as any);
+    store.dispatch(effects.nextQuestion() as any);
 
     const currentIndex = selectCurrentIndex(store.getState());
 
@@ -52,7 +52,7 @@ it("selects the second question on next question upon initialization.", () => {
 
 it("selects the last question on previous question upon initialization.", () => {
   const store = storeFactory.produce(deps);
-  store.dispatch(previousQuestion() as any);
+  store.dispatch(effects.previousQuestion() as any);
 
   const currentIndex = selectCurrentIndex(store.getState());
 
