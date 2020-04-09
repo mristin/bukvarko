@@ -8,6 +8,17 @@ import * as reducer from "./reducer";
 export class WithDeps {
   constructor(private deps: dependency.Register) {}
 
+  public currentQuestionImageURL(state: reducer.State): string {
+    return this.deps.questionBank.get(state.currentQuestion).imageURL;
+  }
+
+  public currentAnswerHits(state: reducer.State): boolean {
+    const q = this.deps.questionBank.get(state.currentQuestion);
+    const answer = state.answers.get(state.currentQuestion) || "";
+
+    return question.compareAnswers(q.expectedAnswer, answer);
+  }
+
   public hitsIDs(state: reducer.State): Array<[boolean, question.ID]> {
     const result = new Array<[boolean, question.ID]>(
       this.deps.questionBank.questions.length
