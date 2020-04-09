@@ -4,11 +4,11 @@ import { Provider } from "react-redux";
 import configureMockFactory from "redux-mock-store";
 import thunk from "redux-thunk";
 
-import { ASK_TO_REFOCUS } from "../../actions";
+import * as action from "../../action";
 import { PreviousQuestion } from "../../components/PreviousQuestion";
-import * as effects from "../../effects";
+import * as effect from "../../effect";
 
-jest.mock("../../effects");
+jest.mock("../../effect");
 
 it("provokes the state change.", async () => {
   const store = configureMockFactory([thunk])();
@@ -18,7 +18,7 @@ it("provokes the state change.", async () => {
 
   const dummy = { hello: 1 };
 
-  (effects.previousQuestion as any).mockResolvedValue(dummy);
+  (effect.previousQuestion as any).mockResolvedValue(dummy);
 
   const rendered = render(
     <Provider store={store}>
@@ -30,5 +30,5 @@ it("provokes the state change.", async () => {
 
   expect(mockDispatch).toHaveBeenCalledTimes(2);
   expect(await mockDispatch.mock.calls[0][0]).toBe(dummy);
-  expect(mockDispatch.mock.calls[1][0].type).toBe(ASK_TO_REFOCUS);
+  expect(mockDispatch.mock.calls[1][0].type).toBe(action.ASK_TO_REFOCUS);
 });

@@ -1,4 +1,4 @@
-import { QuestionID } from "./QuestionBank";
+import * as question from "./question";
 
 export const CHANGE_ANSWER = "CHANGE_ANSWER";
 
@@ -10,7 +10,7 @@ interface ChangeAnswer {
 export const GOTO_QUESTION = "GOTO_QUESTION";
 interface GotoQuestion {
   type: typeof GOTO_QUESTION;
-  questionID: QuestionID;
+  questionID: question.ID;
 }
 
 export const ASK_TO_REFOCUS = "ASK_TO_REFOCUS";
@@ -31,7 +31,7 @@ export function changeAnswer(answer: string): Action {
   return { type: CHANGE_ANSWER, answer: answer };
 }
 
-export function gotoQuestion(questionID: QuestionID): Action {
+export function gotoQuestion(questionID: question.ID): Action {
   return { type: GOTO_QUESTION, questionID: questionID };
 }
 

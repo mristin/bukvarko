@@ -3,7 +3,7 @@ import * as React from "react";
 import { Provider } from "react-redux";
 import configureMockFactory from "redux-mock-store";
 
-import { ACK_REFOCUS, changeAnswer } from "../../actions";
+import * as action from "../../action";
 import { Answer } from "../../components/Answer";
 
 it("dispatches ACK_REFOCUS when focus pending.", () => {
@@ -22,7 +22,7 @@ it("dispatches ACK_REFOCUS when focus pending.", () => {
   );
 
   expect(mockDispatch).toHaveBeenCalledTimes(1);
-  expect(mockDispatch.mock.calls[0][0].type).toEqual(ACK_REFOCUS);
+  expect(mockDispatch.mock.calls[0][0].type).toEqual(action.ACK_REFOCUS);
 });
 
 it("dispatches the actions.", () => {
@@ -45,6 +45,8 @@ it("dispatches the actions.", () => {
   });
 
   expect(mockDispatch).toHaveBeenCalledTimes(2);
-  expect(mockDispatch.mock.calls[0][0].type).toEqual(ACK_REFOCUS);
-  expect(mockDispatch.mock.calls[1][0]).toEqual(changeAnswer("some answer"));
+  expect(mockDispatch.mock.calls[0][0].type).toEqual(action.ACK_REFOCUS);
+  expect(mockDispatch.mock.calls[1][0]).toEqual(
+    action.changeAnswer("some answer")
+  );
 });

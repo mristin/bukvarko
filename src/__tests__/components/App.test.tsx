@@ -3,12 +3,13 @@ import * as React from "react";
 import { Provider } from "react-redux";
 
 import { App } from "../../components/App";
-import { questionBank } from "../../QuestionBank";
+import * as question from "../../question";
 import * as select from "../../select";
 import * as storeFactory from "../../storeFactory";
 
+const deps = { questionBank: question.bank };
+
 function renderApp() {
-  const deps = { questionBank };
   const store = storeFactory.produce(deps);
   const selectWithDeps = new select.WithDeps(deps);
 
@@ -55,7 +56,7 @@ it("handles correct answers without problems.", () => {
   const rendered = renderApp();
 
   fireEvent.change(rendered.getByTestId("answer"), {
-    target: { value: questionBank.questions[0].expectedAnswer },
+    target: { value: deps.questionBank.questions[0].expectedAnswer },
   });
 });
 
@@ -63,6 +64,8 @@ it("handles incorrect answers without problems.", () => {
   const rendered = renderApp();
 
   fireEvent.change(rendered.getByTestId("answer"), {
-    target: { value: "incorrect " + questionBank.questions[0].expectedAnswer },
+    target: {
+      value: "incorrect " + deps.questionBank.questions[0].expectedAnswer,
+    },
   });
 });

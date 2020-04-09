@@ -3,8 +3,8 @@ import RecordVoiceOver from "@material-ui/icons/RecordVoiceOver";
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { askToRefocus } from "../actions";
-import { State } from "../reducer";
+import * as action from "../action";
+import * as reducer from "../reducer";
 
 function speak(text: string) {
   const u = new SpeechSynthesisUtterance();
@@ -19,7 +19,7 @@ function speak(text: string) {
 }
 
 export function Speaker() {
-  const text = useSelector((state: State) => {
+  const text = useSelector((state: reducer.State) => {
     const answer = state.answers.get(state.currentQuestion);
     return answer ? `Ovde piše: ${answer}` : "Ovde ništa ne piše.";
   });
@@ -28,7 +28,7 @@ export function Speaker() {
 
   const onClick = () => {
     speak(text);
-    dispatch(askToRefocus());
+    dispatch(action.askToRefocus());
   };
 
   return (

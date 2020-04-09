@@ -1,27 +1,27 @@
 import { Dispatch } from "redux";
 
-import { gotoQuestion } from "./actions";
-import { Dependencies } from "./dependencies";
-import { State } from "./reducer";
+import * as action from "./action";
+import * as dependency from "./dependency";
+import * as reducer from "./reducer";
 
 export function nextQuestion() {
   return function (
     dispatch: Dispatch,
-    getState: () => State,
-    deps: Dependencies
+    getState: () => reducer.State,
+    deps: dependency.Register
   ): void {
     const questionID = deps.questionBank.next(getState().currentQuestion);
-    dispatch(gotoQuestion(questionID));
+    dispatch(action.gotoQuestion(questionID));
   };
 }
 
 export function previousQuestion() {
   return function (
     dispatch: Dispatch,
-    getState: () => State,
-    deps: Dependencies
+    getState: () => reducer.State,
+    deps: dependency.Register
   ): void {
     const questionID = deps.questionBank.previous(getState().currentQuestion);
-    dispatch(gotoQuestion(questionID));
+    dispatch(action.gotoQuestion(questionID));
   };
 }

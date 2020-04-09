@@ -1,12 +1,12 @@
 import { Action, Dispatch, Middleware, MiddlewareAPI } from "redux";
 
-import { QuestionBank } from "./QuestionBank";
-import { State } from "./reducer";
+import * as question from "./question";
+import * as reducer from "./reducer";
 
-export function create(questionBank: QuestionBank) {
-  const middleware: Middleware = (api: MiddlewareAPI<Dispatch, State>) => (
-    next: Dispatch
-  ) => (action: Action) => {
+export function create(questionBank: question.Bank) {
+  const middleware: Middleware = (
+    api: MiddlewareAPI<Dispatch, reducer.State>
+  ) => (next: Dispatch) => (action: Action) => {
     // Verify before dispatching
     verify(api.getState(), questionBank);
 
@@ -21,7 +21,7 @@ export function create(questionBank: QuestionBank) {
   return middleware;
 }
 
-function verify(state: State, questionBank: QuestionBank) {
+function verify(state: reducer.State, questionBank: question.Bank) {
   if (!questionBank.has(state.currentQuestion)) {
     throw Error(
       `Current question is not in the question bank: ${state.currentQuestion}`

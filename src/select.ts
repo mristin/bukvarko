@@ -1,24 +1,24 @@
 import deepEqual from "deep-equal";
 import * as React from "react";
 
-import { Dependencies } from "./dependencies";
-import { QuestionID, compareAnswers } from "./QuestionBank";
-import { State } from "./reducer";
+import * as dependency from "./dependency";
+import * as question from "./question";
+import * as reducer from "./reducer";
 
 export class WithDeps {
-  constructor(private deps: Dependencies) {}
+  constructor(private deps: dependency.Register) {}
 
-  public hitsIDs(state: State): Array<[boolean, QuestionID]> {
-    const result = new Array<[boolean, QuestionID]>(
+  public hitsIDs(state: reducer.State): Array<[boolean, question.ID]> {
+    const result = new Array<[boolean, question.ID]>(
       this.deps.questionBank.questions.length
     );
 
-    for (const [i, question] of this.deps.questionBank.questions.entries()) {
-      const answer = state.answers.get(question.id) || "";
+    for (const [i, q] of this.deps.questionBank.questions.entries()) {
+      const answer = state.answers.get(q.id) || "";
 
-      const hit = compareAnswers(question.expectedAnswer, answer);
+      const hit = question.compareAnswers(q.expectedAnswer, answer);
 
-      result[i] = [hit, question.id];
+      result[i] = [hit, q.id];
     }
 
     // Post-conditions
@@ -37,7 +37,7 @@ export class WithDeps {
     return result;
   }
 
-  public currentIndex(state: State): number {
+  public currentIndex(state: reducer.State): number {
     return this.deps.questionBank.index(state.currentQuestion);
   }
 }

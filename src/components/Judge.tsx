@@ -3,15 +3,15 @@ import ThumbUp from "@material-ui/icons/ThumbUp";
 import * as React from "react";
 import { useSelector } from "react-redux";
 
-import { compareAnswers, questionBank } from "../QuestionBank";
-import { State } from "../reducer";
+import * as question from "../question";
+import * as reducer from "../reducer";
 
 export function Judge() {
-  const hit = useSelector((state: State) => {
-    const question = questionBank.get(state.currentQuestion);
+  const hit = useSelector((state: reducer.State) => {
+    const q = question.bank.get(state.currentQuestion);
     const answer = state.answers.get(state.currentQuestion) || "";
 
-    return compareAnswers(question.expectedAnswer, answer);
+    return question.compareAnswers(q.expectedAnswer, answer);
   });
 
   return hit ? (

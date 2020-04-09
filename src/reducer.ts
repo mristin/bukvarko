@@ -1,47 +1,41 @@
 import { enableMapSet, produce } from "immer";
 
-import {
-  ACK_REFOCUS,
-  ASK_TO_REFOCUS,
-  Action,
-  CHANGE_ANSWER,
-  GOTO_QUESTION,
-} from "./actions";
-import { Dependencies } from "./dependencies";
-import { QuestionID } from "./QuestionBank";
+import * as action from "./action";
+import * as dependency from "./dependency";
+import * as question from "./question";
 
 enableMapSet(); //  See https://immerjs.github.io/immer/docs/installation#pick-your-immer-version
 
 export interface State {
-  readonly currentQuestion: QuestionID;
-  readonly answers: Map<QuestionID, string>;
+  readonly currentQuestion: question.ID;
+  readonly answers: Map<question.ID, string>;
   readonly focusPending: boolean;
 }
 
-export function initializeState(deps: Dependencies) {
+export function initializeState(deps: dependency.Register) {
   return {
     currentQuestion: deps.questionBank.questions[0].id,
-    answers: new Map<QuestionID, string>(),
+    answers: new Map<question.ID, string>(),
     focusPending: true,
   };
 }
 
-export function create(deps: Dependencies) {
+export function create(deps: dependency.Register) {
   const initialState = initializeState(deps);
 
-  const reducer = (state: State = initialState, action: Action): State => {
+  const reducer = (state: State = initialState, a: action.Action): State => {
     const result = produce(state, (draft) => {
-      switch (action.type) {
-        case CHANGE_ANSWER:
-          draft.answers.set(state.currentQuestion, action.answer);
+      switch (a.type) {
+        case action.CHANGE_ANSWER:
+          draft.answers.set(state.currentQuestion, a.answer);
           break;
-        case GOTO_QUESTION:
-          draft.currentQuestion = action.questionID;
+        case action.GOTO_QUESTION:
+          draft.currentQuestion = a.questionID;
           break;
-        case ASK_TO_REFOCUS:
+        case action.ASK_TO_REFOCUS:
           draft.focusPending = true;
           break;
-        case ACK_REFOCUS:
+        case action.ACK_REFOCUS:
           draft.focusPending = false;
       }
     });
