@@ -4,14 +4,19 @@ import { Provider } from "react-redux";
 
 import { App } from "../../components/App";
 import { questionBank } from "../../QuestionBank";
+import * as select from "../../select";
 import * as storeFactory from "../../storeFactory";
 
 function renderApp() {
-  const store = storeFactory.produce({ questionBank });
+  const deps = { questionBank };
+  const store = storeFactory.produce(deps);
+  const selectWithDeps = new select.WithDeps(deps);
 
   return render(
     <Provider store={store}>
-      <App />
+      <select.Context.Provider value={selectWithDeps}>
+        <App />
+      </select.Context.Provider>
     </Provider>
   );
 }
