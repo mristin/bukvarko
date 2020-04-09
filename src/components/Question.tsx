@@ -1,12 +1,18 @@
 import * as React from "react";
+import { useContext } from "react";
 import { useSelector } from "react-redux";
 
-import * as question from "../question";
 import * as reducer from "../reducer";
+import * as select from "../select";
 
 export function Question() {
-  const imageURL = useSelector(
-    (state: reducer.State) => question.bank.get(state.currentQuestion).imageURL
+  const selectContext = useContext(select.Context);
+  if (selectContext === undefined) {
+    throw Error("Expected selector context to be set.");
+  }
+
+  const imageURL = useSelector((s: reducer.State) =>
+    selectContext.currentQuestionImageURL(s)
   );
 
   return (

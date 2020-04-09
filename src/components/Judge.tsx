@@ -1,18 +1,21 @@
 import ThumbDown from "@material-ui/icons/ThumbDown";
 import ThumbUp from "@material-ui/icons/ThumbUp";
 import * as React from "react";
+import { useContext } from "react";
 import { useSelector } from "react-redux";
 
-import * as question from "../question";
 import * as reducer from "../reducer";
+import * as select from "../select";
 
 export function Judge() {
-  const hit = useSelector((state: reducer.State) => {
-    const q = question.bank.get(state.currentQuestion);
-    const answer = state.answers.get(state.currentQuestion) || "";
+  const selectContext = useContext(select.Context);
+  if (selectContext === undefined) {
+    throw Error("Expected selector context to be set.");
+  }
 
-    return question.compareAnswers(q.expectedAnswer, answer);
-  });
+  const hit = useSelector((s: reducer.State) =>
+    selectContext.currentAnswerHits(s)
+  );
 
   return hit ? (
     <ThumbUp style={{ color: "green" }} />
