@@ -3,8 +3,8 @@ import ArrowRight from "@material-ui/icons/ArrowRight";
 import * as React from "react";
 import { useDispatch } from "react-redux";
 
-import { askToRefocus } from "../actions";
-import { nextQuestion } from "../thunks";
+import * as actions from "../actions";
+import * as effects from "../effects";
 
 export function NextQuestion() {
   const dispatch = useDispatch();
@@ -12,8 +12,8 @@ export function NextQuestion() {
   return (
     <IconButton
       onClick={() => {
-        dispatch(nextQuestion());
-        dispatch(askToRefocus());
+        dispatch(effects.nextQuestion());
+        dispatch(actions.askToRefocus());
       }}
       data-testid="nextQuestion"
     >

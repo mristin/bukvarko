@@ -6,9 +6,9 @@ import thunk from "redux-thunk";
 
 import { ASK_TO_REFOCUS } from "../../actions";
 import { NextQuestion } from "../../components/NextQuestion";
-import * as thunks from "../../thunks";
+import * as effects from "../../effects";
 
-jest.mock("../../thunks");
+jest.mock("../../effects");
 
 it("dispatches the action.", async () => {
   const store = configureMockFactory([thunk])();
@@ -18,7 +18,7 @@ it("dispatches the action.", async () => {
 
   const dummy = { hello: 1 };
 
-  (thunks.nextQuestion as any).mockResolvedValue(dummy);
+  (effects.nextQuestion as any).mockResolvedValue(dummy);
 
   const rendered = render(
     <Provider store={store}>
