@@ -1,16 +1,16 @@
-export type QuestionID = string;
+export type ID = string;
 
 export class Question {
   constructor(
-    public id: QuestionID,
+    public id: ID,
     public imageURL: string,
     public expectedAnswer: string
   ) {}
 }
 
-function verifyThatIndicesMatch(qb: QuestionBank) {
-  for (const [i, q] of qb.questions.entries()) {
-    const idx = qb.index(q.id);
+function verifyThatIndicesMatch(bank: Bank) {
+  for (const [i, q] of bank.questions.entries()) {
+    const idx = bank.index(q.id);
     if (i !== idx) {
       throw Error(
         `Unexpected mismatching index() result (== ${idx}) and index in the question (== ${i}`
@@ -19,23 +19,23 @@ function verifyThatIndicesMatch(qb: QuestionBank) {
   }
 }
 
-function verifyThatPreviousLoopsThrough(qb: QuestionBank) {
-  if (qb.questions.length === 0) {
+function verifyThatPreviousLoopsThrough(bank: Bank) {
+  if (bank.questions.length === 0) {
     throw Error("Unexpected empty question bank");
   }
 
-  const loop = new Array<QuestionID>(qb.questions.length + 1);
+  const loop = new Array<ID>(bank.questions.length + 1);
 
-  let cursor: QuestionID = qb.questions[0].id;
-  for (let i = 0; i < qb.questions.length + 1; i++) {
-    const prev = qb.previous(cursor);
+  let cursor: ID = bank.questions[0].id;
+  for (let i = 0; i < bank.questions.length + 1; i++) {
+    const prev = bank.previous(cursor);
     loop[i] = cursor;
     cursor = prev;
   }
 
   const expected = [
-    qb.questions[0].id,
-    ...qb.questions.map((q) => q.id).reverse(),
+    bank.questions[0].id,
+    ...bank.questions.map((q) => q.id).reverse(),
   ];
 
   const passed =
@@ -46,21 +46,21 @@ function verifyThatPreviousLoopsThrough(qb: QuestionBank) {
   }
 }
 
-function verifyThatNextLoopsThrough(qb: QuestionBank) {
-  if (qb.questions.length === 0) {
+function verifyThatNextLoopsThrough(bank: Bank) {
+  if (bank.questions.length === 0) {
     throw Error("Unexpected empty question bank");
   }
 
-  const loop = new Array<QuestionID>(qb.questions.length + 1);
+  const loop = new Array<ID>(bank.questions.length + 1);
 
-  let cursor: QuestionID = qb.questions[0].id;
-  for (let i = 0; i < qb.questions.length + 1; i++) {
-    const next = qb.next(cursor);
+  let cursor: ID = bank.questions[0].id;
+  for (let i = 0; i < bank.questions.length + 1; i++) {
+    const next = bank.next(cursor);
     loop[i] = cursor;
     cursor = next;
   }
 
-  const expected = [...qb.questions.map((q) => q.id), qb.questions[0].id];
+  const expected = [...bank.questions.map((q) => q.id), bank.questions[0].id];
 
   const passed =
     expected.length === loop.length && expected.every((v, i) => loop[i] === v);
@@ -70,9 +70,9 @@ function verifyThatNextLoopsThrough(qb: QuestionBank) {
   }
 }
 
-function verifyAllGet(qb: QuestionBank) {
-  for (const q of qb.questions) {
-    const got = qb.get(q.id).id;
+function verifyAllGet(bank: Bank) {
+  for (const q of bank.questions) {
+    const got = bank.get(q.id).id;
     const passed = got === q.id;
     if (!passed) {
       throw Error(`Expected question ID ${q.id}, but got: ${got}`);
@@ -80,9 +80,9 @@ function verifyAllGet(qb: QuestionBank) {
   }
 }
 
-function verifyHas(qb: QuestionBank) {
-  for (const q of qb.questions) {
-    if (!qb.has(q.id)) {
+function verifyHas(bank: Bank) {
+  for (const q of bank.questions) {
+    if (!bank.has(q.id)) {
       throw Error(
         `Expected ID to be positive in has(), but it was not: ${q.id}`
       );
@@ -90,27 +90,27 @@ function verifyHas(qb: QuestionBank) {
   }
 }
 
-function verifyQuestionBank(qb: QuestionBank) {
-  verifyThatIndicesMatch(qb);
-  verifyThatPreviousLoopsThrough(qb);
-  verifyThatNextLoopsThrough(qb);
-  verifyAllGet(qb);
-  verifyHas(qb);
+function verifyQuestionBank(bank: Bank) {
+  verifyThatIndicesMatch(bank);
+  verifyThatPreviousLoopsThrough(bank);
+  verifyThatNextLoopsThrough(bank);
+  verifyAllGet(bank);
+  verifyHas(bank);
 }
 
-export class QuestionBank {
-  private questionIndex: Map<QuestionID, number>;
-  private questionMap: Map<QuestionID, Question>;
-  private previousMap: Map<QuestionID, QuestionID>;
-  private nextMap: Map<QuestionID, QuestionID>;
+export class Bank {
+  private questionIndex: Map<ID, number>;
+  private questionMap: Map<ID, Question>;
+  private previousMap: Map<ID, ID>;
+  private nextMap: Map<ID, ID>;
 
   constructor(public questions: Array<Question>) {
-    this.questionIndex = new Map<QuestionID, number>();
+    this.questionIndex = new Map<ID, number>();
     for (const [i, q] of questions.entries()) {
       this.questionIndex.set(q.id, i);
     }
 
-    this.questionMap = new Map<QuestionID, Question>();
+    this.questionMap = new Map<ID, Question>();
     for (const q of questions) {
       if (this.questionMap.has(q.id)) {
         throw Error(`Duplicate ID in questions: ${q.id}`);
@@ -118,7 +118,7 @@ export class QuestionBank {
       this.questionMap.set(q.id, q);
     }
 
-    this.previousMap = new Map<QuestionID, QuestionID>();
+    this.previousMap = new Map<ID, ID>();
     if (questions.length > 0) {
       this.previousMap.set(questions[0].id, questions[questions.length - 1].id);
 
@@ -127,7 +127,7 @@ export class QuestionBank {
       }
     }
 
-    this.nextMap = new Map<QuestionID, QuestionID>();
+    this.nextMap = new Map<ID, ID>();
     if (questions.length > 0) {
       this.nextMap.set(questions[questions.length - 1].id, questions[0].id);
 
@@ -139,7 +139,7 @@ export class QuestionBank {
     verifyQuestionBank(this);
   }
 
-  public index(id: QuestionID): number {
+  public index(id: ID): number {
     const result = this.questionIndex.get(id);
     if (result === undefined) {
       throw Error(`Question ID is invalid: ${id}`);
@@ -148,7 +148,7 @@ export class QuestionBank {
     return result;
   }
 
-  public next(id: QuestionID): QuestionID {
+  public next(id: ID): ID {
     const result = this.nextMap.get(id);
     if (result === undefined) {
       throw Error(`Question ID is invalid: ${id}`);
@@ -157,7 +157,7 @@ export class QuestionBank {
     return result;
   }
 
-  public previous(id: QuestionID): QuestionID {
+  public previous(id: ID): ID {
     const result = this.previousMap.get(id);
     if (result === undefined) {
       throw Error(`Question ID is invalid: ${id}`);
@@ -166,11 +166,11 @@ export class QuestionBank {
     return result;
   }
 
-  public has(id: QuestionID): boolean {
+  public has(id: ID): boolean {
     return this.questionMap.has(id);
   }
 
-  public get(id: QuestionID): Question {
+  public get(id: ID): Question {
     const result = this.questionMap.get(id);
     if (result === undefined) {
       throw Error(`Question ID is invalid: ${id}`);
@@ -180,7 +180,7 @@ export class QuestionBank {
   }
 }
 
-export const questionBank = new QuestionBank([
+export const bank = new Bank([
   {
     id: "slon",
     imageURL: "./media/slon.jpeg",

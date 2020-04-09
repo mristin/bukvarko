@@ -1,10 +1,10 @@
-import * as effects from "../effects";
-import { QuestionID, questionBank } from "../QuestionBank";
+import * as effect from "../effect";
+import * as question from "../question";
 import * as reducer from "../reducer";
 import * as select from "../select";
 import * as storeFactory from "../storeFactory";
 
-const deps = { questionBank };
+const deps = { questionBank: question.bank };
 
 it("selects no hits on initial state.", () => {
   const state: reducer.State = reducer.initializeState(deps);
@@ -18,7 +18,7 @@ it("selects no hits on initial state.", () => {
 });
 
 it("selects hits on all correct answers.", () => {
-  const answers = new Map<QuestionID, string>();
+  const answers = new Map<question.ID, string>();
   for (const q of deps.questionBank.questions) {
     answers.set(q.id, q.expectedAnswer);
   }
@@ -49,7 +49,7 @@ it("selects first question on initial state.", () => {
 it("selects the second question on next question upon initialization.", () => {
   if (deps.questionBank.questions.length > 1) {
     const store = storeFactory.produce(deps);
-    store.dispatch(effects.nextQuestion() as any);
+    store.dispatch(effect.nextQuestion() as any);
 
     const selectWithDeps = new select.WithDeps(deps);
 
@@ -61,7 +61,7 @@ it("selects the second question on next question upon initialization.", () => {
 
 it("selects the last question on previous question upon initialization.", () => {
   const store = storeFactory.produce(deps);
-  store.dispatch(effects.previousQuestion() as any);
+  store.dispatch(effect.previousQuestion() as any);
 
   const selectWithDeps = new select.WithDeps(deps);
 

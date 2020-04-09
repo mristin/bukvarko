@@ -4,23 +4,25 @@ import { Ref, useEffect } from "react";
 import { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { ackRefocus, changeAnswer } from "../actions";
-import { State } from "../reducer";
+import * as action from "../action";
+import * as reducer from "../reducer";
 
 export function Answer() {
   const answer = useSelector(
-    (state: State) => state.answers.get(state.currentQuestion) || ""
+    (state: reducer.State) => state.answers.get(state.currentQuestion) || ""
   );
 
   const dispatch = useDispatch();
 
   const inputEl: Ref<HTMLInputElement> = useRef(null);
-  const focusPending = useSelector((state: State) => state.focusPending);
+  const focusPending = useSelector(
+    (state: reducer.State) => state.focusPending
+  );
 
   useEffect(() => {
     if (focusPending) {
       inputEl.current?.focus();
-      dispatch(ackRefocus());
+      dispatch(action.ackRefocus());
     }
   });
 
@@ -39,7 +41,7 @@ export function Answer() {
       }}
       inputRef={inputEl}
       onChange={(e) => {
-        dispatch(changeAnswer(e.target.value));
+        dispatch(action.changeAnswer(e.target.value));
       }}
       value={answer}
     />

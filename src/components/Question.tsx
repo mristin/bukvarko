@@ -1,12 +1,12 @@
 import * as React from "react";
 import { useSelector } from "react-redux";
 
-import { questionBank } from "../QuestionBank";
-import { State } from "../reducer";
+import * as question from "../question";
+import * as reducer from "../reducer";
 
 export function Question() {
   const imageURL = useSelector(
-    (state: State) => questionBank.get(state.currentQuestion).imageURL
+    (state: reducer.State) => question.bank.get(state.currentQuestion).imageURL
   );
 
   return (

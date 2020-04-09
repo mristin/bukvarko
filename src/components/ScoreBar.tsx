@@ -5,7 +5,7 @@ import * as React from "react";
 import { useContext } from "react";
 import { useSelector } from "react-redux";
 
-import { QuestionID } from "../QuestionBank";
+import * as question from "../question";
 import * as reducer from "../reducer";
 import * as select from "../select";
 
@@ -19,7 +19,7 @@ function Indicator(props: { hit: boolean; current: boolean }) {
 }
 
 function Score(props: {
-  hitsIDs: Array<[boolean, QuestionID]>;
+  hitsIDs: Array<[boolean, question.ID]>;
   currentIndex: number;
 }) {
   return (
