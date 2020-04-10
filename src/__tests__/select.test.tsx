@@ -20,16 +20,18 @@ it("selects no hits on initial state.", () => {
 
 it("selects hits on all correct answers.", () => {
   const answers = new Map<question.ID, string>();
-  for (const q of deps.questionBank.questions) {
-    answers.set(q.id, q.expectedAnswer);
-  }
+  const selectWithDeps = new select.WithDeps(deps);
 
   const state: reducer.State = {
     ...reducer.initializeState(deps),
     answers,
   };
 
-  const selectWithDeps = new select.WithDeps(deps);
+  const translation = selectWithDeps.resolveTranslation(state);
+
+  for (const q of deps.questionBank.questions) {
+    answers.set(q.id, translation.expectedAnswers[q.id]);
+  }
 
   const hitsAndIDs = selectWithDeps.hitsIDs(state);
   const hits = hitsAndIDs.map(([hit, _]) => hit);

@@ -1,15 +1,21 @@
 import { Container, Grid, Paper } from "@material-ui/core";
 import * as React from "react";
+import { useSelector } from "react-redux";
 
+import * as reducer from "../reducer";
 import { Answer } from "./Answer";
 import { Judge } from "./Judge";
 import { NextQuestion } from "./NextQuestion";
+import { Preferences } from "./Preferences";
+import { PreferencesButton } from "./PreferencesButton";
 import { PreviousQuestion } from "./PreviousQuestion";
 import { Question } from "./Question";
 import { ScoreBar } from "./ScoreBar";
 import { Speaker } from "./Speaker";
 
 export function App() {
+  const hasVoice = useSelector((s: reducer.State) => s.voice !== undefined);
+
   return (
     <Container>
       <Paper elevation={3} style={{ padding: "1em" }}>
@@ -24,7 +30,7 @@ export function App() {
           <Grid item xs={7}>
             <Answer />
 
-            <Speaker />
+            {hasVoice ? <Speaker /> : null}
 
             <div style={{ marginTop: "1em" }}>
               <Judge />
@@ -39,7 +45,19 @@ export function App() {
             <NextQuestion />
           </Grid>
         </Grid>
+
+        <div style={{ marginTop: "10em" }}>
+          <PreferencesButton />
+        </div>
       </Paper>
+      <div style={{ fontSize: "xx-small", marginTop: "5em" }}>
+        Copyright © 2020 Marko Ristin. MIT License. Github repository:{" "}
+        <a href="https://github.com/mristin/bukvarko">
+          https://github.com/mristin/bukvarko
+        </a>
+      </div>
+
+      <Preferences />
     </Container>
   );
 }

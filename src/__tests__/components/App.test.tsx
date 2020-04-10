@@ -3,31 +3,38 @@ import * as React from "react";
 import { Provider } from "react-redux";
 
 import { App } from "../../components/App";
+import * as i18n from "../../i18n";
 import * as select from "../../select";
 import * as storeFactory from "../../storeFactory";
 import * as mockDependency from "../mockDependency";
 
 const deps = mockDependency.registry;
 
-function renderApp() {
+function setupAndRenderApp() {
   const store = storeFactory.produce(deps);
-  const selectWithDeps = new select.WithDeps(deps);
+  const selectWithDeps: select.WithDeps = new select.WithDeps(deps);
 
-  return render(
-    <Provider store={store}>
-      <select.Context.Provider value={selectWithDeps}>
-        <App />
-      </select.Context.Provider>
-    </Provider>
-  );
+  return {
+    rendered: render(
+      <Provider store={store}>
+        <select.Context.Provider value={selectWithDeps}>
+          <i18n.Context.Provider value={deps.translations}>
+            <App />
+          </i18n.Context.Provider>
+        </select.Context.Provider>
+      </Provider>
+    ),
+    store,
+    selectWithDeps,
+  };
 }
 
 it("renders without problems.", () => {
-  renderApp();
+  setupAndRenderApp();
 });
 
 it("changes image on next question.", () => {
-  const rendered = renderApp();
+  const { rendered } = setupAndRenderApp();
 
   const questionImage = rendered.getByAltText(
     "question image"
@@ -40,7 +47,7 @@ it("changes image on next question.", () => {
 });
 
 it("changes image on previous question.", () => {
-  const rendered = renderApp();
+  const { rendered } = setupAndRenderApp();
 
   const questionImage = rendered.getByAltText(
     "question image"
@@ -52,20 +59,28 @@ it("changes image on previous question.", () => {
   expect(questionImage.src).not.toBe(oldSrc);
 });
 
-it("handles correct answers without problems.", () => {
-  const rendered = renderApp();
+it("handles the correct answer without problems.", () => {
+  const { rendered, store, selectWithDeps } = setupAndRenderApp();
+
+  const translation = selectWithDeps.resolveTranslation(store.getState());
+  const expectedAnswer =
+    translation.expectedAnswers[store.getState().currentQuestion];
 
   fireEvent.change(rendered.getByTestId("answer"), {
-    target: { value: deps.questionBank.questions[0].expectedAnswer },
+    target: { value: expectedAnswer },
   });
 });
 
-it("handles incorrect answers without problems.", () => {
-  const rendered = renderApp();
+it("handles an incorrect answer without problems.", () => {
+  const { rendered, store, selectWithDeps } = setupAndRenderApp();
+
+  const translation = selectWithDeps.resolveTranslation(store.getState());
+  const expectedAnswer =
+    translation.expectedAnswers[store.getState().currentQuestion];
 
   fireEvent.change(rendered.getByTestId("answer"), {
     target: {
-      value: "incorrect " + deps.questionBank.questions[0].expectedAnswer,
+      value: "incorrect " + expectedAnswer,
     },
   });
 });
