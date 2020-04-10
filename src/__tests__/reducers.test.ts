@@ -1,8 +1,8 @@
 import * as effect from "../effect";
-import * as question from "../question";
 import * as storeFactory from "../storeFactory";
+import * as mockDependency from "./mockDependency";
 
-const deps = { questionBank: question.bank };
+const deps = mockDependency.register;
 
 it("initializes the current question to the first question.", () => {
   const store = storeFactory.produce(deps);

@@ -3,11 +3,11 @@ import * as React from "react";
 import { Provider } from "react-redux";
 
 import { App } from "../../components/App";
-import * as question from "../../question";
 import * as select from "../../select";
 import * as storeFactory from "../../storeFactory";
+import * as mockDependency from "../mockDependency";
 
-const deps = { questionBank: question.bank };
+const deps = mockDependency.register;
 
 function renderApp() {
   const store = storeFactory.produce(deps);
