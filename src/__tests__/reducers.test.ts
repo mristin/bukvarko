@@ -2,7 +2,7 @@ import * as effect from "../effect";
 import * as storeFactory from "../storeFactory";
 import * as mockDependency from "./mockDependency";
 
-const deps = mockDependency.register;
+const deps = mockDependency.registry;
 
 it("initializes the current question to the first question.", () => {
   const store = storeFactory.produce(deps);

@@ -5,7 +5,7 @@ import * as select from "../select";
 import * as storeFactory from "../storeFactory";
 import * as mockDependency from "./mockDependency";
 
-const deps = mockDependency.register;
+const deps = mockDependency.registry;
 
 it("selects no hits on initial state.", () => {
   const state: reducer.State = reducer.initializeState(deps);

@@ -6,7 +6,7 @@ import * as question from "./question";
 import * as reducer from "./reducer";
 
 export class WithDeps {
-  constructor(private deps: dependency.Register) {}
+  constructor(private deps: dependency.Registry) {}
 
   public currentQuestionImageURL(state: reducer.State): string {
     return this.deps.questionBank.get(state.currentQuestion).imageURL;

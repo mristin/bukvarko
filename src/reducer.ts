@@ -12,7 +12,7 @@ export interface State {
   readonly focusPending: boolean;
 }
 
-export function initializeState(deps: dependency.Register) {
+export function initializeState(deps: dependency.Registry) {
   return {
     currentQuestion: deps.questionBank.questions[0].id,
     answers: new Map<question.ID, string>(),
@@ -20,7 +20,7 @@ export function initializeState(deps: dependency.Register) {
   };
 }
 
-export function create(deps: dependency.Register) {
+export function create(deps: dependency.Registry) {
   const initialState = initializeState(deps);
 
   const reducer = (state: State = initialState, a: action.Action): State => {

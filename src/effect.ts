@@ -8,7 +8,7 @@ export function nextQuestion() {
   return function (
     dispatch: Dispatch,
     getState: () => reducer.State,
-    deps: dependency.Register
+    deps: dependency.Registry
   ): void {
     const questionID = deps.questionBank.next(getState().currentQuestion);
     dispatch(action.gotoQuestion(questionID));
@@ -19,7 +19,7 @@ export function previousQuestion() {
   return function (
     dispatch: Dispatch,
     getState: () => reducer.State,
-    deps: dependency.Register
+    deps: dependency.Registry
   ): void {
     const questionID = deps.questionBank.previous(getState().currentQuestion);
     dispatch(action.gotoQuestion(questionID));
@@ -30,7 +30,7 @@ export function speak() {
   return function (
     _: Dispatch,
     getState: () => reducer.State,
-    deps: dependency.Register
+    deps: dependency.Registry
   ): void {
     const answer = getState().answers.get(getState().currentQuestion);
 

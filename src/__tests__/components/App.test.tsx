@@ -7,7 +7,7 @@ import * as select from "../../select";
 import * as storeFactory from "../../storeFactory";
 import * as mockDependency from "../mockDependency";
 
-const deps = mockDependency.register;
+const deps = mockDependency.registry;
 
 function renderApp() {
   const store = storeFactory.produce(deps);
