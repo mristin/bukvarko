@@ -25,3 +25,25 @@ export function previousQuestion() {
     dispatch(action.gotoQuestion(questionID));
   };
 }
+
+export function speak() {
+  return function (
+    _: Dispatch,
+    getState: () => reducer.State,
+    deps: dependency.Register
+  ): void {
+    const answer = getState().answers.get(getState().currentQuestion);
+
+    const text = answer === "" ? `Ovde piše: ${answer}` : "Ovde ništa ne piše.";
+
+    const u = new SpeechSynthesisUtterance();
+    u.text = text;
+    u.lang = "sr-RS";
+    u.volume = 1; // 0 to 1
+    u.rate = 0.7; // 0.1 to 1
+    u.pitch = 2; //0 to 2
+
+    deps.speechSynthesis.cancel();
+    deps.speechSynthesis.speak(u);
+  };
+}

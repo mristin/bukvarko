@@ -5,7 +5,7 @@ import configureMockFactory from "redux-mock-store";
 import thunk from "redux-thunk";
 
 import * as action from "../../action";
-import { NextQuestion } from "../../components/NextQuestion";
+import { Speaker } from "../../components/Speaker";
 import * as effect from "../../effect";
 
 jest.mock("../../effect");
@@ -18,15 +18,15 @@ it("dispatches the actions and effects.", async () => {
 
   const dummy = { hello: 1 };
 
-  (effect.nextQuestion as any).mockResolvedValue(dummy);
+  (effect.speak as any).mockResolvedValue(dummy);
 
   const rendered = render(
     <Provider store={store}>
-      <NextQuestion />
+      <Speaker />
     </Provider>
   );
 
-  fireEvent.click(rendered.getByTestId("nextQuestion"));
+  fireEvent.click(rendered.getByTestId("speak"));
 
   expect(mockDispatch).toHaveBeenCalledTimes(2);
   expect(await mockDispatch.mock.calls[0][0]).toBe(dummy);

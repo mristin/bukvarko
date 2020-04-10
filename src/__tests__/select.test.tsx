@@ -3,8 +3,9 @@ import * as question from "../question";
 import * as reducer from "../reducer";
 import * as select from "../select";
 import * as storeFactory from "../storeFactory";
+import * as mockDependency from "./mockDependency";
 
-const deps = { questionBank: question.bank };
+const deps = mockDependency.register;
 
 it("selects no hits on initial state.", () => {
   const state: reducer.State = reducer.initializeState(deps);

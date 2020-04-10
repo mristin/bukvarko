@@ -5,4 +5,5 @@ import * as question from "./question";
  */
 export interface Register {
   questionBank: question.Bank;
+  speechSynthesis: SpeechSynthesis;
 }
