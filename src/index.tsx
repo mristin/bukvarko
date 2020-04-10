@@ -10,7 +10,7 @@ import * as question from "./question";
 import * as select from "./select";
 import * as storeFactory from "./storeFactory";
 
-const deps: dependency.Register = {
+const deps: dependency.Registry = {
   questionBank: question.bank,
   speechSynthesis: speechSynthesis,
 };

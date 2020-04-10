@@ -6,7 +6,7 @@ const mockSpeechSynthesis: unknown = {
   speak: (_: SpeechSynthesisUtterance) => {},
 };
 
-export const register: dependency.Register = {
+export const registry: dependency.Registry = {
   questionBank: question.bank,
   speechSynthesis: mockSpeechSynthesis as SpeechSynthesis,
 };
