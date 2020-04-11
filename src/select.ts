@@ -2,8 +2,10 @@ import deepEqual from "deep-equal";
 import * as React from "react";
 
 import * as dependency from "./dependency";
+import * as i18n from "./i18n";
 import * as question from "./question";
 import * as reducer from "./reducer";
+import * as speech from "./speech";
 
 export class WithDeps {
   constructor(private deps: dependency.Registry) {}
@@ -12,11 +14,24 @@ export class WithDeps {
     return this.deps.questionBank.get(state.currentQuestion).imageURL;
   }
 
+  public resolveTranslation(state: reducer.State): i18n.Translation {
+    const translation = this.deps.translations.get(state.language);
+    if (translation === undefined) {
+      throw Error(
+        `The translation in the state could not be found in the translations: ${state.language}`
+      );
+    }
+    return translation;
+  }
+
   public currentAnswerHits(state: reducer.State): boolean {
-    const q = this.deps.questionBank.get(state.currentQuestion);
     const answer = state.answers.get(state.currentQuestion) || "";
 
-    return question.compareAnswers(q.expectedAnswer, answer);
+    const expectedAnswer = this.resolveTranslation(state).expectedAnswers[
+      state.currentQuestion
+    ];
+
+    return question.compareAnswers(expectedAnswer, answer);
   }
 
   public hitsIDs(state: reducer.State): Array<[boolean, question.ID]> {
@@ -27,7 +42,11 @@ export class WithDeps {
     for (const [i, q] of this.deps.questionBank.questions.entries()) {
       const answer = state.answers.get(q.id) || "";
 
-      const hit = question.compareAnswers(q.expectedAnswer, answer);
+      const expectedAnswer = this.resolveTranslation(state).expectedAnswers[
+        q.id
+      ];
+
+      const hit = question.compareAnswers(expectedAnswer, answer);
 
       result[i] = [hit, q.id];
     }
@@ -50,6 +69,17 @@ export class WithDeps {
 
   public currentIndex(state: reducer.State): number {
     return this.deps.questionBank.index(state.currentQuestion);
+  }
+
+  public availableVoices(state: reducer.State): Array<speech.VoiceID> {
+    const r = this.deps.voicesByLanguage.get(state.language);
+    if (r === undefined) {
+      throw Error(
+        `Current language does not match any in voices grouped by translation: ${state.language}`
+      );
+    }
+
+    return r;
   }
 }
 

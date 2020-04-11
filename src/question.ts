@@ -1,11 +1,12 @@
-export type ID = string;
+export const ELEPHANT = "elephant";
+export const TIGER = "tiger";
+export const LION = "lion";
+export const DOG = "dog";
+
+export type ID = typeof ELEPHANT | typeof TIGER | typeof LION | typeof DOG;
 
 export class Question {
-  constructor(
-    public id: ID,
-    public imageURL: string,
-    public expectedAnswer: string
-  ) {}
+  constructor(public id: ID, public imageURL: string) {}
 }
 
 function verifyThatIndicesMatch(bank: Bank) {
@@ -180,28 +181,26 @@ export class Bank {
   }
 }
 
-export const bank = new Bank([
-  {
-    id: "slon",
-    imageURL: "./media/slon.jpeg",
-    expectedAnswer: "slon",
-  },
-  {
-    id: "tigar",
-    imageURL: "./media/tigar.jpeg",
-    expectedAnswer: "tigar",
-  },
-  {
-    id: "lav",
-    imageURL: "./media/lav.jpeg",
-    expectedAnswer: "lav",
-  },
-  {
-    id: "pas",
-    imageURL: "./media/pas.jpeg",
-    expectedAnswer: "pas",
-  },
-]);
+export function initializeBank(): Bank {
+  return new Bank([
+    {
+      id: ELEPHANT,
+      imageURL: "./media/slon.jpeg",
+    },
+    {
+      id: TIGER,
+      imageURL: "./media/tigar.jpeg",
+    },
+    {
+      id: LION,
+      imageURL: "./media/lav.jpeg",
+    },
+    {
+      id: DOG,
+      imageURL: "./media/pas.jpeg",
+    },
+  ]);
+}
 
 export function compareAnswers(expected: string, got: string): boolean {
   return expected.toLowerCase() === got.toLowerCase();
