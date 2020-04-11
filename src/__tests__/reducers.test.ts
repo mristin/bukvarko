@@ -2,9 +2,8 @@ import * as effect from "../effect";
 import * as storeFactory from "../storeFactory";
 import * as mockDependency from "./mockDependency";
 
-const deps = mockDependency.registry;
-
 it("initializes the current question to the first question.", () => {
+  const deps = mockDependency.initializeRegistry();
   const store = storeFactory.produce(deps);
 
   expect(store.getState().currentQuestion).toBe(
@@ -13,6 +12,7 @@ it("initializes the current question to the first question.", () => {
 });
 
 it("selects the second question on going forward upon initialization.", () => {
+  const deps = mockDependency.initializeRegistry();
   const store = storeFactory.produce(deps);
   store.dispatch(effect.nextQuestion() as any);
 
@@ -24,6 +24,7 @@ it("selects the second question on going forward upon initialization.", () => {
 });
 
 it("selects the last question on going backwards upon initialization.", () => {
+  const deps = mockDependency.initializeRegistry();
   const store = storeFactory.produce(deps);
   store.dispatch(effect.previousQuestion() as any);
 

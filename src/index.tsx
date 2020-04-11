@@ -14,7 +14,8 @@ import * as storeFactory from "./storeFactory";
 const deps: dependency.Registry = dependency.initializeRegistry(
   question.initializeBank(),
   speechSynthesis,
-  i18n.initializeTranslations()
+  i18n.initializeTranslations(),
+  localStorage
 );
 
 const store = storeFactory.produce(deps);

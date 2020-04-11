@@ -1,6 +1,7 @@
 import { enableMapSet, produce } from "immer";
 
 import * as action from "./action";
+import * as autosave from "./autosave";
 import * as dependency from "./dependency";
 import * as i18n from "./i18n";
 import * as question from "./question";
@@ -47,7 +48,7 @@ export function initializeState(deps: dependency.Registry): State {
 
   const voice = lastVoiceByLanguage.get(language);
 
-  return {
+  let state = {
     language,
     voice,
     lastVoiceByLanguage,
@@ -56,6 +57,10 @@ export function initializeState(deps: dependency.Registry): State {
     focusPending: true,
     preferencesVisible: true,
   };
+
+  state = autosave.patchState(deps, state);
+
+  return state;
 }
 
 export function create(deps: dependency.Registry) {
@@ -83,7 +88,6 @@ export function create(deps: dependency.Registry) {
           if (state.language !== a.language) {
             draft.language = a.language;
             draft.voice = state.lastVoiceByLanguage.get(a.language);
-            console.log(draft.voice);
           }
           break;
         case action.CHANGE_VOICE:
