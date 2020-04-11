@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 
 import * as reducer from "../reducer";
 import { Answer } from "./Answer";
+import { DeleteAll } from "./DeleteAll";
 import { Judge } from "./Judge";
 import { NextQuestion } from "./NextQuestion";
 import { Preferences } from "./Preferences";
@@ -48,6 +49,8 @@ export function App() {
 
         <div style={{ marginTop: "10em" }}>
           <PreferencesButton />
+
+          <DeleteAll />
         </div>
       </Paper>
       <div style={{ fontSize: "xx-small", marginTop: "5em" }}>
