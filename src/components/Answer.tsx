@@ -5,6 +5,7 @@ import { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import * as action from "../action";
+import * as effect from "../effect";
 import * as reducer from "../reducer";
 
 export function Answer() {
@@ -42,6 +43,11 @@ export function Answer() {
       inputRef={inputEl}
       onChange={(e) => {
         dispatch(action.changeAnswer(e.target.value));
+      }}
+      onKeyUp={(e) => {
+        if (e.key === "Enter") {
+          dispatch(effect.speak());
+        }
       }}
       value={answer}
     />
