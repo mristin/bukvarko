@@ -1,4 +1,4 @@
-import Button from "@material-ui/core/Button";
+import { IconButton } from "@material-ui/core";
 import SettingsIcon from "@material-ui/icons/Settings";
 import * as React from "react";
 import { useDispatch } from "react-redux";
@@ -9,8 +9,8 @@ export function PreferencesButton() {
   const dispatch = useDispatch();
 
   return (
-    <Button>
-      <SettingsIcon onClick={() => dispatch(action.togglePreferences(true))} />
-    </Button>
+    <IconButton onClick={() => dispatch(action.togglePreferences(true))}>
+      <SettingsIcon />
+    </IconButton>
   );
 }
