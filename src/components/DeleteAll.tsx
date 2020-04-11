@@ -10,7 +10,7 @@ export function DeleteAll() {
 
   return (
     <IconButton
-      style={{ marginLeft: "1em" }}
+      style={{ float: "right" }}
       onClick={() => dispatch(action.deleteAll())}
       data-testid="deleteAll"
     >
