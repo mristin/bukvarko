@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import * as reducer from "../reducer";
 import { Answer } from "./Answer";
 import { DeleteAll } from "./DeleteAll";
+import { FullScreen } from "./FullScreen";
 import { Judge } from "./Judge";
 import { NextQuestion } from "./NextQuestion";
 import { Preferences } from "./Preferences";
@@ -49,6 +50,8 @@ export function App() {
 
         <div style={{ marginTop: "10em" }}>
           <PreferencesButton />
+
+          <FullScreen />
 
           <DeleteAll />
         </div>

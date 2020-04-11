@@ -1,7 +1,6 @@
 import { enableMapSet, produce } from "immer";
 
 import * as action from "./action";
-import { CHANGE_VOICE, DELETE_ALL } from "./action";
 import * as dependency from "./dependency";
 import * as i18n from "./i18n";
 import * as question from "./question";
@@ -20,6 +19,7 @@ export interface State {
   readonly answers: Map<question.ID, string>;
   readonly focusPending: boolean;
   readonly preferencesVisible: boolean;
+  readonly fullscreen: boolean;
 }
 
 export function initializeState(deps: dependency.Registry): State {
@@ -56,6 +56,7 @@ export function initializeState(deps: dependency.Registry): State {
     answers: new Map<question.ID, string>(),
     focusPending: true,
     preferencesVisible: true,
+    fullscreen: false,
   };
 }
 
@@ -87,12 +88,15 @@ export function create(deps: dependency.Registry) {
             console.log(draft.voice);
           }
           break;
-        case CHANGE_VOICE:
+        case action.CHANGE_VOICE:
           draft.voice = a.voice;
           draft.lastVoiceByLanguage.set(state.language, a.voice);
           break;
-        case DELETE_ALL:
+        case action.DELETE_ALL:
           draft.answers.clear();
+          break;
+        case action.TOGGLE_FULLSCREEN:
+          draft.fullscreen = a.value;
       }
     });
 
