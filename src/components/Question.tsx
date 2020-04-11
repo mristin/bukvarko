@@ -15,11 +15,16 @@ export function Question() {
     selectContext.currentQuestionImageURL(s)
   );
 
+  // This value is computed manually over all the images.
+  const maxImageHeight = 234;
+
   return (
-    <img
-      src={imageURL}
-      alt="question image"
-      style={{ width: "90%", border: "1px solid black" }}
-    />
+    <div style={{ height: maxImageHeight }}>
+      <img
+        src={imageURL}
+        alt="question image"
+        style={{ width: "90%", border: "1px solid black" }}
+      />
+    </div>
   );
 }
