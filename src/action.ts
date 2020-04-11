@@ -77,6 +77,16 @@ export function changeVoice(voice: speech.VoiceID | undefined): Action {
   return { type: CHANGE_VOICE, voice };
 }
 
+export const DELETE_ALL = "DELETE_ALL";
+
+interface DeleteAll {
+  type: typeof DELETE_ALL;
+}
+
+export function deleteAll(): Action {
+  return { type: DELETE_ALL };
+}
+
 export type Action =
   | ChangeAnswer
   | GotoQuestion
@@ -84,4 +94,5 @@ export type Action =
   | AckRefocus
   | TogglePreferences
   | ChangeTranslation
-  | ChangeVoice;
+  | ChangeVoice
+  | DeleteAll;

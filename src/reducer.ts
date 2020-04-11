@@ -1,7 +1,7 @@
 import { enableMapSet, produce } from "immer";
 
 import * as action from "./action";
-import { CHANGE_VOICE } from "./action";
+import { CHANGE_VOICE, DELETE_ALL } from "./action";
 import * as dependency from "./dependency";
 import * as i18n from "./i18n";
 import * as question from "./question";
@@ -91,6 +91,8 @@ export function create(deps: dependency.Registry) {
           draft.voice = a.voice;
           draft.lastVoiceByLanguage.set(state.language, a.voice);
           break;
+        case DELETE_ALL:
+          draft.answers.clear();
       }
     });
 
