@@ -4,7 +4,7 @@ import * as React from "react";
 import { useContext } from "react";
 import { useSelector } from "react-redux";
 
-import * as reducer from "../reducer";
+import * as app from "../app";
 import * as select from "../select";
 
 export function Judge() {
@@ -13,9 +13,7 @@ export function Judge() {
     throw Error("Expected selector context to be set.");
   }
 
-  const hit = useSelector((s: reducer.State) =>
-    selectContext.currentAnswerHits(s)
-  );
+  const hit = useSelector((s: app.State) => selectContext.currentAnswerHits(s));
 
   return hit ? (
     <ThumbUp style={{ color: "green" }} />

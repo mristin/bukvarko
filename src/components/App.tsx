@@ -2,7 +2,7 @@ import { Container, Grid, Paper } from "@material-ui/core";
 import * as React from "react";
 import { useSelector } from "react-redux";
 
-import * as reducer from "../reducer";
+import * as app from "../app";
 import { Answer } from "./Answer";
 import { DeleteAll } from "./DeleteAll";
 import { FullScreen } from "./FullScreen";
@@ -16,7 +16,7 @@ import { ScoreBar } from "./ScoreBar";
 import { Speaker } from "./Speaker";
 
 export function App() {
-  const hasVoice = useSelector((s: reducer.State) => s.voice !== undefined);
+  const hasVoice = useSelector((s: app.State) => s.voice !== undefined);
 
   return (
     <Container>

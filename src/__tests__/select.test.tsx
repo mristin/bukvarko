@@ -1,13 +1,13 @@
+import * as app from "../app";
 import * as effect from "../effect";
 import * as question from "../question";
-import * as reducer from "../reducer";
 import * as select from "../select";
 import * as storeFactory from "../storeFactory";
 import * as mockDependency from "./mockDependency";
 
 it("selects no hits on initial state.", () => {
   const deps = mockDependency.initializeRegistry();
-  const state: reducer.State = reducer.initializeState(deps);
+  const state: app.State = app.initializeState(deps);
 
   const selectWithDeps = new select.WithDeps(deps);
 
@@ -22,8 +22,8 @@ it("selects hits on all correct answers.", () => {
   const answers = new Map<question.ID, string>();
   const selectWithDeps = new select.WithDeps(deps);
 
-  const state: reducer.State = {
-    ...reducer.initializeState(deps),
+  const state: app.State = {
+    ...app.initializeState(deps),
     answers,
   };
 
@@ -41,7 +41,7 @@ it("selects hits on all correct answers.", () => {
 
 it("selects first question on initial state.", () => {
   const deps = mockDependency.initializeRegistry();
-  const state: reducer.State = reducer.initializeState(deps);
+  const state: app.State = app.initializeState(deps);
 
   const selectWithDeps = new select.WithDeps(deps);
 

@@ -1,20 +1,20 @@
 import deepEqual from "deep-equal";
 import * as React from "react";
 
+import * as app from "./app";
 import * as dependency from "./dependency";
 import * as i18n from "./i18n";
 import * as question from "./question";
-import * as reducer from "./reducer";
 import * as speech from "./speech";
 
 export class WithDeps {
   constructor(private deps: dependency.Registry) {}
 
-  public currentQuestionImageURL(state: reducer.State): string {
+  public currentQuestionImageURL(state: app.State): string {
     return this.deps.questionBank.get(state.currentQuestion).imageURL;
   }
 
-  public resolveTranslation(state: reducer.State): i18n.Translation {
+  public resolveTranslation(state: app.State): i18n.Translation {
     const translation = this.deps.translations.get(state.language);
     if (translation === undefined) {
       throw Error(
@@ -24,7 +24,7 @@ export class WithDeps {
     return translation;
   }
 
-  public currentAnswerHits(state: reducer.State): boolean {
+  public currentAnswerHits(state: app.State): boolean {
     const answer = state.answers.get(state.currentQuestion) || "";
 
     const expectedAnswer = this.resolveTranslation(state).expectedAnswers[
@@ -34,7 +34,7 @@ export class WithDeps {
     return question.compareAnswers(expectedAnswer, answer);
   }
 
-  public hitsIDs(state: reducer.State): Array<[boolean, question.ID]> {
+  public hitsIDs(state: app.State): Array<[boolean, question.ID]> {
     const result = new Array<[boolean, question.ID]>(
       this.deps.questionBank.questions.length
     );
@@ -67,11 +67,11 @@ export class WithDeps {
     return result;
   }
 
-  public currentIndex(state: reducer.State): number {
+  public currentIndex(state: app.State): number {
     return this.deps.questionBank.index(state.currentQuestion);
   }
 
-  public availableVoices(state: reducer.State): Array<speech.VoiceID> {
+  public availableVoices(state: app.State): Array<speech.VoiceID> {
     const r = this.deps.voicesByLanguage.get(state.language);
     if (r === undefined) {
       throw Error(

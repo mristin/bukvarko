@@ -2,10 +2,10 @@ import { produce } from "immer";
 import { Dispatch, Middleware, MiddlewareAPI } from "redux";
 
 import * as action from "./action";
+import * as app from "./app";
 import * as dependency from "./dependency";
 import * as i18n from "./i18n";
 import * as question from "./question";
-import * as reducer from "./reducer";
 import * as speech from "./speech";
 import * as stateInvariants from "./stateInvariants";
 
@@ -14,8 +14,8 @@ import * as stateInvariants from "./stateInvariants";
  */
 export function patchState(
   deps: dependency.Registry,
-  state: reducer.State
-): reducer.State {
+  state: app.State
+): app.State {
   // Precondition
   stateInvariants.verify(state, deps);
 
@@ -100,9 +100,9 @@ export function patchState(
 }
 
 export function create(deps: dependency.Registry) {
-  const middleware: Middleware = (
-    api: MiddlewareAPI<Dispatch, reducer.State>
-  ) => (next: Dispatch) => (a: action.Action) => {
+  const middleware: Middleware = (api: MiddlewareAPI<Dispatch, app.State>) => (
+    next: Dispatch
+  ) => (a: action.Action) => {
     const result = next(a);
 
     switch (a.type) {

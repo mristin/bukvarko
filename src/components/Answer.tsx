@@ -5,20 +5,18 @@ import { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import * as action from "../action";
+import * as app from "../app";
 import * as effect from "../effect";
-import * as reducer from "../reducer";
 
 export function Answer() {
   const answer = useSelector(
-    (state: reducer.State) => state.answers.get(state.currentQuestion) || ""
+    (state: app.State) => state.answers.get(state.currentQuestion) || ""
   );
 
   const dispatch = useDispatch();
 
   const inputEl: Ref<HTMLInputElement> = useRef(null);
-  const focusPending = useSelector(
-    (state: reducer.State) => state.focusPending
-  );
+  const focusPending = useSelector((state: app.State) => state.focusPending);
 
   useEffect(() => {
     if (focusPending) {
