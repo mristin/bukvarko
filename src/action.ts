@@ -87,17 +87,6 @@ export function deleteAll(): Action {
   return { type: DELETE_ALL };
 }
 
-export const TOGGLE_FULLSCREEN = "TOGGLE_FULLSCREEN";
-
-interface ToggleFullscreen {
-  type: typeof TOGGLE_FULLSCREEN;
-  value: boolean;
-}
-
-export function toggleFullscreen(value: boolean): Action {
-  return { type: TOGGLE_FULLSCREEN, value };
-}
-
 export type Action =
   | ChangeAnswer
   | GotoQuestion
@@ -106,5 +95,4 @@ export type Action =
   | TogglePreferences
   | ChangeTranslation
   | ChangeVoice
-  | DeleteAll
-  | ToggleFullscreen;
+  | DeleteAll;
