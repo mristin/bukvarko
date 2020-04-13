@@ -169,3 +169,26 @@ export function groupVoicesByLanguage(
   }
   return sorted;
 }
+
+export function voiceForLanguageOK(
+  voice: VoiceID,
+  language: i18n.LanguageID,
+  voicesByLanguage: VoicesByLanguage
+): boolean {
+  const maybeList: Array<VoiceID> | undefined = voicesByLanguage.get(language);
+  if (maybeList !== undefined) {
+    let found = false;
+    const key = voice.toKey();
+
+    for (const anotherVoice of maybeList) {
+      if (anotherVoice.toKey() === key) {
+        found = true;
+        break;
+      }
+    }
+
+    return found;
+  } else {
+    return false;
+  }
+}

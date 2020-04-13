@@ -8,9 +8,8 @@ import * as select from "../../select";
 import * as storeFactory from "../../storeFactory";
 import * as mockDependency from "../mockDependency";
 
-const deps = mockDependency.registry;
-
 function setupAndRenderApp() {
+  const deps = mockDependency.initializeRegistry();
   const store = storeFactory.produce(deps);
   const selectWithDeps: select.WithDeps = new select.WithDeps(deps);
 

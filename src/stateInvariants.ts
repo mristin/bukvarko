@@ -21,7 +21,7 @@ export function create(deps: dependency.Registry) {
   return middleware;
 }
 
-function verify(state: reducer.State, deps: dependency.Registry) {
+export function verify(state: reducer.State, deps: dependency.Registry) {
   if (!deps.translations.has(state.language)) {
     throw Error(
       `Language in the state is not contained in the translations: ${JSON.stringify(

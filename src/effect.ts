@@ -32,6 +32,11 @@ export function speak() {
     getState: () => reducer.State,
     deps: dependency.Registry
   ): void {
+    const voice = getState().voice;
+    if (voice === undefined) {
+      return;
+    }
+
     const answer = getState().answers.get(getState().currentQuestion) || "";
 
     const translation = deps.translations.get(getState().language)!;
@@ -40,13 +45,6 @@ export function speak() {
       answer !== ""
         ? `${translation.hereItSays}: ${answer}`
         : translation.nothingIsWrittenHere;
-
-    const voice = getState().voice;
-    if (voice === undefined) {
-      throw Error(
-        "Unexpected speak effect when the voice is undefined in the state."
-      );
-    }
 
     const u = new SpeechSynthesisUtterance();
     u.voice = deps.voices.get(voice);

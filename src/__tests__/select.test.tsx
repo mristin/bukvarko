@@ -5,9 +5,8 @@ import * as select from "../select";
 import * as storeFactory from "../storeFactory";
 import * as mockDependency from "./mockDependency";
 
-const deps = mockDependency.registry;
-
 it("selects no hits on initial state.", () => {
+  const deps = mockDependency.initializeRegistry();
   const state: reducer.State = reducer.initializeState(deps);
 
   const selectWithDeps = new select.WithDeps(deps);
@@ -19,6 +18,7 @@ it("selects no hits on initial state.", () => {
 });
 
 it("selects hits on all correct answers.", () => {
+  const deps = mockDependency.initializeRegistry();
   const answers = new Map<question.ID, string>();
   const selectWithDeps = new select.WithDeps(deps);
 
@@ -40,6 +40,7 @@ it("selects hits on all correct answers.", () => {
 });
 
 it("selects first question on initial state.", () => {
+  const deps = mockDependency.initializeRegistry();
   const state: reducer.State = reducer.initializeState(deps);
 
   const selectWithDeps = new select.WithDeps(deps);
@@ -50,6 +51,7 @@ it("selects first question on initial state.", () => {
 });
 
 it("selects the second question on next question upon initialization.", () => {
+  const deps = mockDependency.initializeRegistry();
   if (deps.questionBank.questions.length > 1) {
     const store = storeFactory.produce(deps);
     store.dispatch(effect.nextQuestion() as any);
@@ -63,6 +65,7 @@ it("selects the second question on next question upon initialization.", () => {
 });
 
 it("selects the last question on previous question upon initialization.", () => {
+  const deps = mockDependency.initializeRegistry();
   const store = storeFactory.produce(deps);
   store.dispatch(effect.previousQuestion() as any);
 

@@ -11,12 +11,14 @@ export interface Registry {
   translations: i18n.Translations;
   voices: speech.Voices;
   voicesByLanguage: speech.VoicesByLanguage;
+  storage: Storage;
 }
 
 export function initializeRegistry(
   questionBank: question.Bank,
   speechSynthesis: SpeechSynthesis,
-  translations: i18n.Translations
+  translations: i18n.Translations,
+  storage: Storage
 ): Registry {
   const voices = new speech.Voices(speechSynthesis.getVoices());
 
@@ -31,5 +33,6 @@ export function initializeRegistry(
     speechSynthesis,
     voices,
     voicesByLanguage,
+    storage,
   };
 }
