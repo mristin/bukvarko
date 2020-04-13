@@ -19,7 +19,6 @@ export interface State {
   readonly answers: Map<question.ID, string>;
   readonly focusPending: boolean;
   readonly preferencesVisible: boolean;
-  readonly fullscreen: boolean;
 }
 
 export function initializeState(deps: dependency.Registry): State {
@@ -56,7 +55,6 @@ export function initializeState(deps: dependency.Registry): State {
     answers: new Map<question.ID, string>(),
     focusPending: true,
     preferencesVisible: true,
-    fullscreen: false,
   };
 }
 
@@ -95,8 +93,6 @@ export function create(deps: dependency.Registry) {
         case action.DELETE_ALL:
           draft.answers.clear();
           break;
-        case action.TOGGLE_FULLSCREEN:
-          draft.fullscreen = a.value;
       }
     });
 
