@@ -2,6 +2,7 @@ import { Action, Dispatch, Middleware, MiddlewareAPI } from "redux";
 
 import * as app from "./app";
 import * as dependency from "./dependency";
+import * as speech from "./speech";
 
 export function create(deps: dependency.Registry) {
   const middleware: Middleware = (api: MiddlewareAPI<Dispatch, app.State>) => (
@@ -39,15 +40,41 @@ export function verify(state: app.State, deps: dependency.Registry) {
       );
     }
 
-    let voiceMatchesTranslation = false;
-    for (const voice of deps.voicesByLanguage.get(state.language)!) {
-      if (voice.toKey() === state.voice.toKey()) {
-        voiceMatchesTranslation = true;
-      }
+    const lastVoice = state.lastVoiceByLanguage.get(state.language)!;
+    if (lastVoice.toKey() !== state.voice.toKey()) {
+      throw Error(
+        `The voice in the state (== ${state.voice}) for the language ${state.language} ` +
+          `must match the last voice by the same language: ${lastVoice}`
+      );
     }
-    if (!voiceMatchesTranslation) {
+
+    if (
+      !speech.voiceForLanguageOK(
+        state.voice,
+        state.language,
+        deps.voicesByLanguage
+      )
+    ) {
       throw Error(
         `Voice in the state does not match the language in the state ${state.language}: ${state.voice}`
+      );
+    }
+  }
+
+  for (const language of deps.translations.keys()) {
+    if (!state.lastVoiceByLanguage.has(language)) {
+      throw Error(
+        `Unexpectedly missing an entry in lastVoiceByLanguage for: ${language}`
+      );
+    }
+
+    const lastVoice = state.lastVoiceByLanguage.get(language)!;
+    if (
+      lastVoice !== undefined &&
+      !speech.voiceForLanguageOK(lastVoice, language, deps.voicesByLanguage)
+    ) {
+      throw Error(
+        `The lastvoiceByLanguage for the language ${language} is invalid: ${lastVoice}`
       );
     }
   }
