@@ -8,8 +8,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Dispatch } from "redux";
 
 import * as action from "../action";
+import * as app from "../app";
 import * as i18n from "../i18n";
-import * as reducer from "../reducer";
 import * as select from "../select";
 import * as speech from "../speech";
 
@@ -118,7 +118,7 @@ export function Preferences() {
   }
 
   const preferencesVisible = useSelector(
-    (s: reducer.State) => s.preferencesVisible
+    (s: app.State) => s.preferencesVisible
   );
 
   const dispatch = useDispatch();
@@ -126,14 +126,14 @@ export function Preferences() {
   const langs: i18n.LanguageID[] = [...i18nContext.keys()].sort();
 
   const currentTranslation: i18n.LanguageID = useSelector(
-    (s: reducer.State) => s.language
+    (s: app.State) => s.language
   );
   const translation = i18nContext.get(currentTranslation)!;
 
-  const availableVoices = useSelector((s: reducer.State) =>
+  const availableVoices = useSelector((s: app.State) =>
     selectContext.availableVoices(s)
   );
-  const currentVoice = useSelector((s: reducer.State) => s.voice);
+  const currentVoice = useSelector((s: app.State) => s.voice);
 
   return (
     <Drawer

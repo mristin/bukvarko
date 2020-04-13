@@ -63,7 +63,7 @@ export function initializeState(deps: dependency.Registry): State {
   return state;
 }
 
-export function create(deps: dependency.Registry) {
+export function createReducer(deps: dependency.Registry) {
   const initialState = initializeState(deps);
 
   const reducer = (state: State = initialState, a: action.Action): State => {

@@ -5,8 +5,8 @@ import * as React from "react";
 import { useContext } from "react";
 import { useSelector } from "react-redux";
 
+import * as app from "../app";
 import * as question from "../question";
-import * as reducer from "../reducer";
 import * as select from "../select";
 
 function Indicator(props: { hit: boolean; current: boolean }) {
@@ -39,8 +39,8 @@ export function ScoreBar() {
     throw Error("Expected selector context to be set.");
   }
 
-  const hitsIDs = useSelector((s: reducer.State) => selectContext.hitsIDs(s));
-  const currentIndex = useSelector((s: reducer.State) =>
+  const hitsIDs = useSelector((s: app.State) => selectContext.hitsIDs(s));
+  const currentIndex = useSelector((s: app.State) =>
     selectContext.currentIndex(s)
   );
 

@@ -1,13 +1,13 @@
 import { Dispatch } from "redux";
 
 import * as action from "./action";
+import * as app from "./app";
 import * as dependency from "./dependency";
-import * as reducer from "./reducer";
 
 export function nextQuestion() {
   return function (
     dispatch: Dispatch,
-    getState: () => reducer.State,
+    getState: () => app.State,
     deps: dependency.Registry
   ): void {
     const questionID = deps.questionBank.next(getState().currentQuestion);
@@ -18,7 +18,7 @@ export function nextQuestion() {
 export function previousQuestion() {
   return function (
     dispatch: Dispatch,
-    getState: () => reducer.State,
+    getState: () => app.State,
     deps: dependency.Registry
   ): void {
     const questionID = deps.questionBank.previous(getState().currentQuestion);
@@ -29,7 +29,7 @@ export function previousQuestion() {
 export function speak() {
   return function (
     _: Dispatch,
-    getState: () => reducer.State,
+    getState: () => app.State,
     deps: dependency.Registry
   ): void {
     const voice = getState().voice;

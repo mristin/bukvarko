@@ -1,12 +1,12 @@
 import { Action, Dispatch, Middleware, MiddlewareAPI } from "redux";
 
+import * as app from "./app";
 import * as dependency from "./dependency";
-import * as reducer from "./reducer";
 
 export function create(deps: dependency.Registry) {
-  const middleware: Middleware = (
-    api: MiddlewareAPI<Dispatch, reducer.State>
-  ) => (next: Dispatch) => (action: Action) => {
+  const middleware: Middleware = (api: MiddlewareAPI<Dispatch, app.State>) => (
+    next: Dispatch
+  ) => (action: Action) => {
     // Verify before dispatching
     verify(api.getState(), deps);
 
@@ -21,7 +21,7 @@ export function create(deps: dependency.Registry) {
   return middleware;
 }
 
-export function verify(state: reducer.State, deps: dependency.Registry) {
+export function verify(state: app.State, deps: dependency.Registry) {
   if (!deps.translations.has(state.language)) {
     throw Error(
       `Language in the state is not contained in the translations: ${JSON.stringify(

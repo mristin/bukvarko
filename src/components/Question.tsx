@@ -2,7 +2,7 @@ import * as React from "react";
 import { useContext } from "react";
 import { useSelector } from "react-redux";
 
-import * as reducer from "../reducer";
+import * as app from "../app";
 import * as select from "../select";
 
 export function Question() {
@@ -11,7 +11,7 @@ export function Question() {
     throw Error("Expected selector context to be set.");
   }
 
-  const imageURL = useSelector((s: reducer.State) =>
+  const imageURL = useSelector((s: app.State) =>
     selectContext.currentQuestionImageURL(s)
   );
 
