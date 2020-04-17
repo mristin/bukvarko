@@ -23,27 +23,6 @@ function handleVoiceChange(e: any, dispatch: Dispatch) {
   dispatch(action.changeVoice(voice));
 }
 
-function ChooseYourLanguageLabel(props: { languages: i18n.LanguageID[]; translations: i18n.Translations }) {
-  return (
-    <>
-      {props.languages.map((lang, i) => {
-        const translation = props.translations.get(lang);
-        if (translation === undefined) {
-          throw Error(`The translation for the language is unexpectedly missing: ${lang}`);
-        }
-
-        return (
-          <div key={lang} style={{ marginTop: '0.5em' }}>
-            {i < props.languages.length - 1
-              ? translation.chooseYourLanguage + ' /'
-              : translation.chooseYourLanguage + ':'}
-          </div>
-        );
-      })}
-    </>
-  );
-}
-
 function ChooseYourLanguage(props: {
   languages: i18n.LanguageID[];
   translations: i18n.Translations;
@@ -139,7 +118,7 @@ export function Preferences() {
           <SettingsIcon style={{ fontSize: '3em' }} />
         </div>
 
-        <ChooseYourLanguageLabel languages={languages} translations={i18nContext} />
+        <div style={{ marginTop: '0.5em' }}>{translation.chooseYourLanguage}</div>
 
         <ChooseYourLanguage languages={languages} translations={i18nContext} language={language} />
 
