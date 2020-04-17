@@ -1,6 +1,12 @@
 import * as React from 'react';
 
 import * as bcp47 from './bcp47';
+import { german } from './i18n/de';
+import { english } from './i18n/en';
+import { spanish } from './i18n/es';
+import { french } from './i18n/fr';
+import { croatian } from './i18n/hr';
+import { serbian } from './i18n/sr';
 import * as question from './question';
 
 export type ExpectedAnswers = {
@@ -18,58 +24,20 @@ export interface Translation {
   questionImageAlt: string;
 }
 
-const serbian: Translation = {
-  chooseYourLanguage: 'Jezik',
-  languageName: 'Srpski',
-  chooseYourVoice: 'Glas',
-  noVoiceAvailable: 'Sistem ne podržava glas za ovaj jezik.',
-  expectedAnswers: {
-    elephant: 'slon',
-    tiger: 'tigar',
-    lion: 'lav',
-    dog: 'pas',
-  },
-  hereItSays: 'Ovde piše',
-  nothingIsWrittenHere: 'Ovde ništa ne piše.',
-  questionImageAlt: 'slika-pitanje',
-};
 export const SERBIAN = 'sr';
-
-const croatian: Translation = {
-  chooseYourLanguage: 'Jezik',
-  languageName: 'Hrvatski',
-  chooseYourVoice: 'Glas',
-  noVoiceAvailable: 'Sustav ne podržava glas za ovaj jezik.',
-  expectedAnswers: {
-    elephant: 'slon',
-    tiger: 'tigar',
-    lion: 'lav',
-    dog: 'pas',
-  },
-  hereItSays: 'Ovdje piše',
-  nothingIsWrittenHere: 'Ovdje ništa ne piše.',
-  questionImageAlt: 'slika-pitanje',
-};
 export const CROATIAN = 'hr';
-
-const english: Translation = {
-  chooseYourLanguage: 'Language',
-  languageName: 'English',
-  chooseYourVoice: 'Voice',
-  noVoiceAvailable: 'Your system does not provide a voice for this language.',
-  expectedAnswers: {
-    elephant: 'elephant',
-    tiger: 'tiger',
-    lion: 'lion',
-    dog: 'dog',
-  },
-  hereItSays: 'Here it says',
-  nothingIsWrittenHere: 'Nothing has been written.',
-  questionImageAlt: 'question image',
-};
 export const ENGLISH = 'en';
+export const GERMAN = 'de';
+export const FRENCH = 'fr';
+export const SPANISH = 'es';
 
-export type LanguageID = typeof SERBIAN | typeof CROATIAN | typeof ENGLISH;
+export type LanguageID =
+  | typeof SERBIAN
+  | typeof CROATIAN
+  | typeof ENGLISH
+  | typeof GERMAN
+  | typeof FRENCH
+  | typeof SPANISH;
 
 export type Translations = Map<LanguageID, Translation>;
 
@@ -79,6 +47,9 @@ export function initializeTranslations(): Translations {
   result.set(SERBIAN, serbian);
   result.set(CROATIAN, croatian);
   result.set(ENGLISH, english);
+  result.set(GERMAN, german);
+  result.set(FRENCH, french);
+  result.set(SPANISH, spanish);
 
   // Post-condition
   if (result.size === 0) {
