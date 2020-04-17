@@ -1,3 +1,4 @@
+import deepEqual from "deep-equal";
 import { enableMapSet, produce } from "immer";
 
 import * as action from "./action";
@@ -50,7 +51,7 @@ export function initializeState(deps: dependency.Registry): State {
 
   const voice = lastVoiceByLanguage.get(language);
 
-  let state = {
+  const defaultState = {
     language,
     voice,
     lastVoiceByLanguage,
@@ -60,7 +61,14 @@ export function initializeState(deps: dependency.Registry): State {
     preferencesVisible: true,
   };
 
-  state = autosave.patchState(deps, state);
+  const state = autosave.patchState(deps, defaultState);
+
+  if (deps.storage.length === 0 && !deepEqual(defaultState, state)) {
+    throw Error(
+      "The default state and the state patched by the storage are not equal, " +
+        "but there was nothing in the storage."
+    );
+  }
 
   return state;
 }

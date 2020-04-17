@@ -85,11 +85,9 @@ export function patchState(
 
     const maybePreferencesVisible = deps.storage.getItem("preferencesVisible");
     if (
-      maybePreferencesVisible === null ||
-      maybePreferencesVisible === undefined
+      maybePreferencesVisible !== null &&
+      maybePreferencesVisible !== undefined
     ) {
-      draft.preferencesVisible = false;
-    } else {
       draft.preferencesVisible = maybePreferencesVisible === "true";
     }
   });

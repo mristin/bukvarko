@@ -31,6 +31,10 @@ export class MockStorage {
   public clear() {
     this.map.clear();
   }
+
+  get length(): number {
+    return this.map.size;
+  }
 }
 
 export function initializeRegistry(): dependency.Registry {
