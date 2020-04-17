@@ -1,6 +1,6 @@
 Bukvarko
 ========
-Bukvarko helps your kids learn the alphabet in a fun way.
+Bukvarko helps your kids learn the alphabet in a fun way with synthetic speech.
 
 My son started learning how to read and write so I created this simple game
 to make the task easier for him. Different animals are shown as "questions" and 
