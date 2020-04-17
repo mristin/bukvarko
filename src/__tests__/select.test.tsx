@@ -1,11 +1,11 @@
-import * as app from "../app";
-import * as effect from "../effect";
-import * as question from "../question";
-import * as select from "../select";
-import * as storeFactory from "../storeFactory";
-import * as mockDependency from "./mockDependency";
+import * as app from '../app';
+import * as effect from '../effect';
+import * as question from '../question';
+import * as select from '../select';
+import * as storeFactory from '../storeFactory';
+import * as mockDependency from './mockDependency';
 
-it("selects no hits on initial state.", () => {
+it('selects no hits on initial state.', () => {
   const deps = mockDependency.initializeRegistry();
   const state: app.State = app.initializeState(deps);
 
@@ -17,7 +17,7 @@ it("selects no hits on initial state.", () => {
   expect(hits).toEqual(deps.questionBank.questions.map((_) => false));
 });
 
-it("selects hits on all correct answers.", () => {
+it('selects hits on all correct answers.', () => {
   const deps = mockDependency.initializeRegistry();
   const answers = new Map<question.ID, string>();
   const selectWithDeps = new select.WithDeps(deps);
@@ -39,7 +39,7 @@ it("selects hits on all correct answers.", () => {
   expect(hits).toEqual(deps.questionBank.questions.map((_) => true));
 });
 
-it("selects first question on initial state.", () => {
+it('selects first question on initial state.', () => {
   const deps = mockDependency.initializeRegistry();
   const state: app.State = app.initializeState(deps);
 
@@ -50,7 +50,7 @@ it("selects first question on initial state.", () => {
   expect(currentIndex).toBe(0);
 });
 
-it("selects the second question on next question upon initialization.", () => {
+it('selects the second question on next question upon initialization.', () => {
   const deps = mockDependency.initializeRegistry();
   if (deps.questionBank.questions.length > 1) {
     const store = storeFactory.produce(deps);
@@ -64,7 +64,7 @@ it("selects the second question on next question upon initialization.", () => {
   }
 });
 
-it("selects the last question on previous question upon initialization.", () => {
+it('selects the last question on previous question upon initialization.', () => {
   const deps = mockDependency.initializeRegistry();
   const store = storeFactory.produce(deps);
   store.dispatch(effect.previousQuestion() as any);

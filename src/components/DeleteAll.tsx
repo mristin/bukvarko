@@ -1,19 +1,15 @@
-import { IconButton } from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
-import * as React from "react";
-import { useDispatch } from "react-redux";
+import { IconButton } from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/Delete';
+import * as React from 'react';
+import { useDispatch } from 'react-redux';
 
-import * as action from "../action";
+import * as action from '../action';
 
 export function DeleteAll() {
   const dispatch = useDispatch();
 
   return (
-    <IconButton
-      style={{ float: "right" }}
-      onClick={() => dispatch(action.deleteAll())}
-      data-testid="deleteAll"
-    >
+    <IconButton style={{ float: 'right' }} onClick={() => dispatch(action.deleteAll())} data-testid="deleteAll">
       <DeleteIcon />
     </IconButton>
   );

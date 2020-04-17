@@ -1,7 +1,7 @@
-export const ELEPHANT = "elephant";
-export const TIGER = "tiger";
-export const LION = "lion";
-export const DOG = "dog";
+export const ELEPHANT = 'elephant';
+export const TIGER = 'tiger';
+export const LION = 'lion';
+export const DOG = 'dog';
 
 export type ID = typeof ELEPHANT | typeof TIGER | typeof LION | typeof DOG;
 
@@ -13,16 +13,14 @@ function verifyThatIndicesMatch(bank: Bank) {
   for (const [i, q] of bank.questions.entries()) {
     const idx = bank.index(q.id);
     if (i !== idx) {
-      throw Error(
-        `Unexpected mismatching index() result (== ${idx}) and index in the question (== ${i}`
-      );
+      throw Error(`Unexpected mismatching index() result (== ${idx}) and index in the question (== ${i}`);
     }
   }
 }
 
 function verifyThatPreviousLoopsThrough(bank: Bank) {
   if (bank.questions.length === 0) {
-    throw Error("Unexpected empty question bank");
+    throw Error('Unexpected empty question bank');
   }
 
   const loop = new Array<ID>(bank.questions.length + 1);
@@ -34,13 +32,9 @@ function verifyThatPreviousLoopsThrough(bank: Bank) {
     cursor = prev;
   }
 
-  const expected = [
-    bank.questions[0].id,
-    ...bank.questions.map((q) => q.id).reverse(),
-  ];
+  const expected = [bank.questions[0].id, ...bank.questions.map((q) => q.id).reverse()];
 
-  const passed =
-    expected.length === loop.length && expected.every((v, i) => loop[i] === v);
+  const passed = expected.length === loop.length && expected.every((v, i) => loop[i] === v);
   if (!passed) {
     throw Error(`Expected loop (== ${JSON.stringify(expected)} and 
         actual loop (== ${JSON.stringify(loop)}) did not match.`);
@@ -49,7 +43,7 @@ function verifyThatPreviousLoopsThrough(bank: Bank) {
 
 function verifyThatNextLoopsThrough(bank: Bank) {
   if (bank.questions.length === 0) {
-    throw Error("Unexpected empty question bank");
+    throw Error('Unexpected empty question bank');
   }
 
   const loop = new Array<ID>(bank.questions.length + 1);
@@ -63,8 +57,7 @@ function verifyThatNextLoopsThrough(bank: Bank) {
 
   const expected = [...bank.questions.map((q) => q.id), bank.questions[0].id];
 
-  const passed =
-    expected.length === loop.length && expected.every((v, i) => loop[i] === v);
+  const passed = expected.length === loop.length && expected.every((v, i) => loop[i] === v);
   if (!passed) {
     throw Error(`Expected loop (== ${JSON.stringify(expected)} and 
         actual loop (== ${JSON.stringify(loop)}) did not match.`);
@@ -84,9 +77,7 @@ function verifyAllGet(bank: Bank) {
 function verifyHas(bank: Bank) {
   for (const q of bank.questions) {
     if (!bank.has(q.id)) {
-      throw Error(
-        `Expected ID to be positive in has(), but it was not: ${q.id}`
-      );
+      throw Error(`Expected ID to be positive in has(), but it was not: ${q.id}`);
     }
   }
 }
@@ -185,19 +176,19 @@ export function initializeBank(): Bank {
   return new Bank([
     {
       id: ELEPHANT,
-      imageURL: "./media/slon.jpeg",
+      imageURL: './media/slon.jpeg',
     },
     {
       id: TIGER,
-      imageURL: "./media/tigar.jpeg",
+      imageURL: './media/tigar.jpeg',
     },
     {
       id: LION,
-      imageURL: "./media/lav.jpeg",
+      imageURL: './media/lav.jpeg',
     },
     {
       id: DOG,
-      imageURL: "./media/pas.jpeg",
+      imageURL: './media/pas.jpeg',
     },
   ]);
 }

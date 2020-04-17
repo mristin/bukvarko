@@ -1,18 +1,16 @@
-import { IconButton } from "@material-ui/core";
-import FullscreenIcon from "@material-ui/icons/Fullscreen";
-import FullscreenExitIcon from "@material-ui/icons/FullscreenExit";
-import fscreen from "fscreen";
-import * as React from "react";
-import { useState } from "react";
+import { IconButton } from '@material-ui/core';
+import FullscreenIcon from '@material-ui/icons/Fullscreen';
+import FullscreenExitIcon from '@material-ui/icons/FullscreenExit';
+import fscreen from 'fscreen';
+import * as React from 'react';
+import { useState } from 'react';
 
 export function FullScreen() {
   if (!fscreen.fullscreenEnabled) {
     return null;
   }
 
-  const [isFullscreen, setIsFullscreen] = useState(
-    fscreen.fullscreenElement !== null
-  );
+  const [isFullscreen, setIsFullscreen] = useState(fscreen.fullscreenElement !== null);
 
   function toggleFullscreen() {
     if (fscreen.fullscreenElement !== null) {
@@ -28,7 +26,7 @@ export function FullScreen() {
 
   const icon = !isFullscreen ? <FullscreenIcon /> : <FullscreenExitIcon />;
   return (
-    <IconButton onClick={toggleFullscreen} style={{ marginLeft: "1em" }}>
+    <IconButton onClick={toggleFullscreen} style={{ marginLeft: '1em' }}>
       {icon}
     </IconButton>
   );

@@ -1,22 +1,19 @@
-import deepEqual from "deep-equal";
-import { enableMapSet, produce } from "immer";
+import deepEqual from 'deep-equal';
+import { enableMapSet, produce } from 'immer';
 
-import * as action from "./action";
-import * as autosave from "./autosave";
-import * as dependency from "./dependency";
-import * as i18n from "./i18n";
-import * as question from "./question";
-import * as speech from "./speech";
+import * as action from './action';
+import * as autosave from './autosave';
+import * as dependency from './dependency';
+import * as i18n from './i18n';
+import * as question from './question';
+import * as speech from './speech';
 
 enableMapSet(); //  See https://immerjs.github.io/immer/docs/installation#pick-your-immer-version
 
 export interface State {
   readonly language: i18n.LanguageID;
   readonly voice: speech.VoiceID | undefined;
-  readonly lastVoiceByLanguage: Map<
-    i18n.LanguageID,
-    speech.VoiceID | undefined
-  >;
+  readonly lastVoiceByLanguage: Map<i18n.LanguageID, speech.VoiceID | undefined>;
   readonly currentQuestion: question.ID;
   readonly answers: Map<question.ID, string>;
   readonly focusPending: boolean;
@@ -25,22 +22,16 @@ export interface State {
 
 export function initializeState(deps: dependency.Registry): State {
   if (deps.questionBank.questions.length === 0) {
-    throw Error("Unexpected empty question bank.");
+    throw Error('Unexpected empty question bank.');
   }
 
   if (deps.translations.size === 0) {
-    throw Error("Unexpected empty translations.");
+    throw Error('Unexpected empty translations.');
   }
 
-  const language = i18n.inferDefault(
-    navigator.language || "",
-    [...deps.translations.keys()].sort()
-  );
+  const language = i18n.inferDefault(navigator.language || '', [...deps.translations.keys()].sort());
 
-  const lastVoiceByLanguage = new Map<
-    i18n.LanguageID,
-    speech.VoiceID | undefined
-  >();
+  const lastVoiceByLanguage = new Map<i18n.LanguageID, speech.VoiceID | undefined>();
   for (const [lang, voices] of deps.voicesByLanguage.entries()) {
     if (voices.length > 0) {
       lastVoiceByLanguage.set(lang, voices[0]);
@@ -65,8 +56,8 @@ export function initializeState(deps: dependency.Registry): State {
 
   if (deps.storage.length === 0 && !deepEqual(defaultState, state)) {
     throw Error(
-      "The default state and the state patched by the storage are not equal, " +
-        "but there was nothing in the storage."
+      'The default state and the state patched by the storage are not equal, ' +
+        'but there was nothing in the storage.',
     );
   }
 

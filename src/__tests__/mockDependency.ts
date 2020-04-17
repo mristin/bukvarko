@@ -1,17 +1,21 @@
-import { createMemoryHistory } from "history";
+import { createMemoryHistory } from 'history';
 
-import * as dependency from "../dependency";
-import * as i18n from "../i18n";
-import * as question from "../question";
+import * as dependency from '../dependency';
+import * as i18n from '../i18n';
+import * as question from '../question';
 
 const mockSpeechSynthesis = {
-  cancel: () => {},
-  speak: (_: SpeechSynthesisUtterance) => {},
+  cancel: () => {
+    /* do nothing */
+  },
+  speak: (_: SpeechSynthesisUtterance) => {
+    /* do nothing */
+  },
   getVoices: (): SpeechSynthesisVoice[] =>
     ([
-      { lang: "en-GB", name: "Anna" },
-      { lang: "en-US", name: "Barbara" },
-      { lang: "sr", name: "Lejla" },
+      { lang: 'en-GB', name: 'Anna' },
+      { lang: 'en-US', name: 'Barbara' },
+      { lang: 'sr', name: 'Lejla' },
     ] as unknown) as SpeechSynthesisVoice[],
 };
 
@@ -45,6 +49,6 @@ export function initializeRegistry(): dependency.Registry {
     (mockSpeechSynthesis as unknown) as SpeechSynthesis,
     i18n.initializeTranslations(),
     (new MockStorage() as unknown) as Storage,
-    createMemoryHistory()
+    createMemoryHistory(),
   );
 }

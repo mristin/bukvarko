@@ -1,12 +1,12 @@
-import { fireEvent, render } from "@testing-library/react";
-import * as React from "react";
-import { Provider } from "react-redux";
+import { fireEvent, render } from '@testing-library/react';
+import * as React from 'react';
+import { Provider } from 'react-redux';
 
-import { App } from "../../components/App";
-import * as i18n from "../../i18n";
-import * as select from "../../select";
-import * as storeFactory from "../../storeFactory";
-import * as mockDependency from "../mockDependency";
+import { App } from '../../components/App';
+import * as i18n from '../../i18n';
+import * as select from '../../select';
+import * as storeFactory from '../../storeFactory';
+import * as mockDependency from '../mockDependency';
 
 function setupAndRenderApp() {
   const deps = mockDependency.initializeRegistry();
@@ -21,65 +21,59 @@ function setupAndRenderApp() {
             <App />
           </i18n.Context.Provider>
         </select.Context.Provider>
-      </Provider>
+      </Provider>,
     ),
     store,
     selectWithDeps,
   };
 }
 
-it("renders without problems.", () => {
+it('renders without problems.', () => {
   setupAndRenderApp();
 });
 
-it("changes image on next question.", () => {
+it('changes image on next question.', () => {
   const { rendered } = setupAndRenderApp();
 
-  const questionImage = rendered.getByAltText(
-    "question image"
-  ) as HTMLImageElement;
+  const questionImage = rendered.getByAltText('question image') as HTMLImageElement;
   const oldSrc = questionImage.src;
 
-  fireEvent.click(rendered.getByTestId("nextQuestion"));
+  fireEvent.click(rendered.getByTestId('nextQuestion'));
 
   expect(questionImage.src).not.toBe(oldSrc);
 });
 
-it("changes image on previous question.", () => {
+it('changes image on previous question.', () => {
   const { rendered } = setupAndRenderApp();
 
-  const questionImage = rendered.getByAltText(
-    "question image"
-  ) as HTMLImageElement;
+  const questionImage = rendered.getByAltText('question image') as HTMLImageElement;
   const oldSrc = questionImage.src;
 
-  fireEvent.click(rendered.getByTestId("previousQuestion"));
+  fireEvent.click(rendered.getByTestId('previousQuestion'));
 
   expect(questionImage.src).not.toBe(oldSrc);
 });
 
-it("handles the correct answer without problems.", () => {
+it('handles the correct answer without problems.', () => {
   const { rendered, store, selectWithDeps } = setupAndRenderApp();
 
   const translation = selectWithDeps.resolveTranslation(store.getState());
-  const expectedAnswer =
-    translation.expectedAnswers[store.getState().currentQuestion];
+  const expectedAnswer = translation.expectedAnswers[store.getState().currentQuestion];
 
-  fireEvent.change(rendered.getByTestId("answer"), {
+  fireEvent.change(rendered.getByTestId('answer'), {
     target: { value: expectedAnswer },
   });
 });
 
-it("handles an incorrect answer without problems.", () => {
+it('handles an incorrect answer without problems.', () => {
   const { rendered, store, selectWithDeps } = setupAndRenderApp();
 
   const translation = selectWithDeps.resolveTranslation(store.getState());
-  const expectedAnswer =
-    translation.expectedAnswers[store.getState().currentQuestion];
+  const expectedAnswer = translation.expectedAnswers[store.getState().currentQuestion];
 
-  fireEvent.change(rendered.getByTestId("answer"), {
+  fireEvent.change(rendered.getByTestId('answer'), {
     target: {
-      value: "incorrect " + expectedAnswer,
+      value: 'incorrect ' + expectedAnswer,
     },
   });
 });
