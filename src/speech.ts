@@ -1,11 +1,10 @@
 import * as bcp47 from "./bcp47";
 import * as i18n from "./i18n";
 
-type LanguageBCP47 = string;
 type VoiceName = string;
 
 export class VoiceID {
-  constructor(public lang: LanguageBCP47, public name: VoiceName) {
+  constructor(public lang: bcp47.Tag, public name: VoiceName) {
     if (lang.includes("/")) {
       throw Error(`Unexpected "/" in the language of the voice: ${lang}`);
     }
@@ -31,10 +30,7 @@ export function voiceIDFromKey(key: string): VoiceID {
 }
 
 export class Voices {
-  private byBCP47 = new Map<
-    LanguageBCP47,
-    Map<VoiceName, SpeechSynthesisVoice>
-  >();
+  private byBCP47 = new Map<bcp47.Tag, Map<VoiceName, SpeechSynthesisVoice>>();
 
   constructor(listOfVoices: Array<SpeechSynthesisVoice>) {
     for (const v of listOfVoices) {
@@ -93,7 +89,7 @@ export class Voices {
     return voice;
   }
 
-  public filterByExactLanguage(lang: LanguageBCP47): Array<VoiceID> {
+  public filterByExactLanguage(lang: bcp47.Tag): Array<VoiceID> {
     const result = new Array<VoiceID>();
 
     const byName = this.byBCP47.get(lang);

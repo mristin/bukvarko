@@ -1,5 +1,6 @@
 import * as React from "react";
 
+import * as bcp47 from "./bcp47";
 import * as question from "./question";
 
 export type ExpectedAnswers = {
@@ -82,6 +83,39 @@ export function initializeTranslations(): Translations {
   // Post-condition
   if (result.size === 0) {
     throw Error("Expected a non-empty map of translations.");
+  }
+  return result;
+}
+
+/**
+ * Infer the translation language from the navigator language.
+ *
+ * It matches first exactly, then by the primary language. If no match has been found, the first language
+ * in the given list is returned.
+ *
+ * @param navigatorLanguage language as indicated by the browser
+ * @param languages list of available translation languages
+ */
+export function inferDefault(
+  navigatorLanguage: bcp47.Tag,
+  languages: LanguageID[]
+): LanguageID {
+  let result: LanguageID | undefined = undefined;
+
+  for (const lang of languages) {
+    if (lang === navigatorLanguage) {
+      result = lang;
+      break;
+    }
+
+    if (bcp47.primaryLanguage(navigatorLanguage) === lang) {
+      result = lang;
+      break;
+    }
+  }
+
+  if (result === undefined) {
+    return languages[0];
   }
   return result;
 }

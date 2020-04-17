@@ -31,8 +31,10 @@ export function initializeState(deps: dependency.Registry): State {
     throw Error("Unexpected empty translations.");
   }
 
-  const langs: i18n.LanguageID[] = [...deps.translations.keys()].sort();
-  const language = langs[0];
+  const language = i18n.inferDefault(
+    navigator.language || "",
+    [...deps.translations.keys()].sort()
+  );
 
   const lastVoiceByLanguage = new Map<
     i18n.LanguageID,
