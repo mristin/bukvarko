@@ -20,7 +20,7 @@ export function App() {
 
   return (
     <Container>
-      <Paper elevation={3} style={{ padding: '1em' }}>
+      <Paper elevation={3} style={{ marginTop: '2em', padding: '2em' }}>
         <Grid container>
           <Grid item xs={1}>
             <PreviousQuestion />
