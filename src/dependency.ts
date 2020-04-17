@@ -1,3 +1,5 @@
+import { History, LocationState } from "history";
+
 import * as i18n from "./i18n";
 import * as question from "./question";
 import * as speech from "./speech";
@@ -12,13 +14,15 @@ export interface Registry {
   voices: speech.Voices;
   voicesByLanguage: speech.VoicesByLanguage;
   storage: Storage;
+  history: History<LocationState>;
 }
 
 export function initializeRegistry(
   questionBank: question.Bank,
   speechSynthesis: SpeechSynthesis,
   translations: i18n.Translations,
-  storage: Storage
+  storage: Storage,
+  history: History<LocationState>
 ): Registry {
   const voices = new speech.Voices(speechSynthesis.getVoices());
 
@@ -34,5 +38,6 @@ export function initializeRegistry(
     voices,
     voicesByLanguage,
     storage,
+    history,
   };
 }

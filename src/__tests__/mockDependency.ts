@@ -1,3 +1,5 @@
+import { createMemoryHistory } from "history";
+
 import * as dependency from "../dependency";
 import * as i18n from "../i18n";
 import * as question from "../question";
@@ -42,6 +44,7 @@ export function initializeRegistry(): dependency.Registry {
     question.initializeBank(),
     (mockSpeechSynthesis as unknown) as SpeechSynthesis,
     i18n.initializeTranslations(),
-    (new MockStorage() as unknown) as Storage
+    (new MockStorage() as unknown) as Storage,
+    createMemoryHistory()
   );
 }
