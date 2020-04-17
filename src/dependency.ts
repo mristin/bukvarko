@@ -1,8 +1,8 @@
-import { History, LocationState } from "history";
+import { History, LocationState } from 'history';
 
-import * as i18n from "./i18n";
-import * as question from "./question";
-import * as speech from "./speech";
+import * as i18n from './i18n';
+import * as question from './question';
+import * as speech from './speech';
 
 /**
  * Represent a bundle of global dependencies.
@@ -22,14 +22,11 @@ export function initializeRegistry(
   speechSynthesis: SpeechSynthesis,
   translations: i18n.Translations,
   storage: Storage,
-  history: History<LocationState>
+  history: History<LocationState>,
 ): Registry {
   const voices = new speech.Voices(speechSynthesis.getVoices());
 
-  const voicesByLanguage = speech.groupVoicesByLanguage(
-    voices,
-    translations.keys()
-  );
+  const voicesByLanguage = speech.groupVoicesByLanguage(voices, translations.keys());
 
   return {
     questionBank,

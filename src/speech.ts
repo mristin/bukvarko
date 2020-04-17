@@ -1,26 +1,26 @@
-import * as bcp47 from "./bcp47";
-import * as i18n from "./i18n";
+import * as bcp47 from './bcp47';
+import * as i18n from './i18n';
 
 type VoiceName = string;
 
 export class VoiceID {
   constructor(public lang: bcp47.Tag, public name: VoiceName) {
-    if (lang.includes("/")) {
+    if (lang.includes('/')) {
       throw Error(`Unexpected "/" in the language of the voice: ${lang}`);
     }
 
-    if (name.includes("/")) {
+    if (name.includes('/')) {
       throw Error(`Unexpected "/" in the name of the voice: ${name}`);
     }
   }
 
   public toKey(): string {
-    return [this.lang, this.name].join("/");
+    return [this.lang, this.name].join('/');
   }
 }
 
 export function voiceIDFromKey(key: string): VoiceID {
-  const parts = key.split("/");
+  const parts = key.split('/');
   if (parts.length !== 2) {
     throw Error(`Invalid voice ID given as key: ${key}`);
   }
@@ -35,12 +35,12 @@ export class Voices {
   constructor(listOfVoices: Array<SpeechSynthesisVoice>) {
     for (const v of listOfVoices) {
       const lang = v.lang;
-      let vv: Map<VoiceName, SpeechSynthesisVoice>;
-      if (!this.byBCP47.has(lang)) {
+
+      let vv: Map<VoiceName, SpeechSynthesisVoice> | undefined = this.byBCP47.get(lang);
+
+      if (vv === undefined) {
         vv = new Map<VoiceName, SpeechSynthesisVoice>();
         this.byBCP47.set(lang, vv);
-      } else {
-        vv = this.byBCP47.get(lang)!;
       }
 
       vv.set(v.name, v);
@@ -48,11 +48,14 @@ export class Voices {
 
     // Post-conditions
     for (const lang of this.byBCP47.keys()) {
-      for (const [name, voice] of this.byBCP47.get(lang)!) {
+      const vv: Map<VoiceName, SpeechSynthesisVoice> | undefined = this.byBCP47.get(lang);
+      if (vv === undefined) {
+        throw Error(`Unexpectedly no voices for the language in byBCP47: ${lang}`);
+      }
+
+      for (const [name, voice] of vv) {
         if (name !== voice.name) {
-          throw Error(
-            `Unexpected voice keyed on ${name} with .name: ${voice.name}`
-          );
+          throw Error(`Unexpected voice keyed on ${name} with .name: ${voice.name}`);
         }
       }
     }
@@ -136,27 +139,24 @@ export function compareByName(a: VoiceID, b: VoiceID) {
 
 export type VoicesByLanguage = Map<i18n.LanguageID, Array<VoiceID>>;
 
-export function groupVoicesByLanguage(
-  voices: Voices,
-  i18nLangs: IterableIterator<i18n.LanguageID>
-): VoicesByLanguage {
+export function groupVoicesByLanguage(voices: Voices, i18nLangs: IterableIterator<i18n.LanguageID>): VoicesByLanguage {
   const r = new Map<i18n.LanguageID, Array<VoiceID>>();
 
   for (const i18nLang of i18nLangs) {
-    r.set(i18nLang, new Array<VoiceID>());
+    const langVoices = new Array<VoiceID>();
 
     // If there is the exact match between the language specifications, accept all the voices.
     const exactMatches = voices.filterByExactLanguage(i18nLang);
 
     if (exactMatches.length > 0) {
-      r.get(i18nLang)!.push(...exactMatches);
+      langVoices.push(...exactMatches);
     } else {
       // We need to filter by the primary language and accept those voices as a fallback.
-      const fallbackMatches = voices.filterByPrimaryLanguage(
-        bcp47.primaryLanguage(i18nLang)
-      );
-      r.get(i18nLang)!.push(...fallbackMatches);
+      const fallbackMatches = voices.filterByPrimaryLanguage(bcp47.primaryLanguage(i18nLang));
+      langVoices.push(...fallbackMatches);
     }
+
+    r.set(i18nLang, langVoices);
   }
 
   const sorted = new Map<i18n.LanguageID, Array<VoiceID>>();
@@ -169,7 +169,7 @@ export function groupVoicesByLanguage(
 export function voiceForLanguageOK(
   voice: VoiceID,
   language: i18n.LanguageID,
-  voicesByLanguage: VoicesByLanguage
+  voicesByLanguage: VoicesByLanguage,
 ): boolean {
   const maybeList: Array<VoiceID> | undefined = voicesByLanguage.get(language);
   if (maybeList !== undefined) {

@@ -1,12 +1,12 @@
-import { render } from "@testing-library/react";
-import * as React from "react";
-import { Provider } from "react-redux";
+import { render } from '@testing-library/react';
+import * as React from 'react';
+import { Provider } from 'react-redux';
 
-import { Preferences } from "../../components/Preferences";
-import * as i18n from "../../i18n";
-import * as select from "../../select";
-import * as storeFactory from "../../storeFactory";
-import * as mockDependency from "../mockDependency";
+import { Preferences } from '../../components/Preferences';
+import * as i18n from '../../i18n';
+import * as select from '../../select';
+import * as storeFactory from '../../storeFactory';
+import * as mockDependency from '../mockDependency';
 
 function setUp() {
   const deps = mockDependency.initializeRegistry();
@@ -20,13 +20,13 @@ function setUp() {
           <Preferences />
         </i18n.Context.Provider>
       </select.Context.Provider>
-    </Provider>
+    </Provider>,
   );
 
   return { store, rendered };
 }
 
-it("renders without problems.", () => {
+it('renders without problems.', () => {
   setUp();
 });
 

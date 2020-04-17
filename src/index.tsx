@@ -1,23 +1,23 @@
-import "typeface-roboto";
+import 'typeface-roboto';
 
-import { createBrowserHistory } from "history";
-import * as React from "react";
-import { render } from "react-dom";
-import { Provider } from "react-redux";
+import { createBrowserHistory } from 'history';
+import * as React from 'react';
+import { render } from 'react-dom';
+import { Provider } from 'react-redux';
 
-import { App } from "./components/App";
-import * as dependency from "./dependency";
-import * as i18n from "./i18n";
-import * as question from "./question";
-import * as select from "./select";
-import * as storeFactory from "./storeFactory";
+import { App } from './components/App';
+import * as dependency from './dependency';
+import * as i18n from './i18n';
+import * as question from './question';
+import * as select from './select';
+import * as storeFactory from './storeFactory';
 
 const deps: dependency.Registry = dependency.initializeRegistry(
   question.initializeBank(),
   speechSynthesis,
   i18n.initializeTranslations(),
   localStorage,
-  createBrowserHistory()
+  createBrowserHistory(),
 );
 
 const store = storeFactory.produce(deps);
@@ -32,5 +32,5 @@ render(
       </i18n.Context.Provider>
     </select.Context.Provider>
   </Provider>,
-  document.getElementById("root")
+  document.getElementById('root'),
 );

@@ -1,17 +1,15 @@
-import { TextField } from "@material-ui/core";
-import * as React from "react";
-import { Ref, useEffect } from "react";
-import { useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { TextField } from '@material-ui/core';
+import * as React from 'react';
+import { Ref, useEffect } from 'react';
+import { useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import * as action from "../action";
-import * as app from "../app";
-import * as effect from "../effect";
+import * as action from '../action';
+import * as app from '../app';
+import * as effect from '../effect';
 
 export function Answer() {
-  const answer = useSelector(
-    (state: app.State) => state.answers.get(state.currentQuestion) || ""
-  );
+  const answer = useSelector((state: app.State) => state.answers.get(state.currentQuestion) || '');
 
   const dispatch = useDispatch();
 
@@ -33,17 +31,17 @@ export function Answer() {
         size: 15,
         style: {
           fontSize: 40,
-          fontFamily: "Lucida console, Monaco, monospace",
-          letterSpacing: "0.2em",
+          fontFamily: 'Lucida console, Monaco, monospace',
+          letterSpacing: '0.2em',
         },
-        "data-testid": "answer",
+        'data-testid': 'answer',
       }}
       inputRef={inputEl}
       onChange={(e) => {
         dispatch(action.changeAnswer(e.target.value));
       }}
       onKeyUp={(e) => {
-        if (e.key === "Enter") {
+        if (e.key === 'Enter') {
           dispatch(effect.speak());
         }
       }}

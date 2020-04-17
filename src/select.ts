@@ -1,11 +1,11 @@
-import deepEqual from "deep-equal";
-import * as React from "react";
+import deepEqual from 'deep-equal';
+import * as React from 'react';
 
-import * as app from "./app";
-import * as dependency from "./dependency";
-import * as i18n from "./i18n";
-import * as question from "./question";
-import * as speech from "./speech";
+import * as app from './app';
+import * as dependency from './dependency';
+import * as i18n from './i18n';
+import * as question from './question';
+import * as speech from './speech';
 
 export class WithDeps {
   constructor(private deps: dependency.Registry) {}
@@ -17,34 +17,26 @@ export class WithDeps {
   public resolveTranslation(state: app.State): i18n.Translation {
     const translation = this.deps.translations.get(state.language);
     if (translation === undefined) {
-      throw Error(
-        `The translation in the state could not be found in the translations: ${state.language}`
-      );
+      throw Error(`The translation in the state could not be found in the translations: ${state.language}`);
     }
     return translation;
   }
 
   public currentAnswerHits(state: app.State): boolean {
-    const answer = state.answers.get(state.currentQuestion) || "";
+    const answer = state.answers.get(state.currentQuestion) || '';
 
-    const expectedAnswer = this.resolveTranslation(state).expectedAnswers[
-      state.currentQuestion
-    ];
+    const expectedAnswer = this.resolveTranslation(state).expectedAnswers[state.currentQuestion];
 
     return question.compareAnswers(expectedAnswer, answer);
   }
 
   public hitsIDs(state: app.State): Array<[boolean, question.ID]> {
-    const result = new Array<[boolean, question.ID]>(
-      this.deps.questionBank.questions.length
-    );
+    const result = new Array<[boolean, question.ID]>(this.deps.questionBank.questions.length);
 
     for (const [i, q] of this.deps.questionBank.questions.entries()) {
-      const answer = state.answers.get(q.id) || "";
+      const answer = state.answers.get(q.id) || '';
 
-      const expectedAnswer = this.resolveTranslation(state).expectedAnswers[
-        q.id
-      ];
+      const expectedAnswer = this.resolveTranslation(state).expectedAnswers[q.id];
 
       const hit = question.compareAnswers(expectedAnswer, answer);
 
@@ -57,11 +49,7 @@ export class WithDeps {
       const expectedIDs = this.deps.questionBank.questions.map((q) => q.id);
 
       if (!deepEqual(gotIDs, expectedIDs)) {
-        throw Error(
-          `Expected IDs ${JSON.stringify(
-            expectedIDs
-          )} to match: ${JSON.stringify(gotIDs)}`
-        );
+        throw Error(`Expected IDs ${JSON.stringify(expectedIDs)} to match: ${JSON.stringify(gotIDs)}`);
       }
     }
     return result;
@@ -74,9 +62,7 @@ export class WithDeps {
   public availableVoices(state: app.State): Array<speech.VoiceID> {
     const r = this.deps.voicesByLanguage.get(state.language);
     if (r === undefined) {
-      throw Error(
-        `Current language does not match any in voices grouped by translation: ${state.language}`
-      );
+      throw Error(`Current language does not match any in voices grouped by translation: ${state.language}`);
     }
 
     return r;

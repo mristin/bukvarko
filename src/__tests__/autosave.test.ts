@@ -1,11 +1,11 @@
-import * as action from "../action";
-import * as app from "../app";
-import * as i18n from "../i18n";
-import * as speech from "../speech";
-import * as storeFactory from "../storeFactory";
-import * as mockDependency from "./mockDependency";
+import * as action from '../action';
+import * as app from '../app';
+import * as i18n from '../i18n';
+import * as speech from '../speech';
+import * as storeFactory from '../storeFactory';
+import * as mockDependency from './mockDependency';
 
-it("does not patch anything from an initial state on empty storage.", () => {
+it('does not patch anything from an initial state on empty storage.', () => {
   const deps = mockDependency.initializeRegistry();
   const store = storeFactory.produce(deps);
 
@@ -16,7 +16,7 @@ it("does not patch anything from an initial state on empty storage.", () => {
   expect(state).toEqual(store.getState());
 });
 
-it("stores the language, voice and lastVoiceByLanguage on language change.", () => {
+it('stores the language, voice and lastVoiceByLanguage on language change.', () => {
   const deps = mockDependency.initializeRegistry();
   const store = storeFactory.produce(deps);
 
@@ -30,12 +30,12 @@ it("stores the language, voice and lastVoiceByLanguage on language change.", () 
   expect(state).toEqual(store.getState());
 });
 
-it("stores the new voice and the last voice on voice change.", () => {
+it('stores the new voice and the last voice on voice change.', () => {
   const deps = mockDependency.initializeRegistry();
   const store = storeFactory.produce(deps);
 
   // Act
-  store.dispatch(action.changeVoice(new speech.VoiceID("en-US", "Barbara")));
+  store.dispatch(action.changeVoice(new speech.VoiceID('en-US', 'Barbara')));
 
   // Load
   const state = app.initializeState(deps);

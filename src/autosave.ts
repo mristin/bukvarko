@@ -1,21 +1,18 @@
-import { produce } from "immer";
-import { Dispatch, Middleware, MiddlewareAPI } from "redux";
+import { produce } from 'immer';
+import { Dispatch, Middleware, MiddlewareAPI } from 'redux';
 
-import * as action from "./action";
-import * as app from "./app";
-import * as dependency from "./dependency";
-import * as i18n from "./i18n";
-import * as question from "./question";
-import * as speech from "./speech";
-import * as stateInvariants from "./stateInvariants";
+import * as action from './action';
+import * as app from './app';
+import * as dependency from './dependency';
+import * as i18n from './i18n';
+import * as question from './question';
+import * as speech from './speech';
+import * as stateInvariants from './stateInvariants';
 
 /**
  * Patch the initialized state with the extra information from the storage.
  */
-export function patchState(
-  deps: dependency.Registry,
-  state: app.State
-): app.State {
+export function patchState(deps: dependency.Registry, state: app.State): app.State {
   // Precondition
   stateInvariants.verify(state, deps);
 
@@ -24,17 +21,14 @@ export function patchState(
     // Language and voice
     ////
 
-    const maybeLanguage = deps.storage.getItem("language");
+    const maybeLanguage = deps.storage.getItem('language');
 
-    if (
-      maybeLanguage !== null &&
-      deps.translations.has(maybeLanguage as i18n.LanguageID)
-    ) {
+    if (maybeLanguage !== null && deps.translations.has(maybeLanguage as i18n.LanguageID)) {
       const language = maybeLanguage as i18n.LanguageID;
 
       draft.language = language;
 
-      const voiceIDAsKey = deps.storage.getItem("voice");
+      const voiceIDAsKey = deps.storage.getItem('voice');
       if (voiceIDAsKey !== null) {
         const voice = speech.voiceIDFromKey(voiceIDAsKey);
 
@@ -70,7 +64,7 @@ export function patchState(
       }
     }
 
-    const maybeCurrentQuestion = deps.storage.getItem("currentQuestion");
+    const maybeCurrentQuestion = deps.storage.getItem('currentQuestion');
     if (
       maybeCurrentQuestion !== null &&
       maybeCurrentQuestion !== undefined &&
@@ -83,12 +77,9 @@ export function patchState(
     // Preferences visible
     ////
 
-    const maybePreferencesVisible = deps.storage.getItem("preferencesVisible");
-    if (
-      maybePreferencesVisible !== null &&
-      maybePreferencesVisible !== undefined
-    ) {
-      draft.preferencesVisible = maybePreferencesVisible === "true";
+    const maybePreferencesVisible = deps.storage.getItem('preferencesVisible');
+    if (maybePreferencesVisible !== null && maybePreferencesVisible !== undefined) {
+      draft.preferencesVisible = maybePreferencesVisible === 'true';
     }
   });
 
@@ -97,19 +88,20 @@ export function patchState(
   return result;
 }
 
-export function create(deps: dependency.Registry) {
-  const middleware: Middleware = (api: MiddlewareAPI<Dispatch, app.State>) => (
-    next: Dispatch
-  ) => (a: action.Action) => {
+export function create(deps: dependency.Registry): Middleware {
+  /* eslint-disable @typescript-eslint/explicit-function-return-type */
+  const middleware: Middleware = (api: MiddlewareAPI<Dispatch, app.State>) => (next: Dispatch) => (
+    a: action.Action,
+  ) => {
     const result = next(a);
 
     switch (a.type) {
       case action.CHANGE_TRANSLATION: {
-        deps.storage.setItem("language", api.getState().language);
+        deps.storage.setItem('language', api.getState().language);
 
         const voice = api.getState().voice;
         if (voice !== undefined) {
-          deps.storage.setItem("voice", voice.toKey());
+          deps.storage.setItem('voice', voice.toKey());
         }
         break;
       }
@@ -121,28 +113,27 @@ export function create(deps: dependency.Registry) {
 
           // The language needs to be set as well in order to retrieve the voice afterwards.
           // This is relevant when you have an initial storage where no language has been stored.
-          const maybeLanguage = deps.storage.getItem("language");
+          const maybeLanguage = deps.storage.getItem('language');
           if (maybeLanguage === null || maybeLanguage === undefined) {
-            deps.storage.setItem("language", language);
+            deps.storage.setItem('language', language);
           } else {
             if (maybeLanguage !== api.getState().language) {
               throw Error(
                 `Expected the language in the storage (== ${maybeLanguage}) to coincide ` +
-                  `with the language in the state on voice change: ${
-                    api.getState().language
-                  }`
+                  `with the language in the state on voice change: ${api.getState().language}`,
               );
             }
           }
 
-          deps.storage.setItem("voice", voice.toKey());
+          deps.storage.setItem('voice', voice.toKey());
 
-          deps.storage.setItem(
-            `lastVoiceByLanguage/${language}`,
-            api.getState().lastVoiceByLanguage.get(language)!.toKey()
-          );
+          const lastVoice = api.getState().lastVoiceByLanguage.get(language);
+          if (lastVoice === undefined) {
+            throw Error(`Unexpected missing last voice for language ${language} when voice was: ${voice}`);
+          }
+          deps.storage.setItem(`lastVoiceByLanguage/${language}`, lastVoice.toKey());
         } else {
-          deps.storage.removeItem("voice");
+          deps.storage.removeItem('voice');
         }
         break;
       }
@@ -167,15 +158,12 @@ export function create(deps: dependency.Registry) {
 
       case action.GOTO_QUESTION: {
         const currentQuestion = api.getState().currentQuestion;
-        deps.storage.setItem("currentQuestion", currentQuestion);
+        deps.storage.setItem('currentQuestion', currentQuestion);
         break;
       }
 
       case action.TOGGLE_PREFERENCES: {
-        deps.storage.setItem(
-          "preferencesVisible",
-          api.getState().preferencesVisible ? "true" : "false"
-        );
+        deps.storage.setItem('preferencesVisible', api.getState().preferencesVisible ? 'true' : 'false');
       }
     }
 

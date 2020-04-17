@@ -1,16 +1,16 @@
-import { fireEvent, render } from "@testing-library/react";
-import * as React from "react";
-import { Provider } from "react-redux";
-import configureMockFactory from "redux-mock-store";
-import thunk from "redux-thunk";
+import { fireEvent, render } from '@testing-library/react';
+import * as React from 'react';
+import { Provider } from 'react-redux';
+import configureMockFactory from 'redux-mock-store';
+import thunk from 'redux-thunk';
 
-import * as action from "../../action";
-import { PreviousQuestion } from "../../components/PreviousQuestion";
-import * as effect from "../../effect";
+import * as action from '../../action';
+import { PreviousQuestion } from '../../components/PreviousQuestion';
+import * as effect from '../../effect';
 
-jest.mock("../../effect");
+jest.mock('../../effect');
 
-it("provokes the state change.", async () => {
+it('provokes the state change.', async () => {
   const store = configureMockFactory([thunk])();
 
   const mockDispatch = jest.fn();
@@ -23,10 +23,10 @@ it("provokes the state change.", async () => {
   const rendered = render(
     <Provider store={store}>
       <PreviousQuestion />
-    </Provider>
+    </Provider>,
   );
 
-  fireEvent.click(rendered.getByTestId("previousQuestion"));
+  fireEvent.click(rendered.getByTestId('previousQuestion'));
 
   expect(mockDispatch).toHaveBeenCalledTimes(2);
   expect(await mockDispatch.mock.calls[0][0]).toBe(dummy);
