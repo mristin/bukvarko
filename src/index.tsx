@@ -1,5 +1,6 @@
 import "typeface-roboto";
 
+import { createBrowserHistory } from "history";
 import * as React from "react";
 import { render } from "react-dom";
 import { Provider } from "react-redux";
@@ -15,7 +16,8 @@ const deps: dependency.Registry = dependency.initializeRegistry(
   question.initializeBank(),
   speechSynthesis,
   i18n.initializeTranslations(),
-  localStorage
+  localStorage,
+  createBrowserHistory()
 );
 
 const store = storeFactory.produce(deps);

@@ -43,8 +43,10 @@ export function verify(state: app.State, deps: dependency.Registry) {
     const lastVoice = state.lastVoiceByLanguage.get(state.language)!;
     if (lastVoice.toKey() !== state.voice.toKey()) {
       throw Error(
-        `The voice in the state (== ${state.voice}) for the language ${state.language} ` +
-          `must match the last voice by the same language: ${lastVoice}`
+        `The voice in the state (== ${state.voice.toKey()}) for the language ${
+          state.language
+        } ` +
+          `must match the last voice by the same language: ${lastVoice.toKey()}`
       );
     }
 
