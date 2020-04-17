@@ -158,6 +158,13 @@ export function create(deps: dependency.Registry) {
         break;
       }
 
+      case action.DELETE_ALL: {
+        for (const question of deps.questionBank.questions) {
+          deps.storage.removeItem(`answer/${question.id}`);
+        }
+        break;
+      }
+
       case action.GOTO_QUESTION: {
         const currentQuestion = api.getState().currentQuestion;
         deps.storage.setItem("currentQuestion", currentQuestion);
