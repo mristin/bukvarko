@@ -82165,12 +82165,10 @@ var react_redux_1 = require("react-redux");
 
 var action = __importStar(require("../action"));
 
-function DeleteAll() {
+function DeleteAll(props) {
   var dispatch = react_redux_1.useDispatch();
   return React.createElement(core_1.IconButton, {
-    style: {
-      float: 'right'
-    },
+    style: props.style,
     onClick: function onClick() {
       return dispatch(action.deleteAll());
     },
@@ -86749,7 +86747,7 @@ var react_redux_1 = require("react-redux");
 
 var select = __importStar(require("../select"));
 
-function Question() {
+function Question(props) {
   var selectContext = react_1.useContext(select.Context);
 
   if (selectContext === undefined) {
@@ -86758,18 +86756,20 @@ function Question() {
 
   var imageURL = react_redux_1.useSelector(function (s) {
     return selectContext.currentQuestionImageURL(s);
-  }); // This value is computed manually over all the images.
-
-  var maxImageHeight = 234;
+  });
   return React.createElement("div", {
     style: {
-      height: maxImageHeight
+      height: props.maxImageHeight,
+      width: "95%"
     }
   }, React.createElement("img", {
     src: imageURL,
     alt: "question image",
     style: {
-      width: '90%',
+      maxWidth: '95%',
+      maxHeight: '95%',
+      width: 'auto',
+      height: 'auto',
       border: '1px solid black'
     }
   }));
@@ -86998,7 +86998,7 @@ var action = __importStar(require("../action"));
 
 var effect = __importStar(require("../effect"));
 
-function Speaker() {
+function Speaker(props) {
   var dispatch = react_redux_1.useDispatch();
 
   var onClick = function onClick() {
@@ -87007,9 +87007,7 @@ function Speaker() {
   };
 
   return React.createElement(core_1.IconButton, {
-    style: {
-      marginLeft: '1em'
-    },
+    style: props.style,
     onClick: onClick,
     "data-testid": "speak"
   }, React.createElement(RecordVoiceOver_1.default, null));
@@ -87086,7 +87084,9 @@ function Mobile(props) {
   }, React.createElement(PreviousQuestion_1.PreviousQuestion, null)), React.createElement(core_1.Grid, {
     item: true,
     xs: 8
-  }, React.createElement(Question_1.Question, null)), React.createElement(core_1.Grid, {
+  }, React.createElement(Question_1.Question, {
+    maxImageHeight: 180
+  })), React.createElement(core_1.Grid, {
     item: true,
     xs: 2
   }, React.createElement(NextQuestion_1.NextQuestion, null))), React.createElement(core_1.Grid, {
@@ -87098,17 +87098,20 @@ function Mobile(props) {
     container: true
   }, React.createElement(core_1.Grid, {
     item: true,
-    xs: 2
-  }, props.hasVoice ? React.createElement(Speaker_1.Speaker, null) : null)), React.createElement(core_1.Grid, {
-    container: true
-  }, React.createElement(core_1.Grid, {
-    item: true,
     xs: 12
   }, React.createElement(ScoreBar_1.ScoreBar, null))), React.createElement("div", {
     style: {
       marginTop: '1em'
     }
-  }, React.createElement(PreferencesButton_1.PreferencesButton, null), React.createElement(FullScreen_1.FullScreen, null), React.createElement(DeleteAll_1.DeleteAll, null)), React.createElement("div", {
+  }, React.createElement(PreferencesButton_1.PreferencesButton, null), React.createElement(DeleteAll_1.DeleteAll, {
+    style: {
+      marginLeft: '2em'
+    }
+  }), props.hasVoice ? React.createElement(Speaker_1.Speaker, {
+    style: {
+      float: 'right'
+    }
+  }) : null), React.createElement("div", {
     style: {
       fontSize: 'xx-small',
       marginTop: '1em'
@@ -87133,10 +87136,16 @@ function Desktop(props) {
   }, React.createElement(PreviousQuestion_1.PreviousQuestion, null)), React.createElement(core_1.Grid, {
     item: true,
     xs: 3
-  }, React.createElement(Question_1.Question, null)), React.createElement(core_1.Grid, {
+  }, React.createElement(Question_1.Question, {
+    maxImageHeight: 234
+  })), React.createElement(core_1.Grid, {
     item: true,
     xs: 7
-  }, React.createElement(Answer_1.Answer, null), props.hasVoice ? React.createElement(Speaker_1.Speaker, null) : null, React.createElement("div", {
+  }, React.createElement(Answer_1.Answer, null), props.hasVoice ? React.createElement(Speaker_1.Speaker, {
+    style: {
+      marginLeft: '1em'
+    }
+  }) : null, React.createElement("div", {
     style: {
       marginTop: '1em'
     }
@@ -87151,7 +87160,11 @@ function Desktop(props) {
     style: {
       marginTop: '10em'
     }
-  }, React.createElement(PreferencesButton_1.PreferencesButton, null), React.createElement(FullScreen_1.FullScreen, null), React.createElement(DeleteAll_1.DeleteAll, null))), React.createElement("div", {
+  }, React.createElement(PreferencesButton_1.PreferencesButton, null), React.createElement(FullScreen_1.FullScreen, null), React.createElement(DeleteAll_1.DeleteAll, {
+    style: {
+      float: 'right'
+    }
+  }))), React.createElement("div", {
     style: {
       fontSize: 'xx-small',
       marginTop: '5em'
@@ -89446,7 +89459,7 @@ function promiseIngredients() {
   // a real issue at the moment.
   return new Promise(function (resolve, _) {
     // This is necessary since Chrome needs to load the voices, while other browsers just return the getVoices.
-    if ('onvoiceschanged' in speechSynthesis) {
+    if (window.chrome && 'onvoiceschanged' in speechSynthesis) {
       speechSynthesis.onvoiceschanged = function () {
         console.info('voiceschanged event fired.');
         resolve();
@@ -89539,7 +89552,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33167" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "41605" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
