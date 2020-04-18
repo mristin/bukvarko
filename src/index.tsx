@@ -28,23 +28,31 @@ function promiseIngredients(): Promise<Ingredients> {
   // voices should be integrated in the application state. This is left to a future version as it is hardly
   // a real issue at the moment.
 
+  // This is necessary since Chrome needs to load the voices, while other browsers just return the getVoices.
+  speechSynthesis.onvoiceschanged = () => {
+    /* do nothing */
+  };
+
   return new Promise((resolve, _) => {
-    // This is necessary since Chrome needs to load the voices, while other browsers just return the getVoices.
-    if ((window as any).chrome && 'onvoiceschanged' in speechSynthesis) {
-      speechSynthesis.onvoiceschanged = () => {
-        console.info('voiceschanged event fired.');
+    let retries = 0;
+
+    const intervalID = setInterval(() => {
+      if (speechSynthesis.getVoices().length > 0) {
+        clearInterval(intervalID);
         resolve();
-      };
-    } else {
-      // Wait for half a second. Firefox seemed to have problems loading the voices.
-      setTimeout(() => {
+      }
+
+      retries++;
+
+      if (retries >= 10) {
+        clearInterval(intervalID);
         resolve();
-      }, 2000);
-    }
+      }
+    }, 500);
   }).then(() => {
     const deps = dependency.initializeRegistry(
       question.initializeBank(),
-      speechSynthesis,
+      window.speechSynthesis,
       i18n.initializeTranslations(),
       localStorage,
       createBrowserHistory(),
@@ -59,6 +67,10 @@ function promiseIngredients(): Promise<Ingredients> {
     return { deps, store, selectWithDeps };
   });
 }
+
+speechSynthesis.onvoiceschanged = function () {
+  /* do nothing */
+};
 
 function Main() {
   const [ingredients, setIngredients] = useState<Ingredients | undefined>(undefined);
