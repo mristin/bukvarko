@@ -86583,7 +86583,7 @@ function Preferences() {
   }, React.createElement("div", {
     style: {
       padding: '1em',
-      width: '20em'
+      width: '18em'
     }
   }, React.createElement("div", {
     style: {
@@ -87019,6 +87019,20 @@ exports.Speaker = Speaker;
 },{"@material-ui/core":"../node_modules/@material-ui/core/esm/index.js","@material-ui/icons/RecordVoiceOver":"../node_modules/@material-ui/icons/RecordVoiceOver.js","react":"../node_modules/react/index.js","react-redux":"../node_modules/react-redux/es/index.js","../action":"action.ts","../effect":"effect.ts"}],"components/App.tsx":[function(require,module,exports) {
 "use strict";
 
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
 var __importStar = this && this.__importStar || function (mod) {
   if (mod && mod.__esModule) return mod;
   var result = {};
@@ -87061,10 +87075,50 @@ var ScoreBar_1 = require("./ScoreBar");
 
 var Speaker_1 = require("./Speaker");
 
-function App() {
-  var hasVoice = react_redux_1.useSelector(function (s) {
-    return s.voice !== undefined;
-  });
+var react_1 = require("react");
+
+function Mobile(props) {
+  return React.createElement(core_1.Container, null, React.createElement(core_1.Grid, {
+    container: true
+  }, React.createElement(core_1.Grid, {
+    item: true,
+    xs: 2
+  }, React.createElement(PreviousQuestion_1.PreviousQuestion, null)), React.createElement(core_1.Grid, {
+    item: true,
+    xs: 8
+  }, React.createElement(Question_1.Question, null)), React.createElement(core_1.Grid, {
+    item: true,
+    xs: 2
+  }, React.createElement(NextQuestion_1.NextQuestion, null))), React.createElement(core_1.Grid, {
+    container: true
+  }, React.createElement(core_1.Grid, {
+    item: true,
+    xs: 12
+  }, React.createElement(Answer_1.Answer, null))), React.createElement(core_1.Grid, {
+    container: true
+  }, React.createElement(core_1.Grid, {
+    item: true,
+    xs: 2
+  }, props.hasVoice ? React.createElement(Speaker_1.Speaker, null) : null)), React.createElement(core_1.Grid, {
+    container: true
+  }, React.createElement(core_1.Grid, {
+    item: true,
+    xs: 12
+  }, React.createElement(ScoreBar_1.ScoreBar, null))), React.createElement("div", {
+    style: {
+      marginTop: '1em'
+    }
+  }, React.createElement(PreferencesButton_1.PreferencesButton, null), React.createElement(FullScreen_1.FullScreen, null), React.createElement(DeleteAll_1.DeleteAll, null)), React.createElement("div", {
+    style: {
+      fontSize: 'xx-small',
+      marginTop: '1em'
+    }
+  }, "Copyright \xA9 2020 Marko Ristin. MIT License. Github repository:", ' ', React.createElement("a", {
+    href: "https://github.com/mristin/bukvarko"
+  }, "https://github.com/mristin/bukvarko")), React.createElement(Preferences_1.Preferences, null));
+}
+
+function Desktop(props) {
   return React.createElement(core_1.Container, null, React.createElement(core_1.Paper, {
     elevation: 3,
     style: {
@@ -87082,7 +87136,7 @@ function App() {
   }, React.createElement(Question_1.Question, null)), React.createElement(core_1.Grid, {
     item: true,
     xs: 7
-  }, React.createElement(Answer_1.Answer, null), hasVoice ? React.createElement(Speaker_1.Speaker, null) : null, React.createElement("div", {
+  }, React.createElement(Answer_1.Answer, null), props.hasVoice ? React.createElement(Speaker_1.Speaker, null) : null, React.createElement("div", {
     style: {
       marginTop: '1em'
     }
@@ -87105,6 +87159,59 @@ function App() {
   }, "Copyright \xA9 2020 Marko Ristin. MIT License. Github repository:", ' ', React.createElement("a", {
     href: "https://github.com/mristin/bukvarko"
   }, "https://github.com/mristin/bukvarko")), React.createElement(Preferences_1.Preferences, null));
+}
+
+function useWindowSize() {
+  // From https://usehooks.com/useWindowSize/
+  var isClient = (typeof window === "undefined" ? "undefined" : _typeof(window)) === 'object';
+
+  function getSize() {
+    return {
+      width: isClient ? window.innerWidth : undefined,
+      height: isClient ? window.innerHeight : undefined
+    };
+  }
+
+  var _react_1$useState = react_1.useState(getSize),
+      _react_1$useState2 = _slicedToArray(_react_1$useState, 2),
+      windowSize = _react_1$useState2[0],
+      setWindowSize = _react_1$useState2[1];
+
+  react_1.useEffect(function () {
+    if (!isClient) {
+      return;
+    }
+
+    function handleResize() {
+      setWindowSize(getSize());
+    }
+
+    window.addEventListener('resize', handleResize);
+    return function () {
+      return window.removeEventListener('resize', handleResize);
+    };
+  }, []); // Empty array ensures that effect is only run on mount and unmount.
+
+  return windowSize;
+}
+
+function App() {
+  var hasVoice = react_redux_1.useSelector(function (s) {
+    return s.voice !== undefined;
+  });
+
+  var _useWindowSize = useWindowSize(),
+      width = _useWindowSize.width;
+
+  if (width === undefined || width < 500) {
+    return React.createElement(Mobile, {
+      hasVoice: hasVoice
+    });
+  } else {
+    return React.createElement(Desktop, {
+      hasVoice: hasVoice
+    });
+  }
 }
 
 exports.App = App;
@@ -89432,7 +89539,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "36003" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "43161" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
