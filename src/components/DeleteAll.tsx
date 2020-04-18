@@ -5,11 +5,11 @@ import { useDispatch } from 'react-redux';
 
 import * as action from '../action';
 
-export function DeleteAll() {
+export function DeleteAll(props: { style?: any }) {
   const dispatch = useDispatch();
 
   return (
-    <IconButton style={{ float: 'right' }} onClick={() => dispatch(action.deleteAll())} data-testid="deleteAll">
+    <IconButton style={props.style} onClick={() => dispatch(action.deleteAll())} data-testid="deleteAll">
       <DeleteIcon />
     </IconButton>
   );

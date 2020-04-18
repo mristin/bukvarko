@@ -30,7 +30,7 @@ function promiseIngredients(): Promise<Ingredients> {
 
   return new Promise((resolve, _) => {
     // This is necessary since Chrome needs to load the voices, while other browsers just return the getVoices.
-    if ('onvoiceschanged' in speechSynthesis) {
+    if ((window as any).chrome && 'onvoiceschanged' in speechSynthesis) {
       speechSynthesis.onvoiceschanged = () => {
         console.info('voiceschanged event fired.');
         resolve();

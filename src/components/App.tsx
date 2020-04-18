@@ -25,7 +25,7 @@ function Mobile(props: { hasVoice: boolean }) {
         </Grid>
 
         <Grid item xs={8}>
-          <Question />
+          <Question maxImageHeight={180} />
         </Grid>
 
         <Grid item xs={2}>
@@ -40,12 +40,6 @@ function Mobile(props: { hasVoice: boolean }) {
       </Grid>
 
       <Grid container>
-        <Grid item xs={2}>
-          {props.hasVoice ? <Speaker /> : null}
-        </Grid>
-      </Grid>
-
-      <Grid container>
         <Grid item xs={12}>
           <ScoreBar />
         </Grid>
@@ -54,9 +48,9 @@ function Mobile(props: { hasVoice: boolean }) {
       <div style={{ marginTop: '1em' }}>
         <PreferencesButton />
 
-        <FullScreen />
+        <DeleteAll style={{ marginLeft: '2em' }} />
 
-        <DeleteAll />
+        {props.hasVoice ? <Speaker style={{ float: 'right' }} /> : null}
       </div>
       <div style={{ fontSize: 'xx-small', marginTop: '1em' }}>
         Copyright © 2020 Marko Ristin. MIT License. Github repository:{' '}
@@ -77,13 +71,13 @@ function Desktop(props: { hasVoice: boolean }) {
             <PreviousQuestion />
           </Grid>
           <Grid item xs={3}>
-            <Question />
+            <Question maxImageHeight={234} />
           </Grid>
 
           <Grid item xs={7}>
             <Answer />
 
-            {props.hasVoice ? <Speaker /> : null}
+            {props.hasVoice ? <Speaker style={{ marginLeft: '1em' }} /> : null}
 
             <div style={{ marginTop: '1em' }}>
               <Judge />
@@ -104,7 +98,7 @@ function Desktop(props: { hasVoice: boolean }) {
 
           <FullScreen />
 
-          <DeleteAll />
+          <DeleteAll style={{ float: 'right' }} />
         </div>
       </Paper>
       <div style={{ fontSize: 'xx-small', marginTop: '5em' }}>

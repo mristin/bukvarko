@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import * as app from '../app';
 import * as select from '../select';
 
-export function Question() {
+export function Question(props: { maxImageHeight: number }) {
   const selectContext = useContext(select.Context);
   if (selectContext === undefined) {
     throw Error('Expected selector context to be set.');
@@ -13,12 +13,13 @@ export function Question() {
 
   const imageURL = useSelector((s: app.State) => selectContext.currentQuestionImageURL(s));
 
-  // This value is computed manually over all the images.
-  const maxImageHeight = 234;
-
   return (
-    <div style={{ height: maxImageHeight }}>
-      <img src={imageURL} alt="question image" style={{ width: '90%', border: '1px solid black' }} />
+    <div style={{ height: props.maxImageHeight, width: '95%' }}>
+      <img
+        src={imageURL}
+        alt="question image"
+        style={{ maxWidth: '95%', maxHeight: '95%', width: 'auto', height: 'auto', border: '1px solid black' }}
+      />
     </div>
   );
 }

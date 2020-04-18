@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import * as action from '../action';
 import * as effect from '../effect';
 
-export function Speaker() {
+export function Speaker(props: { style?: any }) {
   const dispatch = useDispatch();
 
   const onClick = () => {
@@ -15,7 +15,7 @@ export function Speaker() {
   };
 
   return (
-    <IconButton style={{ marginLeft: '1em' }} onClick={onClick} data-testid="speak">
+    <IconButton style={props.style} onClick={onClick} data-testid="speak">
       <RecordVoiceOver />
     </IconButton>
   );
