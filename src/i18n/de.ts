@@ -12,6 +12,6 @@ export const german: Translation = {
     dog: 'Hund',
   },
   hereItSays: 'Hier steht',
-  nothingIsWrittenHere: 'Nichts steht hier.',
+  nothingIsWrittenHere: 'Hier steht nichts.',
   questionImageAlt: 'Frage',
 };
