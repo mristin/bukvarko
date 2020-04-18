@@ -1,3 +1,4 @@
+import * as expectAnswer from '../expectAnswer';
 import { Translation } from '../i18n';
 
 export const french: Translation = {
@@ -5,11 +6,11 @@ export const french: Translation = {
   languageName: 'Francais',
   chooseYourVoice: 'Voix',
   noVoiceAvailable: 'Le logiciel ne fournit pas aucune voix pour cette langue.',
-  expectedAnswers: {
-    elephant: 'éléphant',
-    tiger: 'tigre',
-    lion: 'lion',
-    dog: 'chien',
+  answerCheckers: {
+    elephant: expectAnswer.ignoreCase('éléphant'),
+    tiger: expectAnswer.ignoreCase('tigre'),
+    lion: expectAnswer.ignoreCase('lion'),
+    dog: expectAnswer.ignoreCase('chien'),
   },
   hereItSays: 'Ça dit ici',
   nothingIsWrittenHere: 'Ça ne dit rien ici.',

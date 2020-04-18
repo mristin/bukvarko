@@ -1,3 +1,4 @@
+import * as expectAnswer from '../expectAnswer';
 import { Translation } from '../i18n';
 
 export const serbian: Translation = {
@@ -5,11 +6,11 @@ export const serbian: Translation = {
   languageName: 'Srpski',
   chooseYourVoice: 'Glas',
   noVoiceAvailable: 'Sistem ne podržava glas za ovaj jezik.',
-  expectedAnswers: {
-    elephant: 'slon',
-    tiger: 'tigar',
-    lion: 'lav',
-    dog: 'pas',
+  answerCheckers: {
+    elephant: expectAnswer.ignoreCase('slon', 'слон'),
+    tiger: expectAnswer.ignoreCase('tigar', 'тигар'),
+    lion: expectAnswer.ignoreCase('lav', 'лав'),
+    dog: expectAnswer.ignoreCase('pas', 'пас'),
   },
   hereItSays: 'Ovde piše',
   nothingIsWrittenHere: 'Ovde ništa ne piše.',

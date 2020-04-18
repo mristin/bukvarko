@@ -58,7 +58,7 @@ it('handles the correct answer without problems.', () => {
   const { rendered, store, selectWithDeps } = setupAndRenderApp();
 
   const translation = selectWithDeps.resolveTranslation(store.getState());
-  const expectedAnswer = translation.expectedAnswers[store.getState().currentQuestion];
+  const expectedAnswer = translation.answerCheckers[store.getState().currentQuestion];
 
   fireEvent.change(rendered.getByTestId('answer'), {
     target: { value: expectedAnswer },
@@ -69,7 +69,7 @@ it('handles an incorrect answer without problems.', () => {
   const { rendered, store, selectWithDeps } = setupAndRenderApp();
 
   const translation = selectWithDeps.resolveTranslation(store.getState());
-  const expectedAnswer = translation.expectedAnswers[store.getState().currentQuestion];
+  const expectedAnswer = translation.answerCheckers[store.getState().currentQuestion];
 
   fireEvent.change(rendered.getByTestId('answer'), {
     target: {

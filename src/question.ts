@@ -192,7 +192,3 @@ export function initializeBank(): Bank {
     },
   ]);
 }
-
-export function compareAnswers(expected: string, got: string): boolean {
-  return expected.toLowerCase() === got.toLowerCase();
-}

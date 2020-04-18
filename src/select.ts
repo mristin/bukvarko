@@ -25,9 +25,9 @@ export class WithDeps {
   public currentAnswerHits(state: app.State): boolean {
     const answer = state.answers.get(state.currentQuestion) || '';
 
-    const expectedAnswer = this.resolveTranslation(state).expectedAnswers[state.currentQuestion];
+    const answerChecker = this.resolveTranslation(state).answerCheckers[state.currentQuestion];
 
-    return question.compareAnswers(expectedAnswer, answer);
+    return answerChecker(answer);
   }
 
   public hitsIDs(state: app.State): Array<[boolean, question.ID]> {
@@ -36,9 +36,9 @@ export class WithDeps {
     for (const [i, q] of this.deps.questionBank.questions.entries()) {
       const answer = state.answers.get(q.id) || '';
 
-      const expectedAnswer = this.resolveTranslation(state).expectedAnswers[q.id];
+      const answerChecker = this.resolveTranslation(state).answerCheckers[q.id];
 
-      const hit = question.compareAnswers(expectedAnswer, answer);
+      const hit = answerChecker(answer);
 
       result[i] = [hit, q.id];
     }
