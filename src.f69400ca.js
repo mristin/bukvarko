@@ -85700,10 +85700,16 @@ exports.german = {
   chooseYourVoice: 'Stimme',
   noVoiceAvailable: 'Das System unterstützt keine Stimme für diese Sprache.',
   answerCheckers: {
-    elephant: expectAnswer.ignoreCase('Elephant'),
-    tiger: expectAnswer.ignoreCase('Tiger'),
-    lion: expectAnswer.ignoreCase('Löwe'),
-    dog: expectAnswer.ignoreCase('Hund')
+    elephant: expectAnswer.ignoreCase('Elephant', 'der Elephant'),
+    tiger: expectAnswer.ignoreCase('Tiger', 'der Tiger'),
+    lion: expectAnswer.ignoreCase('Löwe', 'der Löwe'),
+    dog: expectAnswer.ignoreCase('Hund', 'der Hund'),
+    wolf: expectAnswer.ignoreCase('Wolf', 'der Wolf'),
+    fox: expectAnswer.ignoreCase('Fuchs', 'der Fuchs'),
+    pig: expectAnswer.ignoreCase('Schwein', 'das Schwein', 'Sau', 'die Sau'),
+    goat: expectAnswer.ignoreCase('Ziege', 'die Ziege', 'Geiss', 'die Geiss'),
+    bear: expectAnswer.ignoreCase('Bär', 'der Bär'),
+    giraffe: expectAnswer.ignoreCase('Giraffe', 'die Giraffe')
   },
   hereItSays: 'Hier steht',
   nothingIsWrittenHere: 'Hier steht nichts.',
@@ -85734,10 +85740,16 @@ exports.english = {
   chooseYourVoice: 'Voice',
   noVoiceAvailable: 'Your system does not provide a voice for this language.',
   answerCheckers: {
-    elephant: expectAnswer.ignoreCase('elephant'),
-    tiger: expectAnswer.ignoreCase('tiger'),
-    lion: expectAnswer.ignoreCase('lion'),
-    dog: expectAnswer.ignoreCase('dog')
+    elephant: expectAnswer.ignoreCase('elephant', 'the elephant'),
+    tiger: expectAnswer.ignoreCase('tiger', 'the tiger'),
+    lion: expectAnswer.ignoreCase('lion', 'the lion'),
+    dog: expectAnswer.ignoreCase('dog', 'the dog'),
+    wolf: expectAnswer.ignoreCase('wolf', 'the wolf'),
+    fox: expectAnswer.ignoreCase('fox', 'the fox'),
+    pig: expectAnswer.ignoreCase('pig', 'the pig', 'hog', 'the hog'),
+    goat: expectAnswer.ignoreCase('goat', 'the goat'),
+    bear: expectAnswer.ignoreCase('bear', 'the bear'),
+    giraffe: expectAnswer.ignoreCase('giraffe', 'the giraffe')
   },
   hereItSays: 'Here it says',
   nothingIsWrittenHere: 'Nothing has been written.',
@@ -85771,7 +85783,13 @@ exports.spanish = {
     elephant: expectAnswer.ignoreCase('elefante'),
     tiger: expectAnswer.ignoreCase('tigre'),
     lion: expectAnswer.ignoreCase('leon'),
-    dog: expectAnswer.ignoreCase('perro')
+    dog: expectAnswer.ignoreCase('perro', 'perra'),
+    wolf: expectAnswer.ignoreCase('lobo', 'loba'),
+    fox: expectAnswer.ignoreCase('zorra', 'zorro'),
+    pig: expectAnswer.ignoreCase('cerdo'),
+    goat: expectAnswer.ignoreCase('cabra', 'cabro'),
+    bear: expectAnswer.ignoreCase('oso'),
+    giraffe: expectAnswer.ignoreCase('jirafa')
   },
   hereItSays: 'Aca dice',
   nothingIsWrittenHere: 'Aca no dice nada.',
@@ -85805,7 +85823,13 @@ exports.french = {
     elephant: expectAnswer.ignoreCase('éléphant'),
     tiger: expectAnswer.ignoreCase('tigre'),
     lion: expectAnswer.ignoreCase('lion'),
-    dog: expectAnswer.ignoreCase('chien')
+    dog: expectAnswer.ignoreCase('chien'),
+    wolf: expectAnswer.ignoreCase('loup'),
+    fox: expectAnswer.ignoreCase('renard'),
+    pig: expectAnswer.ignoreCase('cochon', 'porc'),
+    goat: expectAnswer.ignoreCase('chèvre'),
+    bear: expectAnswer.ignoreCase('ours'),
+    giraffe: expectAnswer.ignoreCase('girafe')
   },
   hereItSays: 'Ça dit ici',
   nothingIsWrittenHere: 'Ça ne dit rien ici.',
@@ -85839,7 +85863,13 @@ exports.croatian = {
     elephant: expectAnswer.ignoreCase('slon'),
     tiger: expectAnswer.ignoreCase('tigar'),
     lion: expectAnswer.ignoreCase('lav'),
-    dog: expectAnswer.ignoreCase('pas')
+    dog: expectAnswer.ignoreCase('pas'),
+    wolf: expectAnswer.ignoreCase('vuk'),
+    fox: expectAnswer.ignoreCase('lisica', 'lisac'),
+    pig: expectAnswer.ignoreCase('svinja'),
+    goat: expectAnswer.ignoreCase('koza', 'jarac', 'kozlić'),
+    bear: expectAnswer.ignoreCase('medvjed'),
+    giraffe: expectAnswer.ignoreCase('žirafa')
   },
   hereItSays: 'Ovdje piše',
   nothingIsWrittenHere: 'Ovdje ništa ne piše.',
@@ -85873,7 +85903,13 @@ exports.serbian = {
     elephant: expectAnswer.ignoreCase('slon', 'слон'),
     tiger: expectAnswer.ignoreCase('tigar', 'тигар'),
     lion: expectAnswer.ignoreCase('lav', 'лав'),
-    dog: expectAnswer.ignoreCase('pas', 'пас')
+    dog: expectAnswer.ignoreCase('pas', 'пас'),
+    wolf: expectAnswer.ignoreCase('vuk'),
+    fox: expectAnswer.ignoreCase('lisac', 'lisica', 'лисац', 'лисица'),
+    pig: expectAnswer.ignoreCase('svinja', 'свиња'),
+    goat: expectAnswer.ignoreCase('koza', 'jarac', 'kozlić', 'коза', 'јарац', 'козлић'),
+    bear: expectAnswer.ignoreCase('medved', 'медвед'),
+    giraffe: expectAnswer.ignoreCase('žirafa', 'жирафа')
   },
   hereItSays: 'Ovde piše',
   nothingIsWrittenHere: 'Ovde ništa ne piše.',
@@ -86862,7 +86898,8 @@ function Indicator(props) {
   var style = Object.assign({
     color: props.hit ? yellow_1.default[700] : grey_1.default[500]
   }, props.current ? {
-    background: 'azure'
+    background: 'azure',
+    borderRadius: '50%'
   } : {});
   return React.createElement(Star_1.default, {
     style: style
@@ -87300,6 +87337,13 @@ exports.ELEPHANT = 'elephant';
 exports.TIGER = 'tiger';
 exports.LION = 'lion';
 exports.DOG = 'dog';
+exports.WOLF = 'wolf';
+exports.FOX = 'fox';
+exports.PIG = 'pig';
+exports.GOAT = 'goat';
+exports.BEAR = 'bear';
+exports.GIRAFFE = 'giraffe';
+var ids = [exports.ELEPHANT, exports.TIGER, exports.LION, exports.DOG, exports.WOLF, exports.FOX, exports.PIG, exports.GOAT, exports.BEAR, exports.GIRAFFE];
 
 var Question = function Question(id, imageURL) {
   _classCallCheck(this, Question);
@@ -87558,19 +87602,12 @@ var Bank = /*#__PURE__*/function () {
 exports.Bank = Bank;
 
 function initializeBank() {
-  return new Bank([{
-    id: exports.ELEPHANT,
-    imageURL: './media/slon.jpeg'
-  }, {
-    id: exports.TIGER,
-    imageURL: './media/tigar.jpeg'
-  }, {
-    id: exports.LION,
-    imageURL: './media/lav.jpeg'
-  }, {
-    id: exports.DOG,
-    imageURL: './media/pas.jpeg'
-  }]);
+  return new Bank(ids.map(function (id) {
+    return {
+      id: id,
+      imageURL: "./media/".concat(id, ".jpeg")
+    };
+  }));
 }
 
 exports.initializeBank = initializeBank;
@@ -89395,7 +89432,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "44003" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "36003" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
