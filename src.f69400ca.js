@@ -89457,11 +89457,10 @@ function promiseIngredients() {
   // Remark (Marko Ristin, 2020-04-18): Since the voices might change *while* the application is running,
   // voices should be integrated in the application state. This is left to a future version as it is hardly
   // a real issue at the moment.
-  return new Promise(function (resolve, reject) {
+  return new Promise(function (resolve, _) {
     // This is necessary since Chrome needs to load the voices, while other browsers just return the getVoices.
     if (window.chrome && 'onvoiceschanged' in speechSynthesis) {
       speechSynthesis.onvoiceschanged = function () {
-        reject('rejected with # voices: ' + window.speechSynthesis.getVoices().length);
         console.info('voiceschanged event fired.');
         resolve();
       };
@@ -89495,15 +89494,25 @@ function Main() {
   var _react_1$useState3 = react_1.useState(undefined),
       _react_1$useState4 = _slicedToArray(_react_1$useState3, 2),
       error = _react_1$useState4[0],
-      setError = _react_1$useState4[1];
+      setError = _react_1$useState4[1]; // TODO: uncomment
+  // useEffect(() => {
+  //   if (ingredients === undefined && error === undefined) {
+  //     promiseIngredients()
+  //       .then((youNeed) => setIngredients(youNeed))
+  //       .catch((e: Error) => {
+  //         setError(e.toString());
+  //       });
+  //   }
+  // });
+
 
   react_1.useEffect(function () {
-    if (ingredients === undefined && error === undefined) {
-      promiseIngredients().then(function (youNeed) {
-        return setIngredients(youNeed);
-      }).catch(function (e) {
-        setError(e.toString());
-      });
+    setError('# voices: ' + speechSynthesis.getVoices().length);
+
+    if (speechSynthesis.onvoiceschanged !== undefined) {
+      speechSynthesis.onvoiceschanged = function () {
+        setError('onvoiceschanged # voices: ' + speechSynthesis.getVoices().length);
+      };
     }
   });
 
@@ -89555,7 +89564,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "35027" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "39401" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
