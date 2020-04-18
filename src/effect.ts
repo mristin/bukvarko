@@ -43,7 +43,7 @@ export function speak() {
     u.rate = 0.7; // 0.1 to 1
     u.pitch = 2; //0 to 2
 
-    deps.speechSynthesis.cancel();
-    deps.speechSynthesis.speak(u);
+    deps.aSpeechSynthesis.cancel();
+    deps.aSpeechSynthesis.speak(u);
   };
 }
