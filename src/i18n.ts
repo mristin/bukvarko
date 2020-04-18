@@ -9,8 +9,8 @@ import { croatian } from './i18n/hr';
 import { serbian } from './i18n/sr';
 import * as question from './question';
 
-export type ExpectedAnswers = {
-  readonly [_ in question.ID]: string;
+export type AnswerCheckers = {
+  readonly [_ in question.ID]: (answer: string) => boolean;
 };
 
 export interface Translation {
@@ -18,7 +18,7 @@ export interface Translation {
   languageName: string;
   chooseYourVoice: string;
   noVoiceAvailable: string;
-  expectedAnswers: ExpectedAnswers;
+  answerCheckers: AnswerCheckers;
   hereItSays: string;
   nothingIsWrittenHere: string;
   questionImageAlt: string;

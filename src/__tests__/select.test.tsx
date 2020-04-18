@@ -1,6 +1,5 @@
 import * as app from '../app';
 import * as effect from '../effect';
-import * as question from '../question';
 import * as select from '../select';
 import * as storeFactory from '../storeFactory';
 import * as mockDependency from './mockDependency';
@@ -19,19 +18,18 @@ it('selects no hits on initial state.', () => {
 
 it('selects hits on all correct answers.', () => {
   const deps = mockDependency.initializeRegistry();
-  const answers = new Map<question.ID, string>();
+  // Mock the translation to always return that the answer is a correct one.
+  for (const translation of deps.translations.values()) {
+    for (const q of deps.questionBank.questions) {
+      (translation.answerCheckers as any)[q.id] = () => true;
+    }
+  }
+
   const selectWithDeps = new select.WithDeps(deps);
 
   const state: app.State = {
     ...app.initializeState(deps),
-    answers,
   };
-
-  const translation = selectWithDeps.resolveTranslation(state);
-
-  for (const q of deps.questionBank.questions) {
-    answers.set(q.id, translation.expectedAnswers[q.id]);
-  }
 
   const hitsAndIDs = selectWithDeps.hitsIDs(state);
   const hits = hitsAndIDs.map(([hit, _]) => hit);
