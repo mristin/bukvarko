@@ -89470,11 +89470,11 @@ function promiseIngredients() {
 
       retries++;
 
-      if (retries > 5) {
+      if (retries >= 10) {
         clearInterval(intervalID);
         resolve();
       }
-    });
+    }, 500);
   }).then(function () {
     var deps = dependency.initializeRegistry(question.initializeBank(), window.speechSynthesis, i18n.initializeTranslations(), localStorage, history_1.createBrowserHistory());
     var store = storeFactory.produce(deps);
@@ -89499,35 +89499,15 @@ function Main() {
   var _react_1$useState3 = react_1.useState(undefined),
       _react_1$useState4 = _slicedToArray(_react_1$useState3, 2),
       error = _react_1$useState4[0],
-      setError = _react_1$useState4[1]; // TODO: uncomment
-  // useEffect(() => {
-  //   if (ingredients === undefined && error === undefined) {
-  //     promiseIngredients()
-  //       .then((youNeed) => setIngredients(youNeed))
-  //       .catch((e: Error) => {
-  //         setError(e.toString());
-  //       });
-  //   }
-  // });
-
+      setError = _react_1$useState4[1];
 
   react_1.useEffect(function () {
-    if (error === undefined && ingredients === undefined) {
-      if (speechSynthesis.getVoices().length > 0) {
-        try {
-          var deps = dependency.initializeRegistry(question.initializeBank(), speechSynthesis, i18n.initializeTranslations(), localStorage, history_1.createBrowserHistory());
-          var store = storeFactory.produce(deps);
-          var selectWithDeps = new select.WithDeps(deps);
-          console.info('All we need has been initialized.');
-          setIngredients({
-            deps: deps,
-            store: store,
-            selectWithDeps: selectWithDeps
-          });
-        } catch (e) {
-          setError(e);
-        }
-      }
+    if (ingredients === undefined && error === undefined) {
+      promiseIngredients().then(function (youNeed) {
+        return setIngredients(youNeed);
+      }).catch(function (e) {
+        setError(e.toString());
+      });
     }
   });
 
@@ -89579,7 +89559,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46543" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "40089" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
