@@ -12,7 +12,7 @@ import * as select from '../select';
 function Indicator(props: { hit: boolean; current: boolean }) {
   const style = {
     color: props.hit ? yellow[700] : grey[500],
-    ...(props.current ? { background: 'azure' } : {}),
+    ...(props.current ? { background: 'azure', borderRadius: '50%' } : {}),
   };
 
   return <Star style={style} />;
