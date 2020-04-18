@@ -89445,12 +89445,18 @@ function promiseIngredients() {
   // voices should be integrated in the application state. This is left to a future version as it is hardly
   // a real issue at the moment.
   return new Promise(function (resolve, _) {
-    // signal to the browser that we might need speech synthesis
-    speechSynthesis.getVoices(); // Wait so that voices can be prepared.
-
-    setTimeout(function () {
-      resolve();
-    }, 1000);
+    // This is necessary since Chrome needs to load the voices, while other browsers just return the getVoices.
+    if ('onvoiceschanged' in speechSynthesis) {
+      speechSynthesis.onvoiceschanged = function () {
+        console.info('voiceschanged event fired.');
+        resolve();
+      };
+    } else {
+      // Wait for half a second. Firefox seemed to have problems loading the voices.
+      setTimeout(function () {
+        resolve();
+      }, 2000);
+    }
   }).then(function () {
     var deps = dependency.initializeRegistry(question.initializeBank(), speechSynthesis, i18n.initializeTranslations(), localStorage, history_1.createBrowserHistory());
     var store = storeFactory.produce(deps);
@@ -89533,7 +89539,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46485" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33167" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
