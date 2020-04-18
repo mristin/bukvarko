@@ -2,8 +2,26 @@ export const ELEPHANT = 'elephant';
 export const TIGER = 'tiger';
 export const LION = 'lion';
 export const DOG = 'dog';
+export const WOLF = 'wolf';
+export const FOX = 'fox';
+export const PIG = 'pig';
+export const GOAT = 'goat';
+export const BEAR = 'bear';
+export const GIRAFFE = 'giraffe';
 
-export type ID = typeof ELEPHANT | typeof TIGER | typeof LION | typeof DOG;
+const ids = [ELEPHANT, TIGER, LION, DOG, WOLF, FOX, PIG, GOAT, BEAR, GIRAFFE];
+
+export type ID =
+  | typeof ELEPHANT
+  | typeof TIGER
+  | typeof LION
+  | typeof DOG
+  | typeof WOLF
+  | typeof FOX
+  | typeof PIG
+  | typeof GOAT
+  | typeof BEAR
+  | typeof GIRAFFE;
 
 export class Question {
   constructor(public id: ID, public imageURL: string) {}
@@ -173,22 +191,13 @@ export class Bank {
 }
 
 export function initializeBank(): Bank {
-  return new Bank([
-    {
-      id: ELEPHANT,
-      imageURL: './media/slon.jpeg',
-    },
-    {
-      id: TIGER,
-      imageURL: './media/tigar.jpeg',
-    },
-    {
-      id: LION,
-      imageURL: './media/lav.jpeg',
-    },
-    {
-      id: DOG,
-      imageURL: './media/pas.jpeg',
-    },
-  ]);
+  return new Bank(
+    ids.map(
+      (id) =>
+        ({
+          id: id,
+          imageURL: `./media/${id}.jpeg`,
+        } as Question),
+    ),
+  );
 }
