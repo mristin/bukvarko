@@ -30,7 +30,7 @@ function promiseIngredients(): Promise<Ingredients> {
 
   return new Promise((resolve, _) => {
     // This is necessary since Chrome needs to load the voices, while other browsers just return the getVoices.
-    if ((window as any).chrome) {
+    if ('onvoiceschanged' in speechSynthesis) {
       speechSynthesis.onvoiceschanged = () => {
         console.info('voiceschanged event fired.');
         resolve();
@@ -39,7 +39,7 @@ function promiseIngredients(): Promise<Ingredients> {
       // Wait for half a second. Firefox seemed to have problems loading the voices.
       setTimeout(() => {
         resolve();
-      }, 500);
+      }, 2000);
     }
   }).then(() => {
     const deps = dependency.initializeRegistry(

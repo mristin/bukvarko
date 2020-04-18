@@ -113,7 +113,7 @@ export function Preferences() {
 
   return (
     <Drawer anchor={'left'} open={preferencesVisible} onClose={() => dispatch(action.togglePreferences(false))}>
-      <div style={{ padding: '1em', width: '20em' }}>
+      <div style={{ padding: '1em', width: '18em' }}>
         <div style={{ textAlign: 'center' }}>
           <SettingsIcon style={{ fontSize: '3em' }} />
         </div>
