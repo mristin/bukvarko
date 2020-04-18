@@ -86760,7 +86760,7 @@ function Question(props) {
   return React.createElement("div", {
     style: {
       height: props.maxImageHeight,
-      width: "95%"
+      width: '95%'
     }
   }, React.createElement("img", {
     src: imageURL,
@@ -89457,13 +89457,16 @@ function promiseIngredients() {
   // Remark (Marko Ristin, 2020-04-18): Since the voices might change *while* the application is running,
   // voices should be integrated in the application state. This is left to a future version as it is hardly
   // a real issue at the moment.
-  return new Promise(function (resolve, _) {
+  return new Promise(function (resolve, reject) {
     // This is necessary since Chrome needs to load the voices, while other browsers just return the getVoices.
     if (window.chrome && 'onvoiceschanged' in speechSynthesis) {
       speechSynthesis.onvoiceschanged = function () {
+        reject('rejected with # voices: ' + window.speechSynthesis.getVoices().length);
         console.info('voiceschanged event fired.');
         resolve();
       };
+
+      speechSynthesis.getVoices(); // signal that we need some voices
     } else {
       // Wait for half a second. Firefox seemed to have problems loading the voices.
       setTimeout(function () {
@@ -89471,7 +89474,7 @@ function promiseIngredients() {
       }, 2000);
     }
   }).then(function () {
-    var deps = dependency.initializeRegistry(question.initializeBank(), speechSynthesis, i18n.initializeTranslations(), localStorage, history_1.createBrowserHistory());
+    var deps = dependency.initializeRegistry(question.initializeBank(), window.speechSynthesis, i18n.initializeTranslations(), localStorage, history_1.createBrowserHistory());
     var store = storeFactory.produce(deps);
     var selectWithDeps = new select.WithDeps(deps);
     console.info('All we need has been initialized.');
@@ -89552,7 +89555,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "41605" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "35027" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
