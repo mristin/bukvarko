@@ -1,5 +1,6 @@
 import { Container, Grid, Paper } from '@material-ui/core';
 import * as React from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import * as app from '../app';
@@ -15,9 +16,59 @@ import { Question } from './Question';
 import { ScoreBar } from './ScoreBar';
 import { Speaker } from './Speaker';
 
-export function App() {
-  const hasVoice = useSelector((s: app.State) => s.voice !== undefined);
+function Mobile(props: { hasVoice: boolean }) {
+  return (
+    <Container>
+      <Grid container>
+        <Grid item xs={2}>
+          <PreviousQuestion />
+        </Grid>
 
+        <Grid item xs={8}>
+          <Question />
+        </Grid>
+
+        <Grid item xs={2}>
+          <NextQuestion />
+        </Grid>
+      </Grid>
+
+      <Grid container>
+        <Grid item xs={12}>
+          <Answer />
+        </Grid>
+      </Grid>
+
+      <Grid container>
+        <Grid item xs={2}>
+          {props.hasVoice ? <Speaker /> : null}
+        </Grid>
+      </Grid>
+
+      <Grid container>
+        <Grid item xs={12}>
+          <ScoreBar />
+        </Grid>
+      </Grid>
+
+      <div style={{ marginTop: '1em' }}>
+        <PreferencesButton />
+
+        <FullScreen />
+
+        <DeleteAll />
+      </div>
+      <div style={{ fontSize: 'xx-small', marginTop: '1em' }}>
+        Copyright © 2020 Marko Ristin. MIT License. Github repository:{' '}
+        <a href="https://github.com/mristin/bukvarko">https://github.com/mristin/bukvarko</a>
+      </div>
+
+      <Preferences />
+    </Container>
+  );
+}
+
+function Desktop(props: { hasVoice: boolean }) {
   return (
     <Container>
       <Paper elevation={3} style={{ marginTop: '2em', padding: '2em' }}>
@@ -32,7 +83,7 @@ export function App() {
           <Grid item xs={7}>
             <Answer />
 
-            {hasVoice ? <Speaker /> : null}
+            {props.hasVoice ? <Speaker /> : null}
 
             <div style={{ marginTop: '1em' }}>
               <Judge />
@@ -64,4 +115,46 @@ export function App() {
       <Preferences />
     </Container>
   );
+}
+
+function useWindowSize() {
+  // From https://usehooks.com/useWindowSize/
+  const isClient = typeof window === 'object';
+
+  function getSize() {
+    return {
+      width: isClient ? window.innerWidth : undefined,
+      height: isClient ? window.innerHeight : undefined,
+    };
+  }
+
+  const [windowSize, setWindowSize] = useState(getSize);
+
+  useEffect(() => {
+    if (!isClient) {
+      return;
+    }
+
+    function handleResize() {
+      setWindowSize(getSize());
+    }
+
+    window.addEventListener('resize', handleResize);
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, []); // Empty array ensures that effect is only run on mount and unmount.
+
+  return windowSize;
+}
+
+export function App() {
+  const hasVoice = useSelector((s: app.State) => s.voice !== undefined);
+
+  const { width } = useWindowSize();
+
+  if (width === undefined || width < 500) {
+    return <Mobile hasVoice={hasVoice} />;
+  } else {
+    return <Desktop hasVoice={hasVoice} />;
+  }
 }
