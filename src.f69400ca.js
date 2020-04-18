@@ -89460,11 +89460,12 @@ function promiseIngredients() {
   // This is necessary since Chrome needs to load the voices, while other browsers just return the getVoices.
   speechSynthesis.onvoiceschanged = function () {};
 
-  return new Promise(function (resolve, _) {
+  return new Promise(function (resolve, reject) {
     var retries = 0;
     var intervalID = setInterval(function () {
       if (speechSynthesis.getVoices().length > 0) {
         clearInterval(intervalID);
+        reject('# voices: ' + speechSynthesis.getVoices().length);
         resolve();
       }
 
@@ -89559,7 +89560,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "40089" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "37833" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
