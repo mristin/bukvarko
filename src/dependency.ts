@@ -9,7 +9,7 @@ import * as speech from './speech';
  */
 export interface Registry {
   questionBank: question.Bank;
-  speechSynthesis: SpeechSynthesis;
+  aSpeechSynthesis: SpeechSynthesis;
   translations: i18n.Translations;
   voices: speech.Voices;
   voicesByLanguage: speech.VoicesByLanguage;
@@ -19,19 +19,19 @@ export interface Registry {
 
 export function initializeRegistry(
   questionBank: question.Bank,
-  speechSynthesis: SpeechSynthesis,
+  aSpeechSynthesis: SpeechSynthesis,
   translations: i18n.Translations,
   storage: Storage,
   history: History<LocationState>,
 ): Registry {
-  const voices = new speech.Voices(speechSynthesis.getVoices());
+  const voices = new speech.Voices(aSpeechSynthesis.getVoices());
 
   const voicesByLanguage = speech.groupVoicesByLanguage(voices, translations.keys());
 
   return {
     questionBank,
     translations,
-    speechSynthesis,
+    aSpeechSynthesis: aSpeechSynthesis,
     voices,
     voicesByLanguage,
     storage,
