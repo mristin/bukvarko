@@ -89465,15 +89465,16 @@ function promiseIngredients() {
     var intervalID = setInterval(function () {
       if (speechSynthesis.getVoices().length > 0) {
         clearInterval(intervalID);
-        reject('# voices: ' + speechSynthesis.getVoices().length);
-        resolve();
+        reject('# voices: ' + speechSynthesis.getVoices().map(function (v) {
+          return v.name + ' -- ' + v.lang;
+        }).join('; ')); // resolve();
       }
 
       retries++;
 
       if (retries >= 10) {
         clearInterval(intervalID);
-        resolve();
+        reject('interval at the end: # voices: ' + speechSynthesis.getVoices().length); // resolve();
       }
     }, 500);
   }).then(function () {
@@ -89560,7 +89561,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "37833" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "37615" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
