@@ -89457,21 +89457,24 @@ function promiseIngredients() {
   // Remark (Marko Ristin, 2020-04-18): Since the voices might change *while* the application is running,
   // voices should be integrated in the application state. This is left to a future version as it is hardly
   // a real issue at the moment.
-  return new Promise(function (resolve, _) {
-    // This is necessary since Chrome needs to load the voices, while other browsers just return the getVoices.
-    if (window.chrome && 'onvoiceschanged' in speechSynthesis) {
-      speechSynthesis.onvoiceschanged = function () {
-        console.info('voiceschanged event fired.');
-        resolve();
-      };
+  // This is necessary since Chrome needs to load the voices, while other browsers just return the getVoices.
+  speechSynthesis.onvoiceschanged = function () {};
 
-      speechSynthesis.getVoices(); // signal that we need some voices
-    } else {
-      // Wait for half a second. Firefox seemed to have problems loading the voices.
-      setTimeout(function () {
+  return new Promise(function (resolve, _) {
+    var retries = 0;
+    var intervalID = setInterval(function () {
+      if (speechSynthesis.getVoices().length > 0) {
+        clearInterval(intervalID);
         resolve();
-      }, 2000);
-    }
+      }
+
+      retries++;
+
+      if (retries > 5) {
+        clearInterval(intervalID);
+        resolve();
+      }
+    });
   }).then(function () {
     var deps = dependency.initializeRegistry(question.initializeBank(), window.speechSynthesis, i18n.initializeTranslations(), localStorage, history_1.createBrowserHistory());
     var store = storeFactory.produce(deps);
@@ -89484,6 +89487,8 @@ function promiseIngredients() {
     };
   });
 }
+
+speechSynthesis.onvoiceschanged = function () {};
 
 function Main() {
   var _react_1$useState = react_1.useState(undefined),
@@ -89507,12 +89512,22 @@ function Main() {
 
 
   react_1.useEffect(function () {
-    setError('# voices: ' + speechSynthesis.getVoices().length);
-
-    if (speechSynthesis.onvoiceschanged !== undefined) {
-      speechSynthesis.onvoiceschanged = function () {
-        setError('onvoiceschanged # voices: ' + speechSynthesis.getVoices().length);
-      };
+    if (error === undefined && ingredients === undefined) {
+      if (speechSynthesis.getVoices().length > 0) {
+        try {
+          var deps = dependency.initializeRegistry(question.initializeBank(), speechSynthesis, i18n.initializeTranslations(), localStorage, history_1.createBrowserHistory());
+          var store = storeFactory.produce(deps);
+          var selectWithDeps = new select.WithDeps(deps);
+          console.info('All we need has been initialized.');
+          setIngredients({
+            deps: deps,
+            store: store,
+            selectWithDeps: selectWithDeps
+          });
+        } catch (e) {
+          setError(e);
+        }
+      }
     }
   });
 
@@ -89564,7 +89579,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "39401" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46543" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
