@@ -24,3 +24,8 @@ it('parses correctly the primary language with a region and a script.', () => {
   const lang = bcp47.primaryLanguage('zh-Hant-HK');
   expect(lang).toBe('zh');
 });
+
+it('parses also the primary language with an underscore (important on android!).', () => {
+  const lang = bcp47.primaryLanguage('en_US');
+  expect(lang).toBe('en');
+});

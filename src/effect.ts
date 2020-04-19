@@ -38,6 +38,7 @@ export function speak() {
 
     const u = new SpeechSynthesisUtterance();
     u.voice = deps.voices.get(voice);
+    u.lang = voice.lang;
     u.text = text;
     u.volume = 1; // 0 to 1
     u.rate = 0.7; // 0.1 to 1
