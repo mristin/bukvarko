@@ -7,7 +7,7 @@ export const german: Translation = {
   chooseYourVoice: 'Stimme',
   noVoiceAvailable: 'Das System unterstützt keine Stimme für diese Sprache.',
   answerCheckers: {
-    elephant: expectAnswer.ignoreCase('Elephant', 'der Elephant'),
+    elephant: expectAnswer.ignoreCase('Elefant', 'der Elefant'),
     tiger: expectAnswer.ignoreCase('Tiger', 'der Tiger'),
     lion: expectAnswer.ignoreCase('Löwe', 'der Löwe'),
     dog: expectAnswer.ignoreCase('Hund', 'der Hund'),
