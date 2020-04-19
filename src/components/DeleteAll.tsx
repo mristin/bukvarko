@@ -1,5 +1,5 @@
 import { IconButton } from '@material-ui/core';
-import DeleteIcon from '@material-ui/icons/Delete';
+import ReplayIcon from '@material-ui/icons/Replay';
 import * as React from 'react';
 import { useDispatch } from 'react-redux';
 
@@ -10,7 +10,7 @@ export function DeleteAll(props: { style?: any }) {
 
   return (
     <IconButton style={props.style} onClick={() => dispatch(action.deleteAll())} data-testid="deleteAll">
-      <DeleteIcon />
+      <ReplayIcon />
     </IconButton>
   );
 }
