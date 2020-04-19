@@ -37,7 +37,7 @@ function ChooseYourLanguage(props: {
 
         return (
           <MenuItem key={lang} value={lang}>
-            {translation.languageName}
+            {translation.languageName} ({lang})
           </MenuItem>
         );
       })}
