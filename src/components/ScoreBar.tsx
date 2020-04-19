@@ -4,6 +4,7 @@ import Star from '@material-ui/icons/Star';
 import * as React from 'react';
 import { useContext } from 'react';
 import { useSelector } from 'react-redux';
+import Flash from 'react-reveal/Flash';
 
 import * as app from '../app';
 import * as question from '../question';
@@ -11,11 +12,17 @@ import * as select from '../select';
 
 function Indicator(props: { hit: boolean; current: boolean }) {
   const style = {
-    color: props.hit ? yellow[700] : grey[500],
+    color: props.hit ? yellow[700] : grey[100],
     ...(props.current ? { background: 'azure', borderRadius: '50%' } : {}),
   };
 
-  return <Star style={style} />;
+  return (
+    <Flash when={props.hit}>
+      <span>
+        <Star style={style} />
+      </span>
+    </Flash>
+  );
 }
 
 function Score(props: { hitsIDs: Array<[boolean, question.ID]>; currentIndex: number }) {
