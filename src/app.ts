@@ -51,8 +51,6 @@ export function initializeState(deps: dependency.Registry): State {
   const state = autosave.patchState(deps, defaultState);
 
   if (deps.storage.length === 0 && !deepEqual(defaultState, state)) {
-    console.log(defaultState);
-    console.log(state);
     throw Error(
       'The default state and the state patched by the storage are not equal, ' +
         'but there was nothing in the storage.',
