@@ -1,5 +1,5 @@
 import { produce } from 'immer';
-import { Dispatch, Middleware, MiddlewareAPI } from 'redux';
+import { Dispatch, Middleware, MiddlewareAPI, Store } from 'redux';
 
 import * as action from './action';
 import * as app from './app';
@@ -8,6 +8,106 @@ import * as i18n from './i18n';
 import * as question from './question';
 import * as speech from './speech';
 import * as stateInvariants from './stateInvariants';
+
+function saveVoice(storage: Storage, language: i18n.LanguageID, voice: speech.VoiceID | undefined) {
+  const key = `voiceByLanguage/${language}`;
+  if (voice !== undefined) {
+    storage.setItem(key, voice.toKey());
+  }
+}
+
+function loadVoice(storage: Storage, language: i18n.LanguageID): speech.VoiceID | undefined {
+  const key = `voiceByLanguage/${language}`;
+  const voice = storage.getItem(key);
+  if (voice === null || voice === undefined) {
+    return undefined;
+  }
+  return speech.voiceIDFromKey(voice);
+}
+
+function saveAnswer(storage: Storage, questionID: question.ID, answer: string) {
+  const key = `answer/${questionID}`;
+  if (answer === '') {
+    storage.removeItem(key);
+  } else {
+    storage.setItem(key, answer);
+  }
+}
+
+function loadAnswer(storage: Storage, questionID: question.ID): string | undefined {
+  const key = `answer/${questionID}`;
+  const value = storage.getItem(key);
+  if (value === undefined || value === null) {
+    return undefined;
+  }
+  return value;
+}
+
+export function undoPreviousDataVersions(storage: Storage) {
+  storage.removeItem('voice');
+
+  for (let i = 0; i < storage.lenght; i++) {
+    const key = storage.key(i);
+    if (key !== undefined && key !== null && key.startsWith('lastVoiceByLanguage')) {
+      storage.removeItem(key);
+    }
+  }
+}
+
+export function connectStoreToStorageEvent(store: Store<app.State, action.Action>, deps: dependency.Registry) {
+  window.onstorage = (e: StorageEvent) => {
+    if (e.newValue === e.oldValue) {
+      return;
+    }
+
+    if (e.key === undefined || e.key === null) {
+      return;
+    }
+
+    if (e.newValue === undefined || e.newValue === null) {
+      return;
+    }
+
+    if (e.key === 'language') {
+      const language = e.newValue;
+      if (deps.translations.has(language as i18n.LanguageID)) {
+        store.dispatch(action.changeTranslation(language as i18n.LanguageID));
+      }
+    } else if (e.key.startsWith('voiceByLanguage/')) {
+      const parts = e.key.split('/');
+      if (parts.length !== 2) {
+        throw Error(`Unexpected split on the key (expected exactly 2 parts, got: ${parts.length}): ${e.key}`);
+      }
+
+      const language = parts[1];
+      if (deps.translations.has(language as i18n.LanguageID)) {
+        if (e.newValue !== null && e.newValue !== undefined) {
+          const voice = speech.voiceIDFromKey(e.newValue);
+
+          store.dispatch(action.changeVoice(language as i18n.LanguageID, voice));
+        }
+      }
+    } else if (e.key.startsWith('answer/')) {
+      const parts = e.key.split('/');
+      if (parts.length !== 2) {
+        throw Error(`Unexpected split on the key (expected exactly 2 parts, got: ${parts.length}): ${e.key}`);
+      }
+
+      const questionID = parts[1];
+      if (deps.questionBank.has(questionID as question.ID)) {
+        store.dispatch(action.changeAnswer(questionID as question.ID, e.newValue));
+      }
+    } else if (e.key === 'currentQuestion') {
+      if (deps.questionBank.has(e.newValue as question.ID)) {
+        store.dispatch(action.gotoQuestion(e.newValue as question.ID));
+      }
+    } else if (e.key === 'preferencesVisible') {
+      store.dispatch(action.togglePreferences(e.newValue === 'true'));
+    } else {
+      throw new Error(`Unhandled storage key from the storage event: ${e.key}`);
+    }
+  };
+}
 
 /**
  * Patch the initialized state with the extra information from the storage.
@@ -18,37 +118,18 @@ export function patchState(deps: dependency.Registry, state: app.State): app.Sta
 
   const result = produce(state, (draft) => {
     ////
-    // Language and voice
+    // Language and voices
     ////
 
     const maybeLanguage = deps.storage.getItem('language');
-
     if (maybeLanguage !== null && deps.translations.has(maybeLanguage as i18n.LanguageID)) {
-      const language = maybeLanguage as i18n.LanguageID;
-
-      draft.language = language;
-
-      const voiceIDAsKey = deps.storage.getItem('voice');
-      if (voiceIDAsKey !== null) {
-        const voice = speech.voiceIDFromKey(voiceIDAsKey);
-
-        if (speech.voiceForLanguageOK(voice, language, deps.voicesByLanguage)) {
-          draft.voice = voice;
-        }
-      } else {
-        draft.voice = state.lastVoiceByLanguage.get(language);
-      }
+      draft.language = maybeLanguage as i18n.LanguageID;
     }
 
-    for (const language of deps.translations.keys()) {
-      const storageKey = `lastVoiceByLanguage/${language}`;
-      const maybeLastVoiceKey = deps.storage.getItem(storageKey);
-      if (maybeLastVoiceKey !== null && maybeLastVoiceKey !== undefined) {
-        const voice = speech.voiceIDFromKey(maybeLastVoiceKey);
-
-        if (speech.voiceForLanguageOK(voice, language, deps.voicesByLanguage)) {
-          draft.lastVoiceByLanguage.set(language, voice);
-        }
+    for (const aLanguage of deps.voicesByLanguage.keys()) {
+      const voice = loadVoice(deps.storage, aLanguage);
+      if (voice !== undefined && speech.voiceForLanguageOK(voice, aLanguage, deps.voicesByLanguage)) {
+        draft.voiceByLanguage.set(aLanguage, voice);
       }
     }
 
@@ -57,10 +138,9 @@ export function patchState(deps: dependency.Registry, state: app.State): app.Sta
     ////
 
     for (const question of deps.questionBank.questions) {
-      const maybeAnswer = deps.storage.getItem(`answer/${question.id}`);
-
-      if (maybeAnswer !== null && maybeAnswer !== undefined) {
-        draft.answers.set(question.id, maybeAnswer);
+      const answer = loadAnswer(deps.storage, question.id);
+      if (answer !== undefined) {
+        draft.answers.set(question.id, answer);
       }
     }
 
@@ -83,7 +163,8 @@ export function patchState(deps: dependency.Registry, state: app.State): app.Sta
     }
   });
 
-  stateInvariants.verify(state, deps);
+  // Postcondition
+  stateInvariants.verify(result, deps);
 
   return result;
 }
@@ -97,55 +178,17 @@ export function create(deps: dependency.Registry): Middleware {
 
     switch (a.type) {
       case action.CHANGE_TRANSLATION: {
-        deps.storage.setItem('language', api.getState().language);
-
-        const voice = api.getState().voice;
-        if (voice !== undefined) {
-          deps.storage.setItem('voice', voice.toKey());
-        }
+        deps.storage.setItem('language', a.language);
         break;
       }
 
       case action.CHANGE_VOICE: {
-        const voice = api.getState().voice;
-        if (voice !== undefined) {
-          const language = api.getState().language;
-
-          // The language needs to be set as well in order to retrieve the voice afterwards.
-          // This is relevant when you have an initial storage where no language has been stored.
-          const maybeLanguage = deps.storage.getItem('language');
-          if (maybeLanguage === null || maybeLanguage === undefined) {
-            deps.storage.setItem('language', language);
-          } else {
-            if (maybeLanguage !== api.getState().language) {
-              throw Error(
-                `Expected the language in the storage (== ${maybeLanguage}) to coincide ` +
-                  `with the language in the state on voice change: ${api.getState().language}`,
-              );
-            }
-          }
-
-          deps.storage.setItem('voice', voice.toKey());
-
-          const lastVoice = api.getState().lastVoiceByLanguage.get(language);
-          if (lastVoice === undefined) {
-            throw Error(`Unexpected missing last voice for language ${language} when voice was: ${voice}`);
-          }
-          deps.storage.setItem(`lastVoiceByLanguage/${language}`, lastVoice.toKey());
-        } else {
-          deps.storage.removeItem('voice');
-        }
+        saveVoice(deps.storage, a.language, a.voice);
         break;
       }
 
       case action.CHANGE_ANSWER: {
-        const question = api.getState().currentQuestion;
-        const answer = api.getState().answers.get(question);
-        if (answer === undefined) {
-          throw Error(`Unexpectedly no answer for the question: ${question}`);
-        }
-
-        deps.storage.setItem(`answer/${question}`, answer);
+        saveAnswer(deps.storage, a.questionID, a.answer);
         break;
       }
 
@@ -157,8 +200,7 @@ export function create(deps: dependency.Registry): Middleware {
       }
 
       case action.GOTO_QUESTION: {
-        const currentQuestion = api.getState().currentQuestion;
-        deps.storage.setItem('currentQuestion', currentQuestion);
+        deps.storage.setItem('currentQuestion', a.questionID);
         break;
       }
 

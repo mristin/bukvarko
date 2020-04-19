@@ -12,8 +12,7 @@ enableMapSet(); //  See https://immerjs.github.io/immer/docs/installation#pick-y
 
 export interface State {
   readonly language: i18n.LanguageID;
-  readonly voice: speech.VoiceID | undefined;
-  readonly lastVoiceByLanguage: Map<i18n.LanguageID, speech.VoiceID | undefined>;
+  readonly voiceByLanguage: Map<i18n.LanguageID, speech.VoiceID | undefined>;
   readonly currentQuestion: question.ID;
   readonly answers: Map<question.ID, string>;
   readonly focusPending: boolean;
@@ -31,21 +30,18 @@ export function initializeState(deps: dependency.Registry): State {
 
   const language = i18n.inferDefault(navigator.language || '', [...deps.translations.keys()].sort());
 
-  const lastVoiceByLanguage = new Map<i18n.LanguageID, speech.VoiceID | undefined>();
+  const voiceByLanguage = new Map<i18n.LanguageID, speech.VoiceID | undefined>();
   for (const [lang, voices] of deps.voicesByLanguage.entries()) {
     if (voices.length > 0) {
-      lastVoiceByLanguage.set(lang, voices[0]);
+      voiceByLanguage.set(lang, voices[0]);
     } else {
-      lastVoiceByLanguage.set(lang, undefined);
+      voiceByLanguage.set(lang, undefined);
     }
   }
 
-  const voice = lastVoiceByLanguage.get(language);
-
-  const defaultState = {
+  const defaultState: State = {
     language,
-    voice,
-    lastVoiceByLanguage,
+    voiceByLanguage,
     currentQuestion: deps.questionBank.questions[0].id,
     answers: new Map<question.ID, string>(),
     focusPending: true,
@@ -55,6 +51,8 @@ export function initializeState(deps: dependency.Registry): State {
   const state = autosave.patchState(deps, defaultState);
 
   if (deps.storage.length === 0 && !deepEqual(defaultState, state)) {
+    console.log(defaultState);
+    console.log(state);
     throw Error(
       'The default state and the state patched by the storage are not equal, ' +
         'but there was nothing in the storage.',
@@ -71,7 +69,7 @@ export function createReducer(deps: dependency.Registry) {
     const result = produce(state, (draft) => {
       switch (a.type) {
         case action.CHANGE_ANSWER:
-          draft.answers.set(state.currentQuestion, a.answer);
+          draft.answers.set(a.questionID, a.answer);
           break;
         case action.GOTO_QUESTION:
           draft.currentQuestion = a.questionID;
@@ -86,14 +84,10 @@ export function createReducer(deps: dependency.Registry) {
           draft.preferencesVisible = a.value;
           break;
         case action.CHANGE_TRANSLATION:
-          if (state.language !== a.language) {
-            draft.language = a.language;
-            draft.voice = state.lastVoiceByLanguage.get(a.language);
-          }
+          draft.language = a.language;
           break;
         case action.CHANGE_VOICE:
-          draft.voice = a.voice;
-          draft.lastVoiceByLanguage.set(state.language, a.voice);
+          draft.voiceByLanguage.set(a.language, a.voice);
           break;
         case action.DELETE_ALL:
           draft.answers.clear();

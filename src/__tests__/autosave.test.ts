@@ -16,7 +16,7 @@ it('does not patch anything from an initial state on empty storage.', () => {
   expect(state).toEqual(store.getState());
 });
 
-it('stores the language, voice and lastVoiceByLanguage on language change.', () => {
+it('stores the language, voice and voiceByLanguage on language change.', () => {
   const deps = mockDependency.initializeRegistry();
   const store = storeFactory.produce(deps);
 
@@ -35,7 +35,7 @@ it('stores the new voice and the last voice on voice change.', () => {
   const store = storeFactory.produce(deps);
 
   // Act
-  store.dispatch(action.changeVoice(new speech.VoiceID('en-US', 'Barbara')));
+  store.dispatch(action.changeVoice(i18n.ENGLISH, new speech.VoiceID('en-US', 'Barbara')));
 
   // Load
   const state = app.initializeState(deps);

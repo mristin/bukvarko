@@ -9,6 +9,7 @@ import * as app from '../app';
 import * as effect from '../effect';
 
 export function Answer() {
+  const currentQuestion = useSelector((state: app.State) => state.currentQuestion);
   const answer = useSelector((state: app.State) => state.answers.get(state.currentQuestion) || '');
 
   const dispatch = useDispatch();
@@ -38,7 +39,7 @@ export function Answer() {
       }}
       inputRef={inputEl}
       onChange={(e) => {
-        dispatch(action.changeAnswer(e.target.value));
+        dispatch(action.changeAnswer(currentQuestion, e.target.value));
       }}
       onKeyUp={(e) => {
         if (e.key === 'Enter') {

@@ -8,6 +8,7 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { Store } from 'redux';
 
+import * as autosave from './autosave';
 import { App } from './components/App';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { Unfortunately } from './components/Unfortunately';
@@ -79,7 +80,11 @@ function Main() {
   useEffect(() => {
     if (ingredients === undefined && error === undefined) {
       promiseIngredients()
-        .then((youNeed) => setIngredients(youNeed))
+        .then((youNeed) => {
+          setIngredients(youNeed);
+          autosave.undoPreviousDataVersions(youNeed.deps.storage);
+          autosave.connectStoreToStorageEvent(youNeed.store, youNeed.deps);
+        })
         .catch((e: Error) => {
           setError(e.toString());
         });

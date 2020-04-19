@@ -6,11 +6,12 @@ export const CHANGE_ANSWER = 'CHANGE_ANSWER';
 
 interface ChangeAnswer {
   type: typeof CHANGE_ANSWER;
+  questionID: question.ID;
   answer: string;
 }
 
-export function changeAnswer(answer: string): Action {
-  return { type: CHANGE_ANSWER, answer: answer };
+export function changeAnswer(questionID: question.ID, answer: string): Action {
+  return { type: CHANGE_ANSWER, questionID: questionID, answer: answer };
 }
 
 export const GOTO_QUESTION = 'GOTO_QUESTION';
@@ -70,11 +71,12 @@ export const CHANGE_VOICE = 'CHANGE_VOICE';
 
 interface ChangeVoice {
   type: typeof CHANGE_VOICE;
+  language: i18n.LanguageID;
   voice: speech.VoiceID | undefined;
 }
 
-export function changeVoice(voice: speech.VoiceID | undefined): Action {
-  return { type: CHANGE_VOICE, voice };
+export function changeVoice(language: i18n.LanguageID, voice: speech.VoiceID | undefined): Action {
+  return { type: CHANGE_VOICE, language, voice };
 }
 
 export const DELETE_ALL = 'DELETE_ALL';
