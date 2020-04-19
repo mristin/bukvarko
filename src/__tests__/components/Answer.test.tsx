@@ -7,6 +7,7 @@ import thunk from 'redux-thunk';
 import * as action from '../../action';
 import { Answer } from '../../components/Answer';
 import * as effect from '../../effect';
+import * as question from '../../question';
 
 jest.mock('../../effect');
 
@@ -14,6 +15,7 @@ function setUp() {
   const store = configureMockFactory([thunk])({
     focusPending: true,
     answers: new Map(),
+    currentQuestion: 'someQuestion' as question.ID,
   });
 
   const mockDispatch = jest.fn();
@@ -44,7 +46,7 @@ it('dispatches the change actions.', () => {
 
   expect(mockDispatch).toHaveBeenCalledTimes(2);
   expect(mockDispatch.mock.calls[0][0].type).toEqual(action.ACK_REFOCUS);
-  expect(mockDispatch.mock.calls[1][0]).toEqual(action.changeAnswer('some answer'));
+  expect(mockDispatch.mock.calls[1][0]).toEqual(action.changeAnswer('someQuestion' as question.ID, 'some answer'));
 });
 
 it('speaks when enter is pressed.', async () => {

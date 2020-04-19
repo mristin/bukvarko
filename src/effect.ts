@@ -22,7 +22,7 @@ export function speak() {
   return function (_: Dispatch, getState: () => app.State, deps: dependency.Registry): void {
     const state = getState();
 
-    const voice = state.voice;
+    const voice = state.voiceByLanguage.get(state.language);
     if (voice === undefined) {
       return;
     }

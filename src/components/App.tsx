@@ -142,7 +142,7 @@ function useWindowSize() {
 }
 
 export function App() {
-  const hasVoice = useSelector((s: app.State) => s.voice !== undefined);
+  const hasVoice = useSelector((s: app.State) => s.voiceByLanguage.get(s.language) !== undefined);
 
   const { width } = useWindowSize();
 

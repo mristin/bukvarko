@@ -9,36 +9,14 @@ export function verify(state: app.State, deps: dependency.Registry) {
     throw Error(`Language in the state is not contained in the translations: ${JSON.stringify(state.language)}`);
   }
 
-  if (state.voice !== undefined) {
-    if (!deps.voices.has(state.voice)) {
-      throw Error(`Voice in the state is not available in the voices: (${JSON.stringify(state.voice)}`);
-    }
-
-    const lastVoice = state.lastVoiceByLanguage.get(state.language);
-    if (lastVoice === undefined) {
-      throw Error(`Unexpected undefined last voice for the language in the state: ${state.language}`);
-    }
-
-    if (lastVoice.toKey() !== state.voice.toKey()) {
-      throw Error(
-        `The voice in the state (== ${state.voice.toKey()}) for the language ${state.language} ` +
-          `must match the last voice by the same language: ${lastVoice.toKey()}`,
-      );
-    }
-
-    if (!speech.voiceForLanguageOK(state.voice, state.language, deps.voicesByLanguage)) {
-      throw Error(`Voice in the state does not match the language in the state ${state.language}: ${state.voice}`);
-    }
-  }
-
   for (const language of deps.translations.keys()) {
-    if (!state.lastVoiceByLanguage.has(language)) {
-      throw Error(`Unexpectedly missing an entry in lastVoiceByLanguage for: ${language}`);
+    if (!state.voiceByLanguage.has(language)) {
+      throw Error(`Unexpectedly missing an entry in the state of voiceByLanguage for the language: ${language}`);
     }
 
-    const lastVoice = state.lastVoiceByLanguage.get(language);
-    if (lastVoice !== undefined && !speech.voiceForLanguageOK(lastVoice, language, deps.voicesByLanguage)) {
-      throw Error(`The lastvoiceByLanguage for the language ${language} is invalid: ${lastVoice}`);
+    const voice = state.voiceByLanguage.get(language);
+    if (voice !== undefined && !speech.voiceForLanguageOK(voice, language, deps.voicesByLanguage)) {
+      throw Error(`The state of voiceByLanguage for the language ${language} is invalid: ${voice}`);
     }
   }
 
