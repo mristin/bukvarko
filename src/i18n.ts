@@ -6,6 +6,8 @@ import { english } from './i18n/en';
 import { spanish } from './i18n/es';
 import { french } from './i18n/fr';
 import { croatian } from './i18n/hr';
+import { polish } from './i18n/pl';
+import { portuguese } from './i18n/pt';
 import { serbian } from './i18n/sr';
 import * as question from './question';
 
@@ -30,6 +32,8 @@ export const ENGLISH = 'en';
 export const GERMAN = 'de';
 export const FRENCH = 'fr';
 export const SPANISH = 'es';
+export const POLISH = 'pl';
+export const PORTUGUESE = 'pt';
 
 export type LanguageID =
   | typeof SERBIAN
@@ -37,7 +41,9 @@ export type LanguageID =
   | typeof ENGLISH
   | typeof GERMAN
   | typeof FRENCH
-  | typeof SPANISH;
+  | typeof SPANISH
+  | typeof POLISH
+  | typeof PORTUGUESE;
 
 export type Translations = Map<LanguageID, Translation>;
 
@@ -50,6 +56,8 @@ export function initializeTranslations(): Translations {
   result.set(GERMAN, german);
   result.set(FRENCH, french);
   result.set(SPANISH, spanish);
+  result.set(POLISH, polish);
+  result.set(PORTUGUESE, portuguese);
 
   // Post-condition
   if (result.size === 0) {
