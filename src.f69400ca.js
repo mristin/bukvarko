@@ -81829,7 +81829,1021 @@ var _shallowEqual = _interopRequireDefault(require("./utils/shallowEqual"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 (0, _batch.setBatch)(_reactBatchedUpdates.unstable_batchedUpdates);
-},{"./components/Provider":"../node_modules/react-redux/es/components/Provider.js","./components/connectAdvanced":"../node_modules/react-redux/es/components/connectAdvanced.js","./components/Context":"../node_modules/react-redux/es/components/Context.js","./connect/connect":"../node_modules/react-redux/es/connect/connect.js","./hooks/useDispatch":"../node_modules/react-redux/es/hooks/useDispatch.js","./hooks/useSelector":"../node_modules/react-redux/es/hooks/useSelector.js","./hooks/useStore":"../node_modules/react-redux/es/hooks/useStore.js","./utils/batch":"../node_modules/react-redux/es/utils/batch.js","./utils/reactBatchedUpdates":"../node_modules/react-redux/es/utils/reactBatchedUpdates.js","./utils/shallowEqual":"../node_modules/react-redux/es/utils/shallowEqual.js"}],"action.ts":[function(require,module,exports) {
+},{"./components/Provider":"../node_modules/react-redux/es/components/Provider.js","./components/connectAdvanced":"../node_modules/react-redux/es/components/connectAdvanced.js","./components/Context":"../node_modules/react-redux/es/components/Context.js","./connect/connect":"../node_modules/react-redux/es/connect/connect.js","./hooks/useDispatch":"../node_modules/react-redux/es/hooks/useDispatch.js","./hooks/useSelector":"../node_modules/react-redux/es/hooks/useSelector.js","./hooks/useStore":"../node_modules/react-redux/es/hooks/useStore.js","./utils/batch":"../node_modules/react-redux/es/utils/batch.js","./utils/reactBatchedUpdates":"../node_modules/react-redux/es/utils/reactBatchedUpdates.js","./utils/shallowEqual":"../node_modules/react-redux/es/utils/shallowEqual.js"}],"../node_modules/immer/dist/immer.esm.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.castDraft = T;
+exports.castImmutable = F;
+exports.enableAllPlugins = N;
+exports.enableES5 = k;
+exports.enableMapSet = D;
+exports.enablePatches = R;
+exports.isDraft = t;
+exports.isDraftable = r;
+exports.original = e;
+exports.setUseProxies = exports.setAutoFreeze = exports.produceWithPatches = exports.produce = exports.nothing = exports.immerable = exports.finishDraft = exports.createDraft = exports.applyPatches = exports.Immer = exports.default = void 0;
+
+function n(n) {
+  for (var t = arguments.length, r = Array(t > 1 ? t - 1 : 0), e = 1; e < t; e++) r[e - 1] = arguments[e];
+
+  if ("production" !== "development") {
+    var i = H[n],
+        o = i ? "function" == typeof i ? i.apply(null, r) : i : "unknown error nr: " + n;
+    throw Error("[Immer] " + o);
+  }
+
+  throw Error("[Immer] minified error nr: " + n + (r.length ? " " + r.join(",") : "") + ". Find the full error at: https://bit.ly/3cXEKWf");
+}
+
+function t(n) {
+  return !!n && !!n[B];
+}
+
+function r(n) {
+  return !!n && (function (n) {
+    if (!n || "object" != typeof n) return !1;
+    var t = Object.getPrototypeOf(n);
+    return !t || t === Object.prototype;
+  }(n) || Array.isArray(n) || !!n[q] || !!n.constructor[q] || c(n) || s(n));
+}
+
+function e(n) {
+  if (n && n[B]) return n[B].t;
+}
+
+function i(n, t) {
+  0 === o(n) ? L(n).forEach(function (r) {
+    return t(r, n[r], n);
+  }) : n.forEach(function (r, e) {
+    return t(e, r, n);
+  });
+}
+
+function o(n) {
+  var t = n[B];
+  return t ? t.i > 3 ? t.i - 4 : t.i : Array.isArray(n) ? 1 : c(n) ? 2 : s(n) ? 3 : 0;
+}
+
+function u(n, t) {
+  return 2 === o(n) ? n.has(t) : Object.prototype.hasOwnProperty.call(n, t);
+}
+
+function a(n, t) {
+  return 2 === o(n) ? n.get(t) : n[t];
+}
+
+function f(n, t) {
+  return n === t ? 0 !== n || 1 / n == 1 / t : n != n && t != t;
+}
+
+function c(n) {
+  return $ && n instanceof Map;
+}
+
+function s(n) {
+  return U && n instanceof Set;
+}
+
+function v(n) {
+  return n.o || n.t;
+}
+
+function p(t, r) {
+  if (void 0 === r && (r = !1), Array.isArray(t)) return t.slice();
+  var e = Object.create(Object.getPrototypeOf(t));
+  return i(t, function (i) {
+    if (i !== B) {
+      var o = Object.getOwnPropertyDescriptor(t, i),
+          u = o.value;
+      o.get && (r || n(1), u = o.get.call(t)), o.enumerable ? e[i] = u : Object.defineProperty(e, i, {
+        value: u,
+        writable: !0,
+        configurable: !0
+      });
+    }
+  }), e;
+}
+
+function d(n, e) {
+  t(n) || Object.isFrozen(n) || !r(n) || (o(n) > 1 && (n.set = n.add = n.clear = n.delete = l), Object.freeze(n), e && i(n, function (n, t) {
+    return d(t, !0);
+  }));
+}
+
+function l() {
+  n(2);
+}
+
+function h(t) {
+  var r = Q[t];
+  return r || n("production" !== "development" ? 18 : 19, t), r;
+}
+
+function y(n, t) {
+  Q[n] = t;
+}
+
+function m() {
+  return "production" === "development" || J || n(0), J;
+}
+
+function b(n, t) {
+  t && (h("Patches"), n.u = [], n.s = [], n.v = t);
+}
+
+function _(n) {
+  j(n), n.p.forEach(g), n.p = null;
+}
+
+function j(n) {
+  n === J && (J = n.l);
+}
+
+function O(n) {
+  return J = {
+    p: [],
+    l: J,
+    h: n,
+    m: !0,
+    _: 0
+  };
+}
+
+function g(n) {
+  var t = n[B];
+  0 === t.i || 1 === t.i ? t.j() : t.O = !0;
+}
+
+function w(t, e) {
+  e._ = e.p.length;
+  var i = e.p[0],
+      o = void 0 !== t && t !== i;
+  return e.h.g || h("ES5").S(e, t, o), o ? (i[B].P && (_(e), n(4)), r(t) && (t = S(e, t), e.l || M(e, t)), e.u && h("Patches").M(i[B], t, e.u, e.s)) : t = S(e, i, []), _(e), e.u && e.v(e.u, e.s), t !== X ? t : void 0;
+}
+
+function S(n, t, r) {
+  if (Object.isFrozen(t)) return t;
+  var e = t[B];
+  if (!e) return i(t, function (i, o) {
+    return P(n, e, t, i, o, r);
+  }), t;
+  if (e.A !== n) return t;
+  if (!e.P) return M(n, e.t, !0), e.t;
+
+  if (!e.I) {
+    e.I = !0, e.A._--;
+    var o = 4 === e.i || 5 === e.i ? e.o = p(e.k, !0) : e.o;
+    i(o, function (t, i) {
+      return P(n, e, o, t, i, r);
+    }), M(n, o, !1), r && n.u && h("Patches").R(e, r, n.u, n.s);
+  }
+
+  return e.o;
+}
+
+function P(e, i, c, s, v, p) {
+  if ("production" !== "development" && v === c && n(5), t(v)) {
+    var d = S(e, v, p && i && 3 !== i.i && !u(i.D, s) ? p.concat(s) : void 0);
+    if (h = s, y = d, 2 === (m = o(l = c)) ? l.set(h, y) : 3 === m ? (l.delete(h), l.add(y)) : l[h] = y, !t(d)) return;
+    e.m = !1;
+  }
+
+  var l, h, y, m;
+
+  if ((!i || !f(v, a(i.t, s))) && r(v)) {
+    if (!e.h.N && e._ < 1) return;
+    S(e, v), i && i.A.l || M(e, v);
+  }
+}
+
+function M(n, t, r) {
+  void 0 === r && (r = !1), n.h.N && n.m && d(t, r);
+}
+
+function A(n, t) {
+  var r = n[B],
+      e = Reflect.getOwnPropertyDescriptor(r ? v(r) : n, t);
+  return e && e.value;
+}
+
+function z(n) {
+  if (!n.P) {
+    if (n.P = !0, 0 === n.i || 1 === n.i) {
+      var t = n.o = p(n.t);
+      i(n.p, function (n, r) {
+        t[n] = r;
+      }), n.p = void 0;
+    }
+
+    n.l && z(n.l);
+  }
+}
+
+function x(n) {
+  n.o || (n.o = p(n.t));
+}
+
+function I(n, t, r) {
+  var e = c(t) ? h("MapSet").T(t, r) : s(t) ? h("MapSet").F(t, r) : n.g ? function (n, t) {
+    var r = Array.isArray(n),
+        e = {
+      i: r ? 1 : 0,
+      A: t ? t.A : m(),
+      P: !1,
+      I: !1,
+      D: {},
+      l: t,
+      t: n,
+      k: null,
+      p: {},
+      o: null,
+      j: null,
+      C: !1
+    },
+        i = e,
+        o = V;
+    r && (i = [e], o = Y);
+    var u = Proxy.revocable(i, o),
+        a = u.revoke,
+        f = u.proxy;
+    return e.k = f, e.j = a, f;
+  }(t, r) : h("ES5").J(t, r);
+  return (r ? r.A : m()).p.push(e), e;
+}
+
+function E(n, t) {
+  n.g ? z(t) : h("ES5").K(t);
+}
+
+function k() {
+  function e(n, t) {
+    var r = n[B];
+
+    if (r && !r.$) {
+      r.$ = !0;
+      var e = n[t];
+      return r.$ = !1, e;
+    }
+
+    return n[t];
+  }
+
+  function o(n) {
+    n.P || (n.P = !0, n.l && o(n.l));
+  }
+
+  function a(n) {
+    n.o || (n.o = c(n.t));
+  }
+
+  function c(n) {
+    var t = n && n[B];
+
+    if (t) {
+      t.$ = !0;
+      var r = p(t.k, !0);
+      return t.$ = !1, r;
+    }
+
+    return p(n);
+  }
+
+  function s(n) {
+    for (var t = n.length - 1; t >= 0; t--) {
+      var r = n[t][B];
+      if (!r.P) switch (r.i) {
+        case 5:
+          l(r) && o(r);
+          break;
+
+        case 4:
+          d(r) && o(r);
+      }
+    }
+  }
+
+  function d(n) {
+    for (var t = n.t, r = n.k, e = Object.keys(r), i = e.length - 1; i >= 0; i--) {
+      var o = e[i],
+          a = t[o];
+      if (void 0 === a && !u(t, o)) return !0;
+      var c = r[o],
+          s = c && c[B];
+      if (s ? s.t !== a : !f(c, a)) return !0;
+    }
+
+    return e.length !== Object.keys(t).length;
+  }
+
+  function l(n) {
+    var t = n.k;
+    if (t.length !== n.t.length) return !0;
+    var r = Object.getOwnPropertyDescriptor(t, t.length - 1);
+    return !(!r || r.get);
+  }
+
+  function h(t) {
+    t.O && n(3, JSON.stringify(v(t)));
+  }
+
+  var b = {};
+  y("ES5", {
+    J: function (n, t) {
+      var u = Array.isArray(n),
+          s = c(n);
+      i(s, function (t) {
+        !function (n, t, i) {
+          var u = b[t];
+          u ? u.enumerable = i : b[t] = u = {
+            enumerable: i,
+            get: function () {
+              return function (n, t) {
+                h(n);
+                var i = e(v(n), t);
+                return n.$ ? i : i === e(n.t, t) && r(i) ? (a(n), n.o[t] = I(n.A.h, i, n)) : i;
+              }(this[B], t);
+            },
+            set: function (n) {
+              !function (n, t, r) {
+                if (h(n), n.D[t] = !0, !n.P) {
+                  if (f(r, e(v(n), t))) return;
+                  o(n), a(n);
+                }
+
+                n.o[t] = r;
+              }(this[B], t, n);
+            }
+          }, Object.defineProperty(n, t, u);
+        }(s, t, u || function (n, t) {
+          var r = Object.getOwnPropertyDescriptor(n, t);
+          return !(!r || !r.enumerable);
+        }(n, t));
+      });
+      var p = {
+        i: u ? 5 : 4,
+        A: t ? t.A : m(),
+        P: !1,
+        $: !1,
+        I: !1,
+        D: {},
+        l: t,
+        t: n,
+        k: s,
+        o: null,
+        O: !1,
+        C: !1
+      };
+      return Object.defineProperty(s, B, {
+        value: p,
+        writable: !0
+      }), s;
+    },
+    K: o,
+    S: function (n, r, e) {
+      n.p.forEach(function (n) {
+        n[B].$ = !0;
+      }), e ? t(r) && r[B].A === n && s(n.p) : (n.u && function n(t) {
+        if (t && "object" == typeof t) {
+          var r = t[B];
+
+          if (r) {
+            var e = r.t,
+                a = r.k,
+                f = r.D,
+                c = r.i;
+            if (4 === c) i(a, function (t) {
+              t !== B && (void 0 !== e[t] || u(e, t) ? f[t] || n(a[t]) : (f[t] = !0, o(r)));
+            }), i(e, function (n) {
+              void 0 !== a[n] || u(a, n) || (f[n] = !1, o(r));
+            });else if (5 === c) {
+              if (l(r) && (o(r), f.length = !0), a.length < e.length) for (var s = a.length; s < e.length; s++) f[s] = !1;else for (var v = e.length; v < a.length; v++) f[v] = !0;
+
+              for (var p = Math.min(a.length, e.length), d = 0; d < p; d++) void 0 === f[d] && n(a[d]);
+            }
+          }
+        }
+      }(n.p[0]), s(n.p));
+    }
+  });
+}
+
+function R() {
+  function t(n) {
+    if (!n || "object" != typeof n) return n;
+    if (Array.isArray(n)) return n.map(t);
+    if (c(n)) return new Map(Array.from(n.entries()).map(function (n) {
+      return [n[0], t(n[1])];
+    }));
+    if (s(n)) return new Set(Array.from(n).map(t));
+    var r = Object.create(Object.getPrototypeOf(n));
+
+    for (var e in n) r[e] = t(n[e]);
+
+    return r;
+  }
+
+  var r = "add";
+  y("Patches", {
+    U: function (e, i) {
+      return i.forEach(function (i) {
+        for (var u = i.path, f = i.op, c = e, s = 0; s < u.length - 1; s++) "object" != typeof (c = a(c, u[s])) && n(15, u.join("/"));
+
+        var v = o(c),
+            p = t(i.value),
+            d = u[u.length - 1];
+
+        switch (f) {
+          case "replace":
+            switch (v) {
+              case 2:
+                return c.set(d, p);
+
+              case 3:
+                n(16);
+
+              default:
+                return c[d] = p;
+            }
+
+          case r:
+            switch (v) {
+              case 1:
+                return c.splice(d, 0, p);
+
+              case 2:
+                return c.set(d, p);
+
+              case 3:
+                return c.add(p);
+
+              default:
+                return c[d] = p;
+            }
+
+          case "remove":
+            switch (v) {
+              case 1:
+                return c.splice(d, 1);
+
+              case 2:
+                return c.delete(d);
+
+              case 3:
+                return c.delete(i.value);
+
+              default:
+                return delete c[d];
+            }
+
+          default:
+            n(17, f);
+        }
+      }), e;
+    },
+    R: function (n, t, e, o) {
+      switch (n.i) {
+        case 0:
+        case 4:
+        case 2:
+          return function (n, t, e, o) {
+            var f = n.t,
+                c = n.o;
+            i(n.D, function (n, i) {
+              var s = a(f, n),
+                  v = a(c, n),
+                  p = i ? u(f, n) ? "replace" : r : "remove";
+
+              if (s !== v || "replace" !== p) {
+                var d = t.concat(n);
+                e.push("remove" === p ? {
+                  op: p,
+                  path: d
+                } : {
+                  op: p,
+                  path: d,
+                  value: v
+                }), o.push(p === r ? {
+                  op: "remove",
+                  path: d
+                } : "remove" === p ? {
+                  op: r,
+                  path: d,
+                  value: s
+                } : {
+                  op: "replace",
+                  path: d,
+                  value: s
+                });
+              }
+            });
+          }(n, t, e, o);
+
+        case 5:
+        case 1:
+          return function (n, t, e, i) {
+            var o = n.t,
+                u = n.D,
+                a = n.o;
+
+            if (a.length < o.length) {
+              var f = [a, o];
+              o = f[0], a = f[1];
+              var c = [i, e];
+              e = c[0], i = c[1];
+            }
+
+            for (var s = a.length - o.length, v = 0; o[v] === a[v] && v < o.length;) ++v;
+
+            for (var p = o.length; p > v && o[p - 1] === a[p + s - 1];) --p;
+
+            for (var d = v; d < p; ++d) if (u[d] && a[d] !== o[d]) {
+              var l = t.concat([d]);
+              e.push({
+                op: "replace",
+                path: l,
+                value: a[d]
+              }), i.push({
+                op: "replace",
+                path: l,
+                value: o[d]
+              });
+            }
+
+            for (var h = e.length, y = p + s - 1; y >= p; --y) {
+              var m = t.concat([y]);
+              e[h + y - p] = {
+                op: r,
+                path: m,
+                value: a[y]
+              }, i.push({
+                op: "remove",
+                path: m
+              });
+            }
+          }(n, t, e, o);
+
+        case 3:
+          return function (n, t, e, i) {
+            var o = n.t,
+                u = n.o,
+                a = 0;
+            o.forEach(function (n) {
+              if (!u.has(n)) {
+                var o = t.concat([a]);
+                e.push({
+                  op: "remove",
+                  path: o,
+                  value: n
+                }), i.unshift({
+                  op: r,
+                  path: o,
+                  value: n
+                });
+              }
+
+              a++;
+            }), a = 0, u.forEach(function (n) {
+              if (!o.has(n)) {
+                var u = t.concat([a]);
+                e.push({
+                  op: r,
+                  path: u,
+                  value: n
+                }), i.unshift({
+                  op: "remove",
+                  path: u,
+                  value: n
+                });
+              }
+
+              a++;
+            });
+          }(n, t, e, o);
+      }
+    },
+    M: function (n, t, r, e) {
+      r.push({
+        op: "replace",
+        path: [],
+        value: t
+      }), e.push({
+        op: "replace",
+        path: [],
+        value: n.t
+      });
+    }
+  });
+}
+
+function D() {
+  function t(n, t) {
+    function r() {
+      this.constructor = n;
+    }
+
+    u(n, t), n.prototype = (r.prototype = t.prototype, new r());
+  }
+
+  function e(n) {
+    n.o || (n.D = new Map(), n.o = new Map(n.t));
+  }
+
+  function i(n) {
+    n.o || (n.o = new Set(), n.t.forEach(function (t) {
+      if (r(t)) {
+        var e = I(n.A.h, t, n);
+        n.p.set(t, e), n.o.add(e);
+      } else n.o.add(t);
+    }));
+  }
+
+  function o(t) {
+    t.O && n(3, JSON.stringify(v(t)));
+  }
+
+  var u = function (n, t) {
+    return (u = Object.setPrototypeOf || {
+      __proto__: []
+    } instanceof Array && function (n, t) {
+      n.__proto__ = t;
+    } || function (n, t) {
+      for (var r in t) t.hasOwnProperty(r) && (n[r] = t[r]);
+    })(n, t);
+  },
+      a = function () {
+    function n(n, t) {
+      return this[B] = {
+        i: 2,
+        l: t,
+        A: t ? t.A : m(),
+        P: !1,
+        I: !1,
+        o: void 0,
+        D: void 0,
+        t: n,
+        k: this,
+        C: !1,
+        O: !1
+      }, this;
+    }
+
+    t(n, Map);
+    var i = n.prototype;
+    return Object.defineProperty(i, "size", {
+      get: function () {
+        return v(this[B]).size;
+      }
+    }), i.has = function (n) {
+      return v(this[B]).has(n);
+    }, i.set = function (n, t) {
+      var r = this[B];
+      return o(r), v(r).get(n) !== t && (e(r), E(r.A.h, r), r.D.set(n, !0), r.o.set(n, t), r.D.set(n, !0)), this;
+    }, i.delete = function (n) {
+      if (!this.has(n)) return !1;
+      var t = this[B];
+      return o(t), e(t), E(t.A.h, t), t.D.set(n, !1), t.o.delete(n), !0;
+    }, i.clear = function () {
+      var n = this[B];
+      return o(n), e(n), E(n.A.h, n), n.D = new Map(), n.o.clear();
+    }, i.forEach = function (n, t) {
+      var r = this;
+      v(this[B]).forEach(function (e, i) {
+        n.call(t, r.get(i), i, r);
+      });
+    }, i.get = function (n) {
+      var t = this[B];
+      o(t);
+      var i = v(t).get(n);
+      if (t.I || !r(i)) return i;
+      if (i !== t.t.get(n)) return i;
+      var u = I(t.A.h, i, t);
+      return e(t), t.o.set(n, u), u;
+    }, i.keys = function () {
+      return v(this[B]).keys();
+    }, i.values = function () {
+      var n,
+          t = this,
+          r = this.keys();
+      return (n = {})[G] = function () {
+        return t.values();
+      }, n.next = function () {
+        var n = r.next();
+        return n.done ? n : {
+          done: !1,
+          value: t.get(n.value)
+        };
+      }, n;
+    }, i.entries = function () {
+      var n,
+          t = this,
+          r = this.keys();
+      return (n = {})[G] = function () {
+        return t.entries();
+      }, n.next = function () {
+        var n = r.next();
+        if (n.done) return n;
+        var e = t.get(n.value);
+        return {
+          done: !1,
+          value: [n.value, e]
+        };
+      }, n;
+    }, i[G] = function () {
+      return this.entries();
+    }, n;
+  }(),
+      f = function () {
+    function n(n, t) {
+      return this[B] = {
+        i: 3,
+        l: t,
+        A: t ? t.A : m(),
+        P: !1,
+        I: !1,
+        o: void 0,
+        t: n,
+        k: this,
+        p: new Map(),
+        O: !1,
+        C: !1
+      }, this;
+    }
+
+    t(n, Set);
+    var r = n.prototype;
+    return Object.defineProperty(r, "size", {
+      get: function () {
+        return v(this[B]).size;
+      }
+    }), r.has = function (n) {
+      var t = this[B];
+      return o(t), t.o ? !!t.o.has(n) || !(!t.p.has(n) || !t.o.has(t.p.get(n))) : t.t.has(n);
+    }, r.add = function (n) {
+      var t = this[B];
+      return o(t), t.o ? t.o.add(n) : t.t.has(n) || (i(t), E(t.A.h, t), t.o.add(n)), this;
+    }, r.delete = function (n) {
+      if (!this.has(n)) return !1;
+      var t = this[B];
+      return o(t), i(t), E(t.A.h, t), t.o.delete(n) || !!t.p.has(n) && t.o.delete(t.p.get(n));
+    }, r.clear = function () {
+      var n = this[B];
+      return o(n), i(n), E(n.A.h, n), n.o.clear();
+    }, r.values = function () {
+      var n = this[B];
+      return o(n), i(n), n.o.values();
+    }, r.entries = function () {
+      var n = this[B];
+      return o(n), i(n), n.o.entries();
+    }, r.keys = function () {
+      return this.values();
+    }, r[G] = function () {
+      return this.values();
+    }, r.forEach = function (n, t) {
+      for (var r = this.values(), e = r.next(); !e.done;) n.call(t, e.value, e.value, this), e = r.next();
+    }, n;
+  }();
+
+  y("MapSet", {
+    T: function (n, t) {
+      return new a(n, t);
+    },
+    F: function (n, t) {
+      return new f(n, t);
+    }
+  });
+}
+
+function N() {
+  k(), D(), R();
+}
+
+function T(n) {
+  return n;
+}
+
+function F(n) {
+  return n;
+}
+
+var C,
+    J,
+    K = "undefined" != typeof Symbol,
+    $ = "undefined" != typeof Map,
+    U = "undefined" != typeof Set,
+    W = "undefined" != typeof Proxy && void 0 !== Proxy.revocable && "undefined" != typeof Reflect,
+    X = K ? Symbol("immer-nothing") : ((C = {})["immer-nothing"] = !0, C),
+    q = K ? Symbol("immer-draftable") : "__$immer_draftable",
+    B = K ? Symbol("immer-state") : "__$immer_state",
+    G = K ? Symbol.iterator : "@@iterator",
+    H = {
+  0: "Illegal state",
+  1: "Immer drafts cannot have computed properties",
+  2: "This object has been frozen and should not be mutated",
+  3: function (n) {
+    return "Cannot use a proxy that has been revoked. Did you pass an object from inside an immer function to an async process? " + n;
+  },
+  4: "An immer producer returned a new value *and* modified its draft. Either return a new value *or* modify the draft.",
+  5: "Immer forbids circular references",
+  6: "The first or second argument to `produce` must be a function",
+  7: "The third argument to `produce` must be a function or undefined",
+  8: "First argument to `createDraft` must be a plain object, an array, or an immerable object",
+  9: "First argument to `finishDraft` must be a draft returned by `createDraft`",
+  10: "The given draft is already finalized",
+  11: "Object.defineProperty() cannot be used on an Immer draft",
+  12: "Object.setPrototypeOf() cannot be used on an Immer draft",
+  13: "Immer only supports deleting array indices",
+  14: "Immer only supports setting array indices and the 'length' property",
+  15: function (n) {
+    return "Cannot apply patch, path doesn't resolve: " + n;
+  },
+  16: 'Sets cannot have "replace" patches.',
+  17: function (n) {
+    return "Unsupported patch operation: " + n;
+  },
+  18: function (n) {
+    return "The plugin for '" + n + "' has not been loaded into Immer. To enable the plugin, import and call `enable" + n + "()` when initializing your application.";
+  },
+  19: "plugin not loaded",
+  20: "Cannot use proxies if Proxy, Proxy.revocable or Reflect are not available"
+},
+    L = "undefined" != typeof Reflect && Reflect.ownKeys ? Reflect.ownKeys : void 0 !== Object.getOwnPropertySymbols ? function (n) {
+  return Object.getOwnPropertyNames(n).concat(Object.getOwnPropertySymbols(n));
+} : Object.getOwnPropertyNames,
+    Q = {},
+    V = {
+  get: function (n, t) {
+    if (t === B) return n;
+    var e = n.p;
+    if (!n.P && u(e, t)) return e[t];
+    var i = v(n)[t];
+    if (n.I || !r(i)) return i;
+
+    if (n.P) {
+      if (i !== A(n.t, t)) return i;
+      e = n.o;
+    }
+
+    return e[t] = I(n.A.h, i, n);
+  },
+  has: function (n, t) {
+    return t in v(n);
+  },
+  ownKeys: function (n) {
+    return Reflect.ownKeys(v(n));
+  },
+  set: function (n, t, r) {
+    if (!n.P) {
+      var e = A(n.t, t);
+      if (r ? f(e, r) || r === n.p[t] : f(e, r) && t in n.t) return !0;
+      x(n), z(n);
+    }
+
+    return n.D[t] = !0, n.o[t] = r, !0;
+  },
+  deleteProperty: function (n, t) {
+    return void 0 !== A(n.t, t) || t in n.t ? (n.D[t] = !1, x(n), z(n)) : n.D[t] && delete n.D[t], n.o && delete n.o[t], !0;
+  },
+  getOwnPropertyDescriptor: function (n, t) {
+    var r = v(n),
+        e = Reflect.getOwnPropertyDescriptor(r, t);
+    return e && (e.writable = !0, e.configurable = 1 !== n.i || "length" !== t), e;
+  },
+  defineProperty: function () {
+    n(11);
+  },
+  getPrototypeOf: function (n) {
+    return Object.getPrototypeOf(n.t);
+  },
+  setPrototypeOf: function () {
+    n(12);
+  }
+},
+    Y = {};
+exports.immerable = q;
+exports.nothing = X;
+i(V, function (n, t) {
+  Y[n] = function () {
+    return arguments[0] = arguments[0][0], t.apply(this, arguments);
+  };
+}), Y.deleteProperty = function (t, r) {
+  return "production" !== "development" && isNaN(parseInt(r)) && n(13), V.deleteProperty.call(this, t[0], r);
+}, Y.set = function (t, r, e) {
+  return "production" !== "development" && "length" !== r && isNaN(parseInt(r)) && n(14), V.set.call(this, t[0], r, e, t[0]);
+};
+
+var Z = function () {
+  function e(n) {
+    this.g = W, this.N = "production" !== "development", "boolean" == typeof (null == n ? void 0 : n.useProxies) && this.setUseProxies(n.useProxies), "boolean" == typeof (null == n ? void 0 : n.autoFreeze) && this.setAutoFreeze(n.autoFreeze), this.produce = this.produce.bind(this), this.produceWithPatches = this.produceWithPatches.bind(this);
+  }
+
+  var i = e.prototype;
+  return i.produce = function (t, e, i) {
+    if ("function" == typeof t && "function" != typeof e) {
+      var o = e;
+      e = t;
+      var u = this;
+      return function (n) {
+        var t = this;
+        void 0 === n && (n = o);
+
+        for (var r = arguments.length, i = Array(r > 1 ? r - 1 : 0), a = 1; a < r; a++) i[a - 1] = arguments[a];
+
+        return u.produce(n, function (n) {
+          var r;
+          return (r = e).call.apply(r, [t, n].concat(i));
+        });
+      };
+    }
+
+    var a;
+
+    if ("function" != typeof e && n(6), void 0 !== i && "function" != typeof i && n(7), r(t)) {
+      var f = O(this),
+          c = I(this, t, void 0),
+          s = !0;
+
+      try {
+        a = e(c), s = !1;
+      } finally {
+        s ? _(f) : j(f);
+      }
+
+      return "undefined" != typeof Promise && a instanceof Promise ? a.then(function (n) {
+        return b(f, i), w(n, f);
+      }, function (n) {
+        throw _(f), n;
+      }) : (b(f, i), w(a, f));
+    }
+
+    if ((a = e(t)) !== X) return void 0 === a && (a = t), this.N && d(a, !0), a;
+  }, i.produceWithPatches = function (n, t) {
+    var r,
+        e,
+        i = this;
+    return "function" == typeof n ? function (t) {
+      for (var r = arguments.length, e = Array(r > 1 ? r - 1 : 0), o = 1; o < r; o++) e[o - 1] = arguments[o];
+
+      return i.produceWithPatches(t, function (t) {
+        return n.apply(void 0, [t].concat(e));
+      });
+    } : [this.produce(n, t, function (n, t) {
+      r = n, e = t;
+    }), r, e];
+  }, i.createDraft = function (t) {
+    r(t) || n(8);
+    var e = O(this),
+        i = I(this, t, void 0);
+    return i[B].C = !0, j(e), i;
+  }, i.finishDraft = function (t, r) {
+    var e = t && t[B];
+    "production" !== "development" && (e && e.C || n(9), e.I && n(10));
+    var i = e.A;
+    return b(i, r), w(void 0, i);
+  }, i.setAutoFreeze = function (n) {
+    this.N = n;
+  }, i.setUseProxies = function (t) {
+    W || n(20), this.g = t;
+  }, i.applyPatches = function (n, r) {
+    var e;
+
+    for (e = r.length - 1; e >= 0; e--) {
+      var i = r[e];
+
+      if (0 === i.path.length && "replace" === i.op) {
+        n = i.value;
+        break;
+      }
+    }
+
+    var o = h("Patches").U;
+    return t(n) ? o(n, r) : this.produce(n, function (n) {
+      return o(n, r.slice(e + 1));
+    });
+  }, e;
+}(),
+    nn = new Z(),
+    tn = nn.produce,
+    rn = nn.produceWithPatches.bind(nn),
+    en = nn.setAutoFreeze.bind(nn),
+    on = nn.setUseProxies.bind(nn),
+    un = nn.applyPatches.bind(nn),
+    an = nn.createDraft.bind(nn),
+    fn = nn.finishDraft.bind(nn);
+
+exports.finishDraft = fn;
+exports.createDraft = an;
+exports.applyPatches = un;
+exports.setUseProxies = on;
+exports.setAutoFreeze = en;
+exports.produceWithPatches = rn;
+exports.produce = tn;
+exports.Immer = Z;
+var _default = tn;
+exports.default = _default;
+},{}],"action.ts":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -81837,9 +82851,10 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.CHANGE_ANSWER = 'CHANGE_ANSWER';
 
-function changeAnswer(answer) {
+function changeAnswer(questionID, answer) {
   return {
     type: exports.CHANGE_ANSWER,
+    questionID: questionID,
     answer: answer
   };
 }
@@ -81895,9 +82910,10 @@ function changeTranslation(language) {
 exports.changeTranslation = changeTranslation;
 exports.CHANGE_VOICE = 'CHANGE_VOICE';
 
-function changeVoice(voice) {
+function changeVoice(language, voice) {
   return {
     type: exports.CHANGE_VOICE,
+    language: language,
     voice: voice
   };
 }
@@ -81912,7 +82928,803 @@ function deleteAll() {
 }
 
 exports.deleteAll = deleteAll;
-},{}],"effect.ts":[function(require,module,exports) {
+},{}],"bcp47.ts":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+function primaryLanguage(tag) {
+  var parts = tag.split(/[_-]/);
+
+  if (parts.length === 0) {
+    throw Error("Unexpected language specification according to BCP 47: ".concat(tag));
+  }
+
+  return parts[0];
+}
+
+exports.primaryLanguage = primaryLanguage;
+},{}],"speech.ts":[function(require,module,exports) {
+"use strict";
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _createForOfIteratorHelper(o) { if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (o = _unsupportedIterableToArray(o))) { var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e2) { throw _e2; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var it, normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e3) { didErr = true; err = _e3; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+  }
+  result["default"] = mod;
+  return result;
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var bcp47 = __importStar(require("./bcp47"));
+
+var VoiceID = /*#__PURE__*/function () {
+  function VoiceID(lang, name) {
+    _classCallCheck(this, VoiceID);
+
+    this.lang = lang;
+    this.name = name;
+
+    if (lang.includes('/')) {
+      throw Error("Unexpected \"/\" in the language of the voice: ".concat(lang));
+    }
+
+    if (name.includes('/')) {
+      throw Error("Unexpected \"/\" in the name of the voice: ".concat(name));
+    }
+  }
+
+  _createClass(VoiceID, [{
+    key: "toKey",
+    value: function toKey() {
+      return [this.lang, this.name].join('/');
+    }
+  }]);
+
+  return VoiceID;
+}();
+
+exports.VoiceID = VoiceID;
+
+function voiceIDFromKey(key) {
+  var parts = key.split('/');
+
+  if (parts.length !== 2) {
+    throw Error("Invalid voice ID given as key: ".concat(key));
+  }
+
+  var _parts = _slicedToArray(parts, 2),
+      lang = _parts[0],
+      name = _parts[1];
+
+  return new VoiceID(lang, name);
+}
+
+exports.voiceIDFromKey = voiceIDFromKey;
+
+var Voices = /*#__PURE__*/function () {
+  function Voices(listOfVoices) {
+    _classCallCheck(this, Voices);
+
+    this.byBCP47 = new Map();
+
+    var _iterator = _createForOfIteratorHelper(listOfVoices),
+        _step;
+
+    try {
+      for (_iterator.s(); !(_step = _iterator.n()).done;) {
+        var v = _step.value;
+        var lang = v.lang;
+        var vv = this.byBCP47.get(lang);
+
+        if (vv === undefined) {
+          vv = new Map();
+          this.byBCP47.set(lang, vv);
+        }
+
+        vv.set(v.name, v);
+      } // Post-conditions
+
+    } catch (err) {
+      _iterator.e(err);
+    } finally {
+      _iterator.f();
+    }
+
+    var _iterator2 = _createForOfIteratorHelper(this.byBCP47.keys()),
+        _step2;
+
+    try {
+      for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+        var _lang = _step2.value;
+
+        var _vv = this.byBCP47.get(_lang);
+
+        if (_vv === undefined) {
+          throw Error("Unexpectedly no voices for the language in byBCP47: ".concat(_lang));
+        }
+
+        var _iterator3 = _createForOfIteratorHelper(_vv),
+            _step3;
+
+        try {
+          for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+            var _step3$value = _slicedToArray(_step3.value, 2),
+                name = _step3$value[0],
+                voice = _step3$value[1];
+
+            if (name !== voice.name) {
+              throw Error("Unexpected voice keyed on ".concat(name, " with .name: ").concat(voice.name));
+            }
+          }
+        } catch (err) {
+          _iterator3.e(err);
+        } finally {
+          _iterator3.f();
+        }
+      }
+    } catch (err) {
+      _iterator2.e(err);
+    } finally {
+      _iterator2.f();
+    }
+  }
+
+  _createClass(Voices, [{
+    key: "ids",
+    value: function ids() {
+      var result = new Array();
+
+      var _iterator4 = _createForOfIteratorHelper(this.byBCP47.entries()),
+          _step4;
+
+      try {
+        for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
+          var _step4$value = _slicedToArray(_step4.value, 2),
+              lang = _step4$value[0],
+              byName = _step4$value[1];
+
+          var _iterator5 = _createForOfIteratorHelper(byName.keys()),
+              _step5;
+
+          try {
+            for (_iterator5.s(); !(_step5 = _iterator5.n()).done;) {
+              var name = _step5.value;
+              result.push(new VoiceID(lang, name));
+            }
+          } catch (err) {
+            _iterator5.e(err);
+          } finally {
+            _iterator5.f();
+          }
+        }
+      } catch (err) {
+        _iterator4.e(err);
+      } finally {
+        _iterator4.f();
+      }
+
+      return result;
+    }
+  }, {
+    key: "has",
+    value: function has(id) {
+      var _a;
+
+      var v = (_a = this.byBCP47.get(id.lang)) === null || _a === void 0 ? void 0 : _a.has(id.name);
+      return v !== undefined && v !== null && v;
+    }
+  }, {
+    key: "get",
+    value: function get(id) {
+      var byName = this.byBCP47.get(id.lang);
+
+      if (byName === undefined) {
+        throw Error("The ID is missing in the Voices: ".concat(JSON.stringify(id)));
+      }
+
+      var voice = byName.get(id.name);
+
+      if (voice === undefined) {
+        throw Error("The ID is missing in the Voices: ".concat(JSON.stringify(id)));
+      }
+
+      return voice;
+    }
+  }, {
+    key: "filterByExactLanguage",
+    value: function filterByExactLanguage(lang) {
+      var result = new Array();
+      var byName = this.byBCP47.get(lang);
+
+      if (byName === undefined) {
+        return result;
+      }
+
+      var _iterator6 = _createForOfIteratorHelper(byName.keys()),
+          _step6;
+
+      try {
+        for (_iterator6.s(); !(_step6 = _iterator6.n()).done;) {
+          var name = _step6.value;
+          result.push(new VoiceID(lang, name));
+        }
+      } catch (err) {
+        _iterator6.e(err);
+      } finally {
+        _iterator6.f();
+      }
+
+      return result;
+    }
+  }, {
+    key: "filterByPrimaryLanguage",
+    value: function filterByPrimaryLanguage(primaryLanguage) {
+      var result = new Array();
+
+      var _iterator7 = _createForOfIteratorHelper(this.byBCP47),
+          _step7;
+
+      try {
+        for (_iterator7.s(); !(_step7 = _iterator7.n()).done;) {
+          var _step7$value = _slicedToArray(_step7.value, 2),
+              lang = _step7$value[0],
+              byName = _step7$value[1];
+
+          if (bcp47.primaryLanguage(lang) === primaryLanguage) {
+            var _iterator8 = _createForOfIteratorHelper(byName.keys()),
+                _step8;
+
+            try {
+              for (_iterator8.s(); !(_step8 = _iterator8.n()).done;) {
+                var name = _step8.value;
+                result.push(new VoiceID(lang, name));
+              }
+            } catch (err) {
+              _iterator8.e(err);
+            } finally {
+              _iterator8.f();
+            }
+          }
+        }
+      } catch (err) {
+        _iterator7.e(err);
+      } finally {
+        _iterator7.f();
+      }
+
+      return result;
+    }
+  }]);
+
+  return Voices;
+}();
+
+exports.Voices = Voices;
+
+function compareByName(a, b) {
+  if (a.name === b.name) {
+    if (a.lang === b.lang) {
+      return 0;
+    } else if (a.lang < b.lang) {
+      return -1;
+    } else {
+      return 1;
+    }
+  } else if (a.name < b.name) {
+    return -1;
+  } else {
+    return 1;
+  }
+}
+
+exports.compareByName = compareByName;
+
+function groupVoicesByLanguage(voices, i18nLangs) {
+  var r = new Map();
+
+  var _iterator9 = _createForOfIteratorHelper(i18nLangs),
+      _step9;
+
+  try {
+    for (_iterator9.s(); !(_step9 = _iterator9.n()).done;) {
+      var i18nLang = _step9.value;
+      var langVoices = new Array(); // If there is the exact match between the language specifications, accept all the voices.
+
+      var exactMatches = voices.filterByExactLanguage(i18nLang);
+
+      if (exactMatches.length > 0) {
+        langVoices.push.apply(langVoices, _toConsumableArray(exactMatches));
+      } else {
+        // We need to filter by the primary language and accept those voices as a fallback.
+        var fallbackMatches = voices.filterByPrimaryLanguage(bcp47.primaryLanguage(i18nLang));
+        langVoices.push.apply(langVoices, _toConsumableArray(fallbackMatches));
+      }
+
+      r.set(i18nLang, langVoices);
+    }
+  } catch (err) {
+    _iterator9.e(err);
+  } finally {
+    _iterator9.f();
+  }
+
+  var sorted = new Map();
+
+  var _iterator10 = _createForOfIteratorHelper(r.entries()),
+      _step10;
+
+  try {
+    for (_iterator10.s(); !(_step10 = _iterator10.n()).done;) {
+      var _step10$value = _slicedToArray(_step10.value, 2),
+          _i18nLang = _step10$value[0],
+          langsNames = _step10$value[1];
+
+      sorted.set(_i18nLang, langsNames.sort(compareByName));
+    }
+  } catch (err) {
+    _iterator10.e(err);
+  } finally {
+    _iterator10.f();
+  }
+
+  return sorted;
+}
+
+exports.groupVoicesByLanguage = groupVoicesByLanguage;
+
+function voiceForLanguageOK(voice, language, voicesByLanguage) {
+  var maybeList = voicesByLanguage.get(language);
+
+  if (maybeList !== undefined) {
+    var found = false;
+    var key = voice.toKey();
+
+    var _iterator11 = _createForOfIteratorHelper(maybeList),
+        _step11;
+
+    try {
+      for (_iterator11.s(); !(_step11 = _iterator11.n()).done;) {
+        var anotherVoice = _step11.value;
+
+        if (anotherVoice.toKey() === key) {
+          found = true;
+          break;
+        }
+      }
+    } catch (err) {
+      _iterator11.e(err);
+    } finally {
+      _iterator11.f();
+    }
+
+    return found;
+  } else {
+    return false;
+  }
+}
+
+exports.voiceForLanguageOK = voiceForLanguageOK;
+},{"./bcp47":"bcp47.ts"}],"stateInvariants.ts":[function(require,module,exports) {
+"use strict";
+
+function _createForOfIteratorHelper(o) { if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (o = _unsupportedIterableToArray(o))) { var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var it, normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+  }
+  result["default"] = mod;
+  return result;
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var speech = __importStar(require("./speech"));
+
+function verify(state, deps) {
+  if (!deps.translations.has(state.language)) {
+    throw Error("Language in the state is not contained in the translations: ".concat(JSON.stringify(state.language)));
+  }
+
+  var _iterator = _createForOfIteratorHelper(deps.translations.keys()),
+      _step;
+
+  try {
+    for (_iterator.s(); !(_step = _iterator.n()).done;) {
+      var language = _step.value;
+
+      if (!state.voiceByLanguage.has(language)) {
+        throw Error("Unexpectedly missing an entry in the state of voiceByLanguage for the language: ".concat(language));
+      }
+
+      var voice = state.voiceByLanguage.get(language);
+
+      if (voice !== undefined && !speech.voiceForLanguageOK(voice, language, deps.voicesByLanguage)) {
+        throw Error("The state of voiceByLanguage for the language ".concat(language, " is invalid: ").concat(voice));
+      }
+    }
+  } catch (err) {
+    _iterator.e(err);
+  } finally {
+    _iterator.f();
+  }
+
+  if (!deps.questionBank.has(state.currentQuestion)) {
+    throw Error("Current question is not in the question bank: ".concat(state.currentQuestion));
+  }
+
+  var _iterator2 = _createForOfIteratorHelper(state.answers.keys()),
+      _step2;
+
+  try {
+    for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+      var id = _step2.value;
+
+      if (!deps.questionBank.has(id)) {
+        throw Error("Answer is given to a question with invalid ID: ".concat(id));
+      }
+    }
+  } catch (err) {
+    _iterator2.e(err);
+  } finally {
+    _iterator2.f();
+  }
+}
+
+exports.verify = verify;
+
+function create(deps) {
+  var middleware = function middleware(api) {
+    return function (next) {
+      return function (action) {
+        // Verify before dispatching
+        verify(api.getState(), deps);
+        var result = next(action); // Verify after reducing
+
+        verify(api.getState(), deps);
+        return result;
+      };
+    };
+  };
+
+  return middleware;
+}
+
+exports.create = create;
+},{"./speech":"speech.ts"}],"autosave.ts":[function(require,module,exports) {
+"use strict";
+
+function _createForOfIteratorHelper(o) { if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (o = _unsupportedIterableToArray(o))) { var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var it, normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+  }
+  result["default"] = mod;
+  return result;
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var immer_1 = require("immer");
+
+var action = __importStar(require("./action"));
+
+var speech = __importStar(require("./speech"));
+
+var stateInvariants = __importStar(require("./stateInvariants"));
+
+function saveVoice(storage, language, voice) {
+  var key = "voiceByLanguage/".concat(language);
+
+  if (voice !== undefined) {
+    storage.setItem(key, voice.toKey());
+  }
+}
+
+function loadVoice(storage, language) {
+  var key = "voiceByLanguage/".concat(language);
+  var voice = storage.getItem(key);
+
+  if (voice === null || voice === undefined) {
+    return undefined;
+  }
+
+  return speech.voiceIDFromKey(voice);
+}
+
+function saveAnswer(storage, questionID, answer) {
+  var key = "answer/".concat(questionID);
+
+  if (answer === '') {
+    storage.removeItem(key);
+  } else {
+    storage.setItem(key, answer);
+  }
+}
+
+function loadAnswer(storage, questionID) {
+  var key = "answer/".concat(questionID);
+  var value = storage.getItem(key);
+
+  if (value === undefined || value === null) {
+    return undefined;
+  }
+
+  return value;
+}
+
+function undoPreviousDataVersions(storage) {
+  storage.removeItem('voice');
+
+  for (var i = 0; i < storage.lenght; i++) {
+    var key = storage.key(i);
+
+    if (key !== undefined && key !== null && key.startsWith('lastVoiceByLanguage')) {
+      storage.removeItem(key);
+    }
+  }
+}
+
+exports.undoPreviousDataVersions = undoPreviousDataVersions;
+
+function connectStoreToStorageEvent(store, deps) {
+  window.onstorage = function (e) {
+    if (e.newValue === e.oldValue) {
+      return;
+    }
+
+    if (e.key === undefined || e.key === null) {
+      return;
+    }
+
+    if (e.newValue === undefined || e.newValue === null) {
+      return;
+    }
+
+    if (e.key === 'language') {
+      var language = e.newValue;
+
+      if (deps.translations.has(language)) {
+        store.dispatch(action.changeTranslation(language));
+      }
+    } else if (e.key.startsWith('voiceByLanguage/')) {
+      var parts = e.key.split('/');
+
+      if (parts.length !== 2) {
+        throw Error("Unexpected split on the key (expected exactly 2 parts, got: ".concat(parts.length, "): ").concat(e.key));
+      }
+
+      var _language = parts[1];
+
+      if (deps.translations.has(_language)) {
+        if (e.newValue !== null && e.newValue !== undefined) {
+          var voice = speech.voiceIDFromKey(e.newValue);
+          store.dispatch(action.changeVoice(_language, voice));
+        }
+      }
+    } else if (e.key.startsWith('answer/')) {
+      var _parts = e.key.split('/');
+
+      if (_parts.length !== 2) {
+        throw Error("Unexpected split on the key (expected exactly 2 parts, got: ".concat(_parts.length, "): ").concat(e.key));
+      }
+
+      var questionID = _parts[1];
+
+      if (deps.questionBank.has(questionID)) {
+        store.dispatch(action.changeAnswer(questionID, e.newValue));
+      }
+    } else if (e.key === 'currentQuestion') {
+      if (deps.questionBank.has(e.newValue)) {
+        store.dispatch(action.gotoQuestion(e.newValue));
+      }
+    } else if (e.key === 'preferencesVisible') {
+      store.dispatch(action.togglePreferences(e.newValue === 'true'));
+    } else {
+      throw new Error("Unhandled storage key from the storage event: ".concat(e.key));
+    }
+  };
+}
+
+exports.connectStoreToStorageEvent = connectStoreToStorageEvent;
+/**
+ * Patch the initialized state with the extra information from the storage.
+ */
+
+function patchState(deps, state) {
+  // Precondition
+  stateInvariants.verify(state, deps);
+  var result = immer_1.produce(state, function (draft) {
+    ////
+    // Language and voices
+    ////
+    var maybeLanguage = deps.storage.getItem('language');
+
+    if (maybeLanguage !== null && deps.translations.has(maybeLanguage)) {
+      draft.language = maybeLanguage;
+    }
+
+    var _iterator = _createForOfIteratorHelper(deps.voicesByLanguage.keys()),
+        _step;
+
+    try {
+      for (_iterator.s(); !(_step = _iterator.n()).done;) {
+        var aLanguage = _step.value;
+        var voice = loadVoice(deps.storage, aLanguage);
+
+        if (voice !== undefined && speech.voiceForLanguageOK(voice, aLanguage, deps.voicesByLanguage)) {
+          draft.voiceByLanguage.set(aLanguage, voice);
+        }
+      } ////
+      // Question & answers
+      ////
+
+    } catch (err) {
+      _iterator.e(err);
+    } finally {
+      _iterator.f();
+    }
+
+    var _iterator2 = _createForOfIteratorHelper(deps.questionBank.questions),
+        _step2;
+
+    try {
+      for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+        var question = _step2.value;
+        var answer = loadAnswer(deps.storage, question.id);
+
+        if (answer !== undefined) {
+          draft.answers.set(question.id, answer);
+        }
+      }
+    } catch (err) {
+      _iterator2.e(err);
+    } finally {
+      _iterator2.f();
+    }
+
+    var maybeCurrentQuestion = deps.storage.getItem('currentQuestion');
+
+    if (maybeCurrentQuestion !== null && maybeCurrentQuestion !== undefined && deps.questionBank.has(maybeCurrentQuestion)) {
+      draft.currentQuestion = maybeCurrentQuestion;
+    } ////
+    // Preferences visible
+    ////
+
+
+    var maybePreferencesVisible = deps.storage.getItem('preferencesVisible');
+
+    if (maybePreferencesVisible !== null && maybePreferencesVisible !== undefined) {
+      draft.preferencesVisible = maybePreferencesVisible === 'true';
+    }
+  }); // Postcondition
+
+  stateInvariants.verify(result, deps);
+  return result;
+}
+
+exports.patchState = patchState;
+
+function create(deps) {
+  /* eslint-disable @typescript-eslint/explicit-function-return-type */
+  var middleware = function middleware(api) {
+    return function (next) {
+      return function (a) {
+        var result = next(a);
+
+        switch (a.type) {
+          case action.CHANGE_TRANSLATION:
+            {
+              deps.storage.setItem('language', a.language);
+              break;
+            }
+
+          case action.CHANGE_VOICE:
+            {
+              saveVoice(deps.storage, a.language, a.voice);
+              break;
+            }
+
+          case action.CHANGE_ANSWER:
+            {
+              saveAnswer(deps.storage, a.questionID, a.answer);
+              break;
+            }
+
+          case action.DELETE_ALL:
+            {
+              var _iterator3 = _createForOfIteratorHelper(deps.questionBank.questions),
+                  _step3;
+
+              try {
+                for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+                  var question = _step3.value;
+                  deps.storage.removeItem("answer/".concat(question.id));
+                }
+              } catch (err) {
+                _iterator3.e(err);
+              } finally {
+                _iterator3.f();
+              }
+
+              break;
+            }
+
+          case action.GOTO_QUESTION:
+            {
+              deps.storage.setItem('currentQuestion', a.questionID);
+              break;
+            }
+
+          case action.TOGGLE_PREFERENCES:
+            {
+              deps.storage.setItem('preferencesVisible', api.getState().preferencesVisible ? 'true' : 'false');
+            }
+        }
+
+        return result;
+      };
+    };
+  };
+
+  return middleware;
+}
+
+exports.create = create;
+},{"immer":"../node_modules/immer/dist/immer.esm.js","./action":"action.ts","./speech":"speech.ts","./stateInvariants":"stateInvariants.ts"}],"effect.ts":[function(require,module,exports) {
 "use strict";
 
 var __importStar = this && this.__importStar || function (mod) {
@@ -81952,7 +83764,7 @@ exports.previousQuestion = previousQuestion;
 function speak() {
   return function (_, getState, deps) {
     var state = getState();
-    var voice = state.voice;
+    var voice = state.voiceByLanguage.get(state.language);
 
     if (voice === undefined) {
       return;
@@ -82014,6 +83826,9 @@ var action = __importStar(require("../action"));
 var effect = __importStar(require("../effect"));
 
 function Answer() {
+  var currentQuestion = react_redux_1.useSelector(function (state) {
+    return state.currentQuestion;
+  });
   var answer = react_redux_1.useSelector(function (state) {
     return state.answers.get(state.currentQuestion) || '';
   });
@@ -82044,7 +83859,7 @@ function Answer() {
     },
     inputRef: inputEl,
     onChange: function onChange(e) {
-      dispatch(action.changeAnswer(e.target.value));
+      dispatch(action.changeAnswer(currentQuestion, e.target.value));
     },
     onKeyUp: function onKeyUp(e) {
       if (e.key === 'Enter') {
@@ -82358,7 +84173,7 @@ function FullScreen() {
 }
 
 exports.FullScreen = FullScreen;
-},{"@material-ui/core":"../node_modules/@material-ui/core/esm/index.js","@material-ui/icons/Fullscreen":"../node_modules/@material-ui/icons/Fullscreen.js","@material-ui/icons/FullscreenExit":"../node_modules/@material-ui/icons/FullscreenExit.js","fscreen":"../node_modules/fscreen/lib/index.js","react":"../node_modules/react/index.js"}],"../node_modules/@material-ui/icons/ThumbDown.js":[function(require,module,exports) {
+},{"@material-ui/core":"../node_modules/@material-ui/core/esm/index.js","@material-ui/icons/Fullscreen":"../node_modules/@material-ui/icons/Fullscreen.js","@material-ui/icons/FullscreenExit":"../node_modules/@material-ui/icons/FullscreenExit.js","fscreen":"../node_modules/fscreen/lib/index.js","react":"../node_modules/react/index.js"}],"../node_modules/@material-ui/icons/ArrowRight.js":[function(require,module,exports) {
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -82373,11 +84188,60 @@ var _react = _interopRequireDefault(require("react"));
 var _createSvgIcon = _interopRequireDefault(require("./utils/createSvgIcon"));
 
 var _default = (0, _createSvgIcon.default)(_react.default.createElement("path", {
-  d: "M15 3H6c-.83 0-1.54.5-1.84 1.22l-3.02 7.05c-.09.23-.14.47-.14.73v2c0 1.1.9 2 2 2h6.31l-.95 4.57-.03.32c0 .41.17.79.44 1.06L9.83 23l6.59-6.59c.36-.36.58-.86.58-1.41V5c0-1.1-.9-2-2-2zm4 0v12h4V3h-4z"
-}), 'ThumbDown');
+  d: "M10 17l5-5-5-5v10z"
+}), 'ArrowRight');
 
 exports.default = _default;
-},{"@babel/runtime/helpers/interopRequireDefault":"../node_modules/@babel/runtime/helpers/interopRequireDefault.js","react":"../node_modules/react/index.js","./utils/createSvgIcon":"../node_modules/@material-ui/icons/utils/createSvgIcon.js"}],"../node_modules/@material-ui/icons/ThumbUp.js":[function(require,module,exports) {
+},{"@babel/runtime/helpers/interopRequireDefault":"../node_modules/@babel/runtime/helpers/interopRequireDefault.js","react":"../node_modules/react/index.js","./utils/createSvgIcon":"../node_modules/@material-ui/icons/utils/createSvgIcon.js"}],"components/NextQuestion.tsx":[function(require,module,exports) {
+"use strict";
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+  }
+  result["default"] = mod;
+  return result;
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var core_1 = require("@material-ui/core");
+
+var ArrowRight_1 = __importDefault(require("@material-ui/icons/ArrowRight"));
+
+var React = __importStar(require("react"));
+
+var react_redux_1 = require("react-redux");
+
+var actions = __importStar(require("../action"));
+
+var effect = __importStar(require("../effect"));
+
+function NextQuestion() {
+  var dispatch = react_redux_1.useDispatch();
+  return React.createElement(core_1.IconButton, {
+    onClick: function onClick() {
+      dispatch(effect.nextQuestion());
+      dispatch(actions.askToRefocus());
+    },
+    "data-testid": "nextQuestion"
+  }, React.createElement(ArrowRight_1.default, {
+    fontSize: "large"
+  }));
+}
+
+exports.NextQuestion = NextQuestion;
+},{"@material-ui/core":"../node_modules/@material-ui/core/esm/index.js","@material-ui/icons/ArrowRight":"../node_modules/@material-ui/icons/ArrowRight.js","react":"../node_modules/react/index.js","react-redux":"../node_modules/react-redux/es/index.js","../action":"action.ts","../effect":"effect.ts"}],"../node_modules/@material-ui/icons/Settings.js":[function(require,module,exports) {
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -82392,11 +84256,492 @@ var _react = _interopRequireDefault(require("react"));
 var _createSvgIcon = _interopRequireDefault(require("./utils/createSvgIcon"));
 
 var _default = (0, _createSvgIcon.default)(_react.default.createElement("path", {
-  d: "M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"
-}), 'ThumbUp');
+  transform: "scale(1.2, 1.2)",
+  d: "M15.95 10.78c.03-.25.05-.51.05-.78s-.02-.53-.06-.78l1.69-1.32c.15-.12.19-.34.1-.51l-1.6-2.77c-.1-.18-.31-.24-.49-.18l-1.99.8c-.42-.32-.86-.58-1.35-.78L12 2.34c-.03-.2-.2-.34-.4-.34H8.4c-.2 0-.36.14-.39.34l-.3 2.12c-.49.2-.94.47-1.35.78l-1.99-.8c-.18-.07-.39 0-.49.18l-1.6 2.77c-.1.18-.06.39.1.51l1.69 1.32c-.04.25-.07.52-.07.78s.02.53.06.78L2.37 12.1c-.15.12-.19.34-.1.51l1.6 2.77c.1.18.31.24.49.18l1.99-.8c.42.32.86.58 1.35.78l.3 2.12c.04.2.2.34.4.34h3.2c.2 0 .37-.14.39-.34l.3-2.12c.49-.2.94-.47 1.35-.78l1.99.8c.18.07.39 0 .49-.18l1.6-2.77c.1-.18.06-.39-.1-.51l-1.67-1.32zM10 13c-1.65 0-3-1.35-3-3s1.35-3 3-3 3 1.35 3 3-1.35 3-3 3z"
+}), 'Settings');
 
 exports.default = _default;
-},{"@babel/runtime/helpers/interopRequireDefault":"../node_modules/@babel/runtime/helpers/interopRequireDefault.js","react":"../node_modules/react/index.js","./utils/createSvgIcon":"../node_modules/@material-ui/icons/utils/createSvgIcon.js"}],"../node_modules/object-keys/isArguments.js":[function(require,module,exports) {
+},{"@babel/runtime/helpers/interopRequireDefault":"../node_modules/@babel/runtime/helpers/interopRequireDefault.js","react":"../node_modules/react/index.js","./utils/createSvgIcon":"../node_modules/@material-ui/icons/utils/createSvgIcon.js"}],"expectAnswer.ts":[function(require,module,exports) {
+"use strict";
+
+function _createForOfIteratorHelper(o) { if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (o = _unsupportedIterableToArray(o))) { var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var it, normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+function ignoreCase() {
+  for (var _len = arguments.length, expected = new Array(_len), _key = 0; _key < _len; _key++) {
+    expected[_key] = arguments[_key];
+  }
+
+  return function (answer) {
+    var result = false;
+
+    var _iterator = _createForOfIteratorHelper(expected),
+        _step;
+
+    try {
+      for (_iterator.s(); !(_step = _iterator.n()).done;) {
+        var anExpected = _step.value;
+
+        if (answer.toLowerCase().trim() === anExpected.toLowerCase().trim()) {
+          result = true;
+          break;
+        }
+      }
+    } catch (err) {
+      _iterator.e(err);
+    } finally {
+      _iterator.f();
+    }
+
+    return result;
+  };
+}
+
+exports.ignoreCase = ignoreCase;
+},{}],"i18n/de.ts":[function(require,module,exports) {
+"use strict";
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+  }
+  result["default"] = mod;
+  return result;
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var expectAnswer = __importStar(require("../expectAnswer"));
+
+exports.german = {
+  chooseYourLanguage: 'Sprache',
+  languageName: 'Deutsch',
+  chooseYourVoice: 'Stimme',
+  noVoiceAvailable: 'Das System unterstützt keine Stimme für diese Sprache.',
+  answerCheckers: {
+    elephant: expectAnswer.ignoreCase('Elefant', 'der Elefant'),
+    tiger: expectAnswer.ignoreCase('Tiger', 'der Tiger'),
+    lion: expectAnswer.ignoreCase('Löwe', 'der Löwe'),
+    dog: expectAnswer.ignoreCase('Hund', 'der Hund'),
+    wolf: expectAnswer.ignoreCase('Wolf', 'der Wolf'),
+    fox: expectAnswer.ignoreCase('Fuchs', 'der Fuchs'),
+    pig: expectAnswer.ignoreCase('Schwein', 'das Schwein', 'Sau', 'die Sau'),
+    goat: expectAnswer.ignoreCase('Ziege', 'die Ziege', 'Geiss', 'die Geiss'),
+    bear: expectAnswer.ignoreCase('Bär', 'der Bär'),
+    giraffe: expectAnswer.ignoreCase('Giraffe', 'die Giraffe')
+  },
+  hereItSays: 'Hier steht',
+  nothingIsWrittenHere: 'Hier steht nichts.',
+  questionImageAlt: 'Frage'
+};
+},{"../expectAnswer":"expectAnswer.ts"}],"i18n/en.ts":[function(require,module,exports) {
+"use strict";
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+  }
+  result["default"] = mod;
+  return result;
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var expectAnswer = __importStar(require("../expectAnswer"));
+
+exports.english = {
+  chooseYourLanguage: 'Language',
+  languageName: 'English',
+  chooseYourVoice: 'Voice',
+  noVoiceAvailable: 'Your system does not provide a voice for this language.',
+  answerCheckers: {
+    elephant: expectAnswer.ignoreCase('elephant', 'the elephant'),
+    tiger: expectAnswer.ignoreCase('tiger', 'the tiger'),
+    lion: expectAnswer.ignoreCase('lion', 'the lion'),
+    dog: expectAnswer.ignoreCase('dog', 'the dog'),
+    wolf: expectAnswer.ignoreCase('wolf', 'the wolf'),
+    fox: expectAnswer.ignoreCase('fox', 'the fox'),
+    pig: expectAnswer.ignoreCase('pig', 'the pig', 'hog', 'the hog'),
+    goat: expectAnswer.ignoreCase('goat', 'the goat'),
+    bear: expectAnswer.ignoreCase('bear', 'the bear'),
+    giraffe: expectAnswer.ignoreCase('giraffe', 'the giraffe')
+  },
+  hereItSays: 'Here it says',
+  nothingIsWrittenHere: 'Nothing has been written.',
+  questionImageAlt: 'question image'
+};
+},{"../expectAnswer":"expectAnswer.ts"}],"i18n/es.ts":[function(require,module,exports) {
+"use strict";
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+  }
+  result["default"] = mod;
+  return result;
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var expectAnswer = __importStar(require("../expectAnswer"));
+
+exports.spanish = {
+  chooseYourLanguage: 'Idioma',
+  languageName: 'Castellano',
+  chooseYourVoice: 'Voz',
+  noVoiceAvailable: 'El sistema no soporta la narración en el idioma escogido.',
+  answerCheckers: {
+    elephant: expectAnswer.ignoreCase('elefante'),
+    tiger: expectAnswer.ignoreCase('tigre'),
+    lion: expectAnswer.ignoreCase('leon'),
+    dog: expectAnswer.ignoreCase('perro', 'perra'),
+    wolf: expectAnswer.ignoreCase('lobo', 'loba'),
+    fox: expectAnswer.ignoreCase('zorra', 'zorro'),
+    pig: expectAnswer.ignoreCase('cerdo'),
+    goat: expectAnswer.ignoreCase('cabra', 'cabro'),
+    bear: expectAnswer.ignoreCase('oso'),
+    giraffe: expectAnswer.ignoreCase('jirafa')
+  },
+  hereItSays: 'Aca dice',
+  nothingIsWrittenHere: 'Aca no dice nada.',
+  questionImageAlt: 'la pregunta'
+};
+},{"../expectAnswer":"expectAnswer.ts"}],"i18n/fr.ts":[function(require,module,exports) {
+"use strict";
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+  }
+  result["default"] = mod;
+  return result;
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var expectAnswer = __importStar(require("../expectAnswer"));
+
+exports.french = {
+  chooseYourLanguage: 'Langue',
+  languageName: 'Francais',
+  chooseYourVoice: 'Voix',
+  noVoiceAvailable: 'Le logiciel ne fournit pas aucune voix pour cette langue.',
+  answerCheckers: {
+    elephant: expectAnswer.ignoreCase('éléphant'),
+    tiger: expectAnswer.ignoreCase('tigre'),
+    lion: expectAnswer.ignoreCase('lion'),
+    dog: expectAnswer.ignoreCase('chien'),
+    wolf: expectAnswer.ignoreCase('loup'),
+    fox: expectAnswer.ignoreCase('renard'),
+    pig: expectAnswer.ignoreCase('cochon', 'porc'),
+    goat: expectAnswer.ignoreCase('chèvre'),
+    bear: expectAnswer.ignoreCase('ours'),
+    giraffe: expectAnswer.ignoreCase('girafe')
+  },
+  hereItSays: 'Ça dit ici',
+  nothingIsWrittenHere: 'Ça ne dit rien ici.',
+  questionImageAlt: 'question'
+};
+},{"../expectAnswer":"expectAnswer.ts"}],"i18n/hr.ts":[function(require,module,exports) {
+"use strict";
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+  }
+  result["default"] = mod;
+  return result;
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var expectAnswer = __importStar(require("../expectAnswer"));
+
+exports.croatian = {
+  chooseYourLanguage: 'Jezik',
+  languageName: 'Hrvatski',
+  chooseYourVoice: 'Glas',
+  noVoiceAvailable: 'Sustav ne podržava glas za ovaj jezik.',
+  answerCheckers: {
+    elephant: expectAnswer.ignoreCase('slon'),
+    tiger: expectAnswer.ignoreCase('tigar'),
+    lion: expectAnswer.ignoreCase('lav'),
+    dog: expectAnswer.ignoreCase('pas'),
+    wolf: expectAnswer.ignoreCase('vuk'),
+    fox: expectAnswer.ignoreCase('lisica', 'lisac'),
+    pig: expectAnswer.ignoreCase('svinja'),
+    goat: expectAnswer.ignoreCase('koza', 'jarac', 'kozlić'),
+    bear: expectAnswer.ignoreCase('medvjed'),
+    giraffe: expectAnswer.ignoreCase('žirafa')
+  },
+  hereItSays: 'Ovdje piše',
+  nothingIsWrittenHere: 'Ovdje ništa ne piše.',
+  questionImageAlt: 'slika-pitanje'
+};
+},{"../expectAnswer":"expectAnswer.ts"}],"i18n/sr.ts":[function(require,module,exports) {
+"use strict";
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+  }
+  result["default"] = mod;
+  return result;
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var expectAnswer = __importStar(require("../expectAnswer"));
+
+exports.serbian = {
+  chooseYourLanguage: 'Jezik',
+  languageName: 'Srpski',
+  chooseYourVoice: 'Glas',
+  noVoiceAvailable: 'Sistem ne podržava glas za ovaj jezik.',
+  answerCheckers: {
+    elephant: expectAnswer.ignoreCase('slon', 'слон'),
+    tiger: expectAnswer.ignoreCase('tigar', 'тигар'),
+    lion: expectAnswer.ignoreCase('lav', 'лав'),
+    dog: expectAnswer.ignoreCase('pas', 'пас'),
+    wolf: expectAnswer.ignoreCase('vuk'),
+    fox: expectAnswer.ignoreCase('lisac', 'lisica', 'лисац', 'лисица'),
+    pig: expectAnswer.ignoreCase('svinja', 'свиња'),
+    goat: expectAnswer.ignoreCase('koza', 'jarac', 'kozlić', 'коза', 'јарац', 'козлић'),
+    bear: expectAnswer.ignoreCase('medved', 'медвед'),
+    giraffe: expectAnswer.ignoreCase('žirafa', 'жирафа')
+  },
+  hereItSays: 'Ovde piše',
+  nothingIsWrittenHere: 'Ovde ništa ne piše.',
+  questionImageAlt: 'slika-pitanje'
+};
+},{"../expectAnswer":"expectAnswer.ts"}],"i18n/pl.ts":[function(require,module,exports) {
+"use strict";
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+  }
+  result["default"] = mod;
+  return result;
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var expectAnswer = __importStar(require("../expectAnswer"));
+
+exports.polish = {
+  chooseYourLanguage: 'Język',
+  languageName: 'Polski',
+  chooseYourVoice: 'Głos',
+  noVoiceAvailable: 'System nie jest w stanie dostarczyć głosu dla tego języka.',
+  answerCheckers: {
+    elephant: expectAnswer.ignoreCase('słoń'),
+    tiger: expectAnswer.ignoreCase('tygrys'),
+    lion: expectAnswer.ignoreCase('lew'),
+    dog: expectAnswer.ignoreCase('pies', 'piesek'),
+    wolf: expectAnswer.ignoreCase('wilk'),
+    fox: expectAnswer.ignoreCase('lis'),
+    pig: expectAnswer.ignoreCase('świnia', 'świnka'),
+    goat: expectAnswer.ignoreCase('koza', 'kozioł', 'kózka', 'baran', 'baranek'),
+    bear: expectAnswer.ignoreCase('niedźwiedź', 'niedźwiadek'),
+    giraffe: expectAnswer.ignoreCase('żyrafa')
+  },
+  hereItSays: 'Napisano',
+  nothingIsWrittenHere: 'Nic nie napisano.',
+  questionImageAlt: 'obrazek-pytanie'
+};
+},{"../expectAnswer":"expectAnswer.ts"}],"i18n/pt.ts":[function(require,module,exports) {
+"use strict";
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+  }
+  result["default"] = mod;
+  return result;
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var expectAnswer = __importStar(require("../expectAnswer"));
+
+exports.portuguese = {
+  chooseYourLanguage: 'O idioma',
+  languageName: 'Português',
+  chooseYourVoice: 'A voz',
+  noVoiceAvailable: 'O sistema não suporta voz de narração para este idioma.',
+  answerCheckers: {
+    elephant: expectAnswer.ignoreCase('elefante'),
+    tiger: expectAnswer.ignoreCase('tigre'),
+    lion: expectAnswer.ignoreCase('leão'),
+    dog: expectAnswer.ignoreCase('cão'),
+    wolf: expectAnswer.ignoreCase('lobo', 'loba'),
+    fox: expectAnswer.ignoreCase('raposa', 'raposo'),
+    pig: expectAnswer.ignoreCase('porco'),
+    goat: expectAnswer.ignoreCase('cabra', 'cabro'),
+    bear: expectAnswer.ignoreCase('urso'),
+    giraffe: expectAnswer.ignoreCase('girafa')
+  },
+  hereItSays: 'Aqui está escrito',
+  nothingIsWrittenHere: 'Aqui não está nada escrito.',
+  questionImageAlt: 'A pergunta'
+};
+},{"../expectAnswer":"expectAnswer.ts"}],"i18n.ts":[function(require,module,exports) {
+"use strict";
+
+function _createForOfIteratorHelper(o) { if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (o = _unsupportedIterableToArray(o))) { var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var it, normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+  }
+  result["default"] = mod;
+  return result;
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var React = __importStar(require("react"));
+
+var bcp47 = __importStar(require("./bcp47"));
+
+var de_1 = require("./i18n/de");
+
+var en_1 = require("./i18n/en");
+
+var es_1 = require("./i18n/es");
+
+var fr_1 = require("./i18n/fr");
+
+var hr_1 = require("./i18n/hr");
+
+var sr_1 = require("./i18n/sr");
+
+var pl_1 = require("./i18n/pl");
+
+var pt_1 = require("./i18n/pt");
+
+exports.SERBIAN = 'sr';
+exports.CROATIAN = 'hr';
+exports.ENGLISH = 'en';
+exports.GERMAN = 'de';
+exports.FRENCH = 'fr';
+exports.SPANISH = 'es';
+exports.POLISH = 'pl';
+exports.PORTUGUESE = 'pt';
+
+function initializeTranslations() {
+  var result = new Map();
+  result.set(exports.SERBIAN, sr_1.serbian);
+  result.set(exports.CROATIAN, hr_1.croatian);
+  result.set(exports.ENGLISH, en_1.english);
+  result.set(exports.GERMAN, de_1.german);
+  result.set(exports.FRENCH, fr_1.french);
+  result.set(exports.SPANISH, es_1.spanish);
+  result.set(exports.POLISH, pl_1.polish);
+  result.set(exports.PORTUGUESE, pt_1.portuguese); // Post-condition
+
+  if (result.size === 0) {
+    throw Error('Expected a non-empty map of translations.');
+  }
+
+  return result;
+}
+
+exports.initializeTranslations = initializeTranslations;
+/**
+ * Infer the translation language from the navigator language.
+ *
+ * It matches first exactly, then by the primary language. If no match has been found, the first language
+ * in the given list is returned.
+ *
+ * @param navigatorLanguage language as indicated by the browser
+ * @param languages list of available translation languages
+ */
+
+function inferDefault(navigatorLanguage, languages) {
+  var result = undefined;
+
+  var _iterator = _createForOfIteratorHelper(languages),
+      _step;
+
+  try {
+    for (_iterator.s(); !(_step = _iterator.n()).done;) {
+      var lang = _step.value;
+
+      if (lang === navigatorLanguage) {
+        result = lang;
+        break;
+      }
+
+      if (bcp47.primaryLanguage(navigatorLanguage) === lang) {
+        result = lang;
+        break;
+      }
+    }
+  } catch (err) {
+    _iterator.e(err);
+  } finally {
+    _iterator.f();
+  }
+
+  if (result === undefined) {
+    return languages[0];
+  }
+
+  return result;
+}
+
+exports.inferDefault = inferDefault;
+exports.Context = React.createContext(undefined);
+},{"react":"../node_modules/react/index.js","./bcp47":"bcp47.ts","./i18n/de":"i18n/de.ts","./i18n/en":"i18n/en.ts","./i18n/es":"i18n/es.ts","./i18n/fr":"i18n/fr.ts","./i18n/hr":"i18n/hr.ts","./i18n/sr":"i18n/sr.ts","./i18n/pl":"i18n/pl.ts","./i18n/pt":"i18n/pt.ts"}],"../node_modules/object-keys/isArguments.js":[function(require,module,exports) {
 'use strict';
 
 var toStr = Object.prototype.toString;
@@ -85467,956 +87812,7 @@ var WithDeps = /*#__PURE__*/function () {
 
 exports.WithDeps = WithDeps;
 exports.Context = React.createContext(undefined);
-},{"deep-equal":"../node_modules/deep-equal/index.js","react":"../node_modules/react/index.js"}],"components/Judge.tsx":[function(require,module,exports) {
-"use strict";
-
-var __importDefault = this && this.__importDefault || function (mod) {
-  return mod && mod.__esModule ? mod : {
-    "default": mod
-  };
-};
-
-var __importStar = this && this.__importStar || function (mod) {
-  if (mod && mod.__esModule) return mod;
-  var result = {};
-  if (mod != null) for (var k in mod) {
-    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-  }
-  result["default"] = mod;
-  return result;
-};
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var ThumbDown_1 = __importDefault(require("@material-ui/icons/ThumbDown"));
-
-var ThumbUp_1 = __importDefault(require("@material-ui/icons/ThumbUp"));
-
-var React = __importStar(require("react"));
-
-var react_1 = require("react");
-
-var react_redux_1 = require("react-redux");
-
-var select = __importStar(require("../select"));
-
-function Judge() {
-  var selectContext = react_1.useContext(select.Context);
-
-  if (selectContext === undefined) {
-    throw Error('Expected selector context to be set.');
-  }
-
-  var hit = react_redux_1.useSelector(function (s) {
-    return selectContext.currentAnswerHits(s);
-  });
-  return hit ? React.createElement(ThumbUp_1.default, {
-    style: {
-      color: 'green'
-    }
-  }) : React.createElement(ThumbDown_1.default, {
-    style: {
-      color: 'red'
-    }
-  });
-}
-
-exports.Judge = Judge;
-},{"@material-ui/icons/ThumbDown":"../node_modules/@material-ui/icons/ThumbDown.js","@material-ui/icons/ThumbUp":"../node_modules/@material-ui/icons/ThumbUp.js","react":"../node_modules/react/index.js","react-redux":"../node_modules/react-redux/es/index.js","../select":"select.ts"}],"../node_modules/@material-ui/icons/ArrowRight.js":[function(require,module,exports) {
-"use strict";
-
-var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _react = _interopRequireDefault(require("react"));
-
-var _createSvgIcon = _interopRequireDefault(require("./utils/createSvgIcon"));
-
-var _default = (0, _createSvgIcon.default)(_react.default.createElement("path", {
-  d: "M10 17l5-5-5-5v10z"
-}), 'ArrowRight');
-
-exports.default = _default;
-},{"@babel/runtime/helpers/interopRequireDefault":"../node_modules/@babel/runtime/helpers/interopRequireDefault.js","react":"../node_modules/react/index.js","./utils/createSvgIcon":"../node_modules/@material-ui/icons/utils/createSvgIcon.js"}],"components/NextQuestion.tsx":[function(require,module,exports) {
-"use strict";
-
-var __importDefault = this && this.__importDefault || function (mod) {
-  return mod && mod.__esModule ? mod : {
-    "default": mod
-  };
-};
-
-var __importStar = this && this.__importStar || function (mod) {
-  if (mod && mod.__esModule) return mod;
-  var result = {};
-  if (mod != null) for (var k in mod) {
-    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-  }
-  result["default"] = mod;
-  return result;
-};
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var core_1 = require("@material-ui/core");
-
-var ArrowRight_1 = __importDefault(require("@material-ui/icons/ArrowRight"));
-
-var React = __importStar(require("react"));
-
-var react_redux_1 = require("react-redux");
-
-var actions = __importStar(require("../action"));
-
-var effect = __importStar(require("../effect"));
-
-function NextQuestion() {
-  var dispatch = react_redux_1.useDispatch();
-  return React.createElement(core_1.IconButton, {
-    onClick: function onClick() {
-      dispatch(effect.nextQuestion());
-      dispatch(actions.askToRefocus());
-    },
-    "data-testid": "nextQuestion"
-  }, React.createElement(ArrowRight_1.default, {
-    fontSize: "large"
-  }));
-}
-
-exports.NextQuestion = NextQuestion;
-},{"@material-ui/core":"../node_modules/@material-ui/core/esm/index.js","@material-ui/icons/ArrowRight":"../node_modules/@material-ui/icons/ArrowRight.js","react":"../node_modules/react/index.js","react-redux":"../node_modules/react-redux/es/index.js","../action":"action.ts","../effect":"effect.ts"}],"../node_modules/@material-ui/icons/Settings.js":[function(require,module,exports) {
-"use strict";
-
-var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _react = _interopRequireDefault(require("react"));
-
-var _createSvgIcon = _interopRequireDefault(require("./utils/createSvgIcon"));
-
-var _default = (0, _createSvgIcon.default)(_react.default.createElement("path", {
-  transform: "scale(1.2, 1.2)",
-  d: "M15.95 10.78c.03-.25.05-.51.05-.78s-.02-.53-.06-.78l1.69-1.32c.15-.12.19-.34.1-.51l-1.6-2.77c-.1-.18-.31-.24-.49-.18l-1.99.8c-.42-.32-.86-.58-1.35-.78L12 2.34c-.03-.2-.2-.34-.4-.34H8.4c-.2 0-.36.14-.39.34l-.3 2.12c-.49.2-.94.47-1.35.78l-1.99-.8c-.18-.07-.39 0-.49.18l-1.6 2.77c-.1.18-.06.39.1.51l1.69 1.32c-.04.25-.07.52-.07.78s.02.53.06.78L2.37 12.1c-.15.12-.19.34-.1.51l1.6 2.77c.1.18.31.24.49.18l1.99-.8c.42.32.86.58 1.35.78l.3 2.12c.04.2.2.34.4.34h3.2c.2 0 .37-.14.39-.34l.3-2.12c.49-.2.94-.47 1.35-.78l1.99.8c.18.07.39 0 .49-.18l1.6-2.77c.1-.18.06-.39-.1-.51l-1.67-1.32zM10 13c-1.65 0-3-1.35-3-3s1.35-3 3-3 3 1.35 3 3-1.35 3-3 3z"
-}), 'Settings');
-
-exports.default = _default;
-},{"@babel/runtime/helpers/interopRequireDefault":"../node_modules/@babel/runtime/helpers/interopRequireDefault.js","react":"../node_modules/react/index.js","./utils/createSvgIcon":"../node_modules/@material-ui/icons/utils/createSvgIcon.js"}],"bcp47.ts":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-function primaryLanguage(tag) {
-  var parts = tag.split(/[_-]/);
-
-  if (parts.length === 0) {
-    throw Error("Unexpected language specification according to BCP 47: ".concat(tag));
-  }
-
-  return parts[0];
-}
-
-exports.primaryLanguage = primaryLanguage;
-},{}],"expectAnswer.ts":[function(require,module,exports) {
-"use strict";
-
-function _createForOfIteratorHelper(o) { if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (o = _unsupportedIterableToArray(o))) { var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var it, normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-function ignoreCase() {
-  for (var _len = arguments.length, expected = new Array(_len), _key = 0; _key < _len; _key++) {
-    expected[_key] = arguments[_key];
-  }
-
-  return function (answer) {
-    var result = false;
-
-    var _iterator = _createForOfIteratorHelper(expected),
-        _step;
-
-    try {
-      for (_iterator.s(); !(_step = _iterator.n()).done;) {
-        var anExpected = _step.value;
-
-        if (answer.toLowerCase().trim() === anExpected.toLowerCase().trim()) {
-          result = true;
-          break;
-        }
-      }
-    } catch (err) {
-      _iterator.e(err);
-    } finally {
-      _iterator.f();
-    }
-
-    return result;
-  };
-}
-
-exports.ignoreCase = ignoreCase;
-},{}],"i18n/de.ts":[function(require,module,exports) {
-"use strict";
-
-var __importStar = this && this.__importStar || function (mod) {
-  if (mod && mod.__esModule) return mod;
-  var result = {};
-  if (mod != null) for (var k in mod) {
-    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-  }
-  result["default"] = mod;
-  return result;
-};
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var expectAnswer = __importStar(require("../expectAnswer"));
-
-exports.german = {
-  chooseYourLanguage: 'Sprache',
-  languageName: 'Deutsch',
-  chooseYourVoice: 'Stimme',
-  noVoiceAvailable: 'Das System unterstützt keine Stimme für diese Sprache.',
-  answerCheckers: {
-    elephant: expectAnswer.ignoreCase('Elephant', 'der Elephant'),
-    tiger: expectAnswer.ignoreCase('Tiger', 'der Tiger'),
-    lion: expectAnswer.ignoreCase('Löwe', 'der Löwe'),
-    dog: expectAnswer.ignoreCase('Hund', 'der Hund'),
-    wolf: expectAnswer.ignoreCase('Wolf', 'der Wolf'),
-    fox: expectAnswer.ignoreCase('Fuchs', 'der Fuchs'),
-    pig: expectAnswer.ignoreCase('Schwein', 'das Schwein', 'Sau', 'die Sau'),
-    goat: expectAnswer.ignoreCase('Ziege', 'die Ziege', 'Geiss', 'die Geiss'),
-    bear: expectAnswer.ignoreCase('Bär', 'der Bär'),
-    giraffe: expectAnswer.ignoreCase('Giraffe', 'die Giraffe')
-  },
-  hereItSays: 'Hier steht',
-  nothingIsWrittenHere: 'Hier steht nichts.',
-  questionImageAlt: 'Frage'
-};
-},{"../expectAnswer":"expectAnswer.ts"}],"i18n/en.ts":[function(require,module,exports) {
-"use strict";
-
-var __importStar = this && this.__importStar || function (mod) {
-  if (mod && mod.__esModule) return mod;
-  var result = {};
-  if (mod != null) for (var k in mod) {
-    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-  }
-  result["default"] = mod;
-  return result;
-};
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var expectAnswer = __importStar(require("../expectAnswer"));
-
-exports.english = {
-  chooseYourLanguage: 'Language',
-  languageName: 'English',
-  chooseYourVoice: 'Voice',
-  noVoiceAvailable: 'Your system does not provide a voice for this language.',
-  answerCheckers: {
-    elephant: expectAnswer.ignoreCase('elephant', 'the elephant'),
-    tiger: expectAnswer.ignoreCase('tiger', 'the tiger'),
-    lion: expectAnswer.ignoreCase('lion', 'the lion'),
-    dog: expectAnswer.ignoreCase('dog', 'the dog'),
-    wolf: expectAnswer.ignoreCase('wolf', 'the wolf'),
-    fox: expectAnswer.ignoreCase('fox', 'the fox'),
-    pig: expectAnswer.ignoreCase('pig', 'the pig', 'hog', 'the hog'),
-    goat: expectAnswer.ignoreCase('goat', 'the goat'),
-    bear: expectAnswer.ignoreCase('bear', 'the bear'),
-    giraffe: expectAnswer.ignoreCase('giraffe', 'the giraffe')
-  },
-  hereItSays: 'Here it says',
-  nothingIsWrittenHere: 'Nothing has been written.',
-  questionImageAlt: 'question image'
-};
-},{"../expectAnswer":"expectAnswer.ts"}],"i18n/es.ts":[function(require,module,exports) {
-"use strict";
-
-var __importStar = this && this.__importStar || function (mod) {
-  if (mod && mod.__esModule) return mod;
-  var result = {};
-  if (mod != null) for (var k in mod) {
-    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-  }
-  result["default"] = mod;
-  return result;
-};
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var expectAnswer = __importStar(require("../expectAnswer"));
-
-exports.spanish = {
-  chooseYourLanguage: 'Idioma',
-  languageName: 'Castellano',
-  chooseYourVoice: 'Voz',
-  noVoiceAvailable: 'El sistema no soporta la narración en el idioma escogido.',
-  answerCheckers: {
-    elephant: expectAnswer.ignoreCase('elefante'),
-    tiger: expectAnswer.ignoreCase('tigre'),
-    lion: expectAnswer.ignoreCase('leon'),
-    dog: expectAnswer.ignoreCase('perro', 'perra'),
-    wolf: expectAnswer.ignoreCase('lobo', 'loba'),
-    fox: expectAnswer.ignoreCase('zorra', 'zorro'),
-    pig: expectAnswer.ignoreCase('cerdo'),
-    goat: expectAnswer.ignoreCase('cabra', 'cabro'),
-    bear: expectAnswer.ignoreCase('oso'),
-    giraffe: expectAnswer.ignoreCase('jirafa')
-  },
-  hereItSays: 'Aca dice',
-  nothingIsWrittenHere: 'Aca no dice nada.',
-  questionImageAlt: 'la pregunta'
-};
-},{"../expectAnswer":"expectAnswer.ts"}],"i18n/fr.ts":[function(require,module,exports) {
-"use strict";
-
-var __importStar = this && this.__importStar || function (mod) {
-  if (mod && mod.__esModule) return mod;
-  var result = {};
-  if (mod != null) for (var k in mod) {
-    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-  }
-  result["default"] = mod;
-  return result;
-};
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var expectAnswer = __importStar(require("../expectAnswer"));
-
-exports.french = {
-  chooseYourLanguage: 'Langue',
-  languageName: 'Francais',
-  chooseYourVoice: 'Voix',
-  noVoiceAvailable: 'Le logiciel ne fournit pas aucune voix pour cette langue.',
-  answerCheckers: {
-    elephant: expectAnswer.ignoreCase('éléphant'),
-    tiger: expectAnswer.ignoreCase('tigre'),
-    lion: expectAnswer.ignoreCase('lion'),
-    dog: expectAnswer.ignoreCase('chien'),
-    wolf: expectAnswer.ignoreCase('loup'),
-    fox: expectAnswer.ignoreCase('renard'),
-    pig: expectAnswer.ignoreCase('cochon', 'porc'),
-    goat: expectAnswer.ignoreCase('chèvre'),
-    bear: expectAnswer.ignoreCase('ours'),
-    giraffe: expectAnswer.ignoreCase('girafe')
-  },
-  hereItSays: 'Ça dit ici',
-  nothingIsWrittenHere: 'Ça ne dit rien ici.',
-  questionImageAlt: 'question'
-};
-},{"../expectAnswer":"expectAnswer.ts"}],"i18n/hr.ts":[function(require,module,exports) {
-"use strict";
-
-var __importStar = this && this.__importStar || function (mod) {
-  if (mod && mod.__esModule) return mod;
-  var result = {};
-  if (mod != null) for (var k in mod) {
-    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-  }
-  result["default"] = mod;
-  return result;
-};
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var expectAnswer = __importStar(require("../expectAnswer"));
-
-exports.croatian = {
-  chooseYourLanguage: 'Jezik',
-  languageName: 'Hrvatski',
-  chooseYourVoice: 'Glas',
-  noVoiceAvailable: 'Sustav ne podržava glas za ovaj jezik.',
-  answerCheckers: {
-    elephant: expectAnswer.ignoreCase('slon'),
-    tiger: expectAnswer.ignoreCase('tigar'),
-    lion: expectAnswer.ignoreCase('lav'),
-    dog: expectAnswer.ignoreCase('pas'),
-    wolf: expectAnswer.ignoreCase('vuk'),
-    fox: expectAnswer.ignoreCase('lisica', 'lisac'),
-    pig: expectAnswer.ignoreCase('svinja'),
-    goat: expectAnswer.ignoreCase('koza', 'jarac', 'kozlić'),
-    bear: expectAnswer.ignoreCase('medvjed'),
-    giraffe: expectAnswer.ignoreCase('žirafa')
-  },
-  hereItSays: 'Ovdje piše',
-  nothingIsWrittenHere: 'Ovdje ništa ne piše.',
-  questionImageAlt: 'slika-pitanje'
-};
-},{"../expectAnswer":"expectAnswer.ts"}],"i18n/sr.ts":[function(require,module,exports) {
-"use strict";
-
-var __importStar = this && this.__importStar || function (mod) {
-  if (mod && mod.__esModule) return mod;
-  var result = {};
-  if (mod != null) for (var k in mod) {
-    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-  }
-  result["default"] = mod;
-  return result;
-};
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var expectAnswer = __importStar(require("../expectAnswer"));
-
-exports.serbian = {
-  chooseYourLanguage: 'Jezik',
-  languageName: 'Srpski',
-  chooseYourVoice: 'Glas',
-  noVoiceAvailable: 'Sistem ne podržava glas za ovaj jezik.',
-  answerCheckers: {
-    elephant: expectAnswer.ignoreCase('slon', 'слон'),
-    tiger: expectAnswer.ignoreCase('tigar', 'тигар'),
-    lion: expectAnswer.ignoreCase('lav', 'лав'),
-    dog: expectAnswer.ignoreCase('pas', 'пас'),
-    wolf: expectAnswer.ignoreCase('vuk'),
-    fox: expectAnswer.ignoreCase('lisac', 'lisica', 'лисац', 'лисица'),
-    pig: expectAnswer.ignoreCase('svinja', 'свиња'),
-    goat: expectAnswer.ignoreCase('koza', 'jarac', 'kozlić', 'коза', 'јарац', 'козлић'),
-    bear: expectAnswer.ignoreCase('medved', 'медвед'),
-    giraffe: expectAnswer.ignoreCase('žirafa', 'жирафа')
-  },
-  hereItSays: 'Ovde piše',
-  nothingIsWrittenHere: 'Ovde ništa ne piše.',
-  questionImageAlt: 'slika-pitanje'
-};
-},{"../expectAnswer":"expectAnswer.ts"}],"i18n.ts":[function(require,module,exports) {
-"use strict";
-
-function _createForOfIteratorHelper(o) { if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (o = _unsupportedIterableToArray(o))) { var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var it, normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-var __importStar = this && this.__importStar || function (mod) {
-  if (mod && mod.__esModule) return mod;
-  var result = {};
-  if (mod != null) for (var k in mod) {
-    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-  }
-  result["default"] = mod;
-  return result;
-};
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var React = __importStar(require("react"));
-
-var bcp47 = __importStar(require("./bcp47"));
-
-var de_1 = require("./i18n/de");
-
-var en_1 = require("./i18n/en");
-
-var es_1 = require("./i18n/es");
-
-var fr_1 = require("./i18n/fr");
-
-var hr_1 = require("./i18n/hr");
-
-var sr_1 = require("./i18n/sr");
-
-exports.SERBIAN = 'sr';
-exports.CROATIAN = 'hr';
-exports.ENGLISH = 'en';
-exports.GERMAN = 'de';
-exports.FRENCH = 'fr';
-exports.SPANISH = 'es';
-
-function initializeTranslations() {
-  var result = new Map();
-  result.set(exports.SERBIAN, sr_1.serbian);
-  result.set(exports.CROATIAN, hr_1.croatian);
-  result.set(exports.ENGLISH, en_1.english);
-  result.set(exports.GERMAN, de_1.german);
-  result.set(exports.FRENCH, fr_1.french);
-  result.set(exports.SPANISH, es_1.spanish); // Post-condition
-
-  if (result.size === 0) {
-    throw Error('Expected a non-empty map of translations.');
-  }
-
-  return result;
-}
-
-exports.initializeTranslations = initializeTranslations;
-/**
- * Infer the translation language from the navigator language.
- *
- * It matches first exactly, then by the primary language. If no match has been found, the first language
- * in the given list is returned.
- *
- * @param navigatorLanguage language as indicated by the browser
- * @param languages list of available translation languages
- */
-
-function inferDefault(navigatorLanguage, languages) {
-  var result = undefined;
-
-  var _iterator = _createForOfIteratorHelper(languages),
-      _step;
-
-  try {
-    for (_iterator.s(); !(_step = _iterator.n()).done;) {
-      var lang = _step.value;
-
-      if (lang === navigatorLanguage) {
-        result = lang;
-        break;
-      }
-
-      if (bcp47.primaryLanguage(navigatorLanguage) === lang) {
-        result = lang;
-        break;
-      }
-    }
-  } catch (err) {
-    _iterator.e(err);
-  } finally {
-    _iterator.f();
-  }
-
-  if (result === undefined) {
-    return languages[0];
-  }
-
-  return result;
-}
-
-exports.inferDefault = inferDefault;
-exports.Context = React.createContext(undefined);
-},{"react":"../node_modules/react/index.js","./bcp47":"bcp47.ts","./i18n/de":"i18n/de.ts","./i18n/en":"i18n/en.ts","./i18n/es":"i18n/es.ts","./i18n/fr":"i18n/fr.ts","./i18n/hr":"i18n/hr.ts","./i18n/sr":"i18n/sr.ts"}],"speech.ts":[function(require,module,exports) {
-"use strict";
-
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
-
-function _createForOfIteratorHelper(o) { if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (o = _unsupportedIterableToArray(o))) { var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e2) { throw _e2; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var it, normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e3) { didErr = true; err = _e3; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
-
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
-
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-var __importStar = this && this.__importStar || function (mod) {
-  if (mod && mod.__esModule) return mod;
-  var result = {};
-  if (mod != null) for (var k in mod) {
-    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-  }
-  result["default"] = mod;
-  return result;
-};
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var bcp47 = __importStar(require("./bcp47"));
-
-var VoiceID = /*#__PURE__*/function () {
-  function VoiceID(lang, name) {
-    _classCallCheck(this, VoiceID);
-
-    this.lang = lang;
-    this.name = name;
-
-    if (lang.includes('/')) {
-      throw Error("Unexpected \"/\" in the language of the voice: ".concat(lang));
-    }
-
-    if (name.includes('/')) {
-      throw Error("Unexpected \"/\" in the name of the voice: ".concat(name));
-    }
-  }
-
-  _createClass(VoiceID, [{
-    key: "toKey",
-    value: function toKey() {
-      return [this.lang, this.name].join('/');
-    }
-  }]);
-
-  return VoiceID;
-}();
-
-exports.VoiceID = VoiceID;
-
-function voiceIDFromKey(key) {
-  var parts = key.split('/');
-
-  if (parts.length !== 2) {
-    throw Error("Invalid voice ID given as key: ".concat(key));
-  }
-
-  var _parts = _slicedToArray(parts, 2),
-      lang = _parts[0],
-      name = _parts[1];
-
-  return new VoiceID(lang, name);
-}
-
-exports.voiceIDFromKey = voiceIDFromKey;
-
-var Voices = /*#__PURE__*/function () {
-  function Voices(listOfVoices) {
-    _classCallCheck(this, Voices);
-
-    this.byBCP47 = new Map();
-
-    var _iterator = _createForOfIteratorHelper(listOfVoices),
-        _step;
-
-    try {
-      for (_iterator.s(); !(_step = _iterator.n()).done;) {
-        var v = _step.value;
-        var lang = v.lang;
-        var vv = this.byBCP47.get(lang);
-
-        if (vv === undefined) {
-          vv = new Map();
-          this.byBCP47.set(lang, vv);
-        }
-
-        vv.set(v.name, v);
-      } // Post-conditions
-
-    } catch (err) {
-      _iterator.e(err);
-    } finally {
-      _iterator.f();
-    }
-
-    var _iterator2 = _createForOfIteratorHelper(this.byBCP47.keys()),
-        _step2;
-
-    try {
-      for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
-        var _lang = _step2.value;
-
-        var _vv = this.byBCP47.get(_lang);
-
-        if (_vv === undefined) {
-          throw Error("Unexpectedly no voices for the language in byBCP47: ".concat(_lang));
-        }
-
-        var _iterator3 = _createForOfIteratorHelper(_vv),
-            _step3;
-
-        try {
-          for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
-            var _step3$value = _slicedToArray(_step3.value, 2),
-                name = _step3$value[0],
-                voice = _step3$value[1];
-
-            if (name !== voice.name) {
-              throw Error("Unexpected voice keyed on ".concat(name, " with .name: ").concat(voice.name));
-            }
-          }
-        } catch (err) {
-          _iterator3.e(err);
-        } finally {
-          _iterator3.f();
-        }
-      }
-    } catch (err) {
-      _iterator2.e(err);
-    } finally {
-      _iterator2.f();
-    }
-  }
-
-  _createClass(Voices, [{
-    key: "ids",
-    value: function ids() {
-      var result = new Array();
-
-      var _iterator4 = _createForOfIteratorHelper(this.byBCP47.entries()),
-          _step4;
-
-      try {
-        for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
-          var _step4$value = _slicedToArray(_step4.value, 2),
-              lang = _step4$value[0],
-              byName = _step4$value[1];
-
-          var _iterator5 = _createForOfIteratorHelper(byName.keys()),
-              _step5;
-
-          try {
-            for (_iterator5.s(); !(_step5 = _iterator5.n()).done;) {
-              var name = _step5.value;
-              result.push(new VoiceID(lang, name));
-            }
-          } catch (err) {
-            _iterator5.e(err);
-          } finally {
-            _iterator5.f();
-          }
-        }
-      } catch (err) {
-        _iterator4.e(err);
-      } finally {
-        _iterator4.f();
-      }
-
-      return result;
-    }
-  }, {
-    key: "has",
-    value: function has(id) {
-      var _a;
-
-      var v = (_a = this.byBCP47.get(id.lang)) === null || _a === void 0 ? void 0 : _a.has(id.name);
-      return v !== undefined && v !== null && v;
-    }
-  }, {
-    key: "get",
-    value: function get(id) {
-      var byName = this.byBCP47.get(id.lang);
-
-      if (byName === undefined) {
-        throw Error("The ID is missing in the Voices: ".concat(JSON.stringify(id)));
-      }
-
-      var voice = byName.get(id.name);
-
-      if (voice === undefined) {
-        throw Error("The ID is missing in the Voices: ".concat(JSON.stringify(id)));
-      }
-
-      return voice;
-    }
-  }, {
-    key: "filterByExactLanguage",
-    value: function filterByExactLanguage(lang) {
-      var result = new Array();
-      var byName = this.byBCP47.get(lang);
-
-      if (byName === undefined) {
-        return result;
-      }
-
-      var _iterator6 = _createForOfIteratorHelper(byName.keys()),
-          _step6;
-
-      try {
-        for (_iterator6.s(); !(_step6 = _iterator6.n()).done;) {
-          var name = _step6.value;
-          result.push(new VoiceID(lang, name));
-        }
-      } catch (err) {
-        _iterator6.e(err);
-      } finally {
-        _iterator6.f();
-      }
-
-      return result;
-    }
-  }, {
-    key: "filterByPrimaryLanguage",
-    value: function filterByPrimaryLanguage(primaryLanguage) {
-      var result = new Array();
-
-      var _iterator7 = _createForOfIteratorHelper(this.byBCP47),
-          _step7;
-
-      try {
-        for (_iterator7.s(); !(_step7 = _iterator7.n()).done;) {
-          var _step7$value = _slicedToArray(_step7.value, 2),
-              lang = _step7$value[0],
-              byName = _step7$value[1];
-
-          if (bcp47.primaryLanguage(lang) === primaryLanguage) {
-            var _iterator8 = _createForOfIteratorHelper(byName.keys()),
-                _step8;
-
-            try {
-              for (_iterator8.s(); !(_step8 = _iterator8.n()).done;) {
-                var name = _step8.value;
-                result.push(new VoiceID(lang, name));
-              }
-            } catch (err) {
-              _iterator8.e(err);
-            } finally {
-              _iterator8.f();
-            }
-          }
-        }
-      } catch (err) {
-        _iterator7.e(err);
-      } finally {
-        _iterator7.f();
-      }
-
-      return result;
-    }
-  }]);
-
-  return Voices;
-}();
-
-exports.Voices = Voices;
-
-function compareByName(a, b) {
-  if (a.name === b.name) {
-    if (a.lang === b.lang) {
-      return 0;
-    } else if (a.lang < b.lang) {
-      return -1;
-    } else {
-      return 1;
-    }
-  } else if (a.name < b.name) {
-    return -1;
-  } else {
-    return 1;
-  }
-}
-
-exports.compareByName = compareByName;
-
-function groupVoicesByLanguage(voices, i18nLangs) {
-  var r = new Map();
-
-  var _iterator9 = _createForOfIteratorHelper(i18nLangs),
-      _step9;
-
-  try {
-    for (_iterator9.s(); !(_step9 = _iterator9.n()).done;) {
-      var i18nLang = _step9.value;
-      var langVoices = new Array(); // If there is the exact match between the language specifications, accept all the voices.
-
-      var exactMatches = voices.filterByExactLanguage(i18nLang);
-
-      if (exactMatches.length > 0) {
-        langVoices.push.apply(langVoices, _toConsumableArray(exactMatches));
-      } else {
-        // We need to filter by the primary language and accept those voices as a fallback.
-        var fallbackMatches = voices.filterByPrimaryLanguage(bcp47.primaryLanguage(i18nLang));
-        langVoices.push.apply(langVoices, _toConsumableArray(fallbackMatches));
-      }
-
-      r.set(i18nLang, langVoices);
-    }
-  } catch (err) {
-    _iterator9.e(err);
-  } finally {
-    _iterator9.f();
-  }
-
-  var sorted = new Map();
-
-  var _iterator10 = _createForOfIteratorHelper(r.entries()),
-      _step10;
-
-  try {
-    for (_iterator10.s(); !(_step10 = _iterator10.n()).done;) {
-      var _step10$value = _slicedToArray(_step10.value, 2),
-          _i18nLang = _step10$value[0],
-          langsNames = _step10$value[1];
-
-      sorted.set(_i18nLang, langsNames.sort(compareByName));
-    }
-  } catch (err) {
-    _iterator10.e(err);
-  } finally {
-    _iterator10.f();
-  }
-
-  return sorted;
-}
-
-exports.groupVoicesByLanguage = groupVoicesByLanguage;
-
-function voiceForLanguageOK(voice, language, voicesByLanguage) {
-  var maybeList = voicesByLanguage.get(language);
-
-  if (maybeList !== undefined) {
-    var found = false;
-    var key = voice.toKey();
-
-    var _iterator11 = _createForOfIteratorHelper(maybeList),
-        _step11;
-
-    try {
-      for (_iterator11.s(); !(_step11 = _iterator11.n()).done;) {
-        var anotherVoice = _step11.value;
-
-        if (anotherVoice.toKey() === key) {
-          found = true;
-          break;
-        }
-      }
-    } catch (err) {
-      _iterator11.e(err);
-    } finally {
-      _iterator11.f();
-    }
-
-    return found;
-  } else {
-    return false;
-  }
-}
-
-exports.voiceForLanguageOK = voiceForLanguageOK;
-},{"./bcp47":"bcp47.ts"}],"components/Preferences.tsx":[function(require,module,exports) {
+},{"deep-equal":"../node_modules/deep-equal/index.js","react":"../node_modules/react/index.js"}],"components/Preferences.tsx":[function(require,module,exports) {
 "use strict";
 
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
@@ -86473,16 +87869,6 @@ var select = __importStar(require("../select"));
 
 var speech = __importStar(require("../speech"));
 
-function handleLanguageChange(e, dispatch) {
-  var lang = e.target.value;
-  dispatch(action.changeTranslation(lang));
-}
-
-function handleVoiceChange(e, dispatch) {
-  var voice = speech.voiceIDFromKey(e.target.value);
-  dispatch(action.changeVoice(voice));
-}
-
 function ChooseYourLanguage(props) {
   var dispatch = react_redux_1.useDispatch();
   return React.createElement(core_1.Select, {
@@ -86491,7 +87877,8 @@ function ChooseYourLanguage(props) {
     },
     value: props.language,
     onChange: function onChange(e) {
-      return handleLanguageChange(e, dispatch);
+      var lang = e.target.value;
+      dispatch(action.changeTranslation(lang));
     },
     "data-testid": "chooseYourLanguage"
   }, props.languages.map(function (lang) {
@@ -86504,7 +87891,7 @@ function ChooseYourLanguage(props) {
     return React.createElement(MenuItem_1.default, {
       key: lang,
       value: lang
-    }, translation.languageName);
+    }, translation.languageName, " (", lang, ")");
   }));
 }
 
@@ -86525,7 +87912,8 @@ function ChooseYourVoice(props) {
     },
     value: props.currentVoice ? [props.currentVoice.toKey()] : undefined,
     onChange: function onChange(e) {
-      return handleVoiceChange(e, dispatch);
+      var voice = speech.voiceIDFromKey(e.target.value);
+      dispatch(action.changeVoice(props.language, voice));
     },
     inputProps: {
       'data-testid': 'chooseYourVoice'
@@ -86571,7 +87959,7 @@ function Preferences() {
     return selectContext.availableVoices(s);
   });
   var currentVoice = react_redux_1.useSelector(function (s) {
-    return s.voice;
+    return s.voiceByLanguage.get(s.language);
   });
   return React.createElement(Drawer_1.default, {
     anchor: 'left',
@@ -86607,6 +87995,7 @@ function Preferences() {
   }, React.createElement(ChooseYourVoice, {
     currentVoice: currentVoice,
     availableVoices: availableVoices,
+    language: language,
     translation: translation
   }))));
 }
@@ -86723,7 +88112,15 @@ function PreviousQuestion() {
 }
 
 exports.PreviousQuestion = PreviousQuestion;
-},{"@material-ui/core":"../node_modules/@material-ui/core/esm/index.js","@material-ui/icons/ArrowLeft":"../node_modules/@material-ui/icons/ArrowLeft.js","react":"../node_modules/react/index.js","react-redux":"../node_modules/react-redux/es/index.js","../action":"action.ts","../effect":"effect.ts"}],"components/Question.tsx":[function(require,module,exports) {
+},{"@material-ui/core":"../node_modules/@material-ui/core/esm/index.js","@material-ui/icons/ArrowLeft":"../node_modules/@material-ui/icons/ArrowLeft.js","react":"../node_modules/react/index.js","react-redux":"../node_modules/react-redux/es/index.js","../action":"action.ts","../effect":"effect.ts"}],"../node_modules/react-reveal/globals.js":[function(require,module,exports) {
+"use strict";function insertRule(e){try{return sheet.insertRule(e,sheet.cssRules.length)}catch(e){console.warn("react-reveal - animation failed")}}function cascade(e,n,t,o,r){var s=Math.log(o),i=Math.log(r),a=(i-s)/(t-n);return Math.exp(s+a*(e-n))}function animation(e){if(!sheet)return"";var n="@keyframes "+(name+counter)+"{"+e+"}",t=effectMap[e];return t?""+name+t:(sheet.insertRule(n,sheet.cssRules.length),effectMap[e]=counter,""+name+counter++)}function hideAll(){globalHide||(exports.globalHide=globalHide=!0,window.removeEventListener("scroll",hideAll,!0),insertRule("."+namespace+" { opacity: 0; }"),window.removeEventListener("orientationchange",hideAll,!0),window.document.removeEventListener("visibilitychange",hideAll))}function config(e){var n=e.ssrFadeout;exports.fadeOutEnabled=fadeOutEnabled=n}Object.defineProperty(exports,"__esModule",{value:!0}),exports.insertRule=insertRule,exports.cascade=cascade,exports.animation=animation,exports.hideAll=hideAll,exports.default=config;var namespace=exports.namespace="react-reveal",defaults=exports.defaults={duration:1e3,delay:0,count:1},ssr=exports.ssr=!0,observerMode=exports.observerMode=!1,raf=exports.raf=function(e){return window.setTimeout(e,66)},disableSsr=exports.disableSsr=function(){return exports.ssr=ssr=!1},fadeOutEnabled=exports.fadeOutEnabled=!1,ssrFadeout=exports.ssrFadeout=function(){var e=arguments.length>0&&void 0!==arguments[0]&&arguments[0];return exports.fadeOutEnabled=fadeOutEnabled=e},globalHide=exports.globalHide=!1,ie10=exports.ie10=!1,collapseend=exports.collapseend=void 0,counter=1,effectMap={},sheet=!1,name=namespace+"-"+Math.floor(1e15*Math.random())+"-";if("undefined"!=typeof window&&"nodejs"!==window.name&&window.document&&"undefined"!=typeof navigator){exports.observerMode=observerMode="IntersectionObserver"in window&&"IntersectionObserverEntry"in window&&"intersectionRatio"in window.IntersectionObserverEntry.prototype&&/\{\s*\[native code\]\s*\}/.test(""+IntersectionObserver),exports.raf=raf=window.requestAnimationFrame||window.webkitRequestAnimationFrame||window.mozRequestAnimationFrame||raf,exports.ssr=ssr=window.document.querySelectorAll("div[data-reactroot]").length>0,-1!==navigator.appVersion.indexOf("MSIE 10")&&(exports.ie10=ie10=!0),ssr&&"performance"in window&&"timing"in window.performance&&"domContentLoadedEventEnd"in window.performance.timing&&window.performance.timing.domLoading&&Date.now()-window.performance.timing.domLoading<300&&(exports.ssr=ssr=!1),ssr&&window.setTimeout(disableSsr,1500),observerMode||(exports.collapseend=collapseend=document.createEvent("Event"),collapseend.initEvent("collapseend",!0,!0));var element=document.createElement("style");document.head.appendChild(element),element.sheet&&element.sheet.cssRules&&element.sheet.insertRule&&(sheet=element.sheet,window.addEventListener("scroll",hideAll,!0),window.addEventListener("orientationchange",hideAll,!0),window.document.addEventListener("visibilitychange",hideAll))}
+},{}],"../node_modules/react-reveal/RevealBase.js":[function(require,module,exports) {
+"use strict";function _interopRequireDefault(e){return e&&e.__esModule?e:{default:e}}function _defineProperty(e,t,i){return t in e?Object.defineProperty(e,t,{value:i,enumerable:!0,configurable:!0,writable:!0}):e[t]=i,e}function _classCallCheck(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function _possibleConstructorReturn(e,t){if(!e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!t||"object"!=typeof t&&"function"!=typeof t?e:t}function _inherits(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function, not "+typeof t);e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,enumerable:!1,writable:!0,configurable:!0}}),t&&(Object.setPrototypeOf?Object.setPrototypeOf(e,t):e.__proto__=t)}Object.defineProperty(exports,"__esModule",{value:!0});var _typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},_slicedToArray=function(){function e(e,t){var i=[],s=!0,o=!1,n=void 0;try{for(var r,a=e[Symbol.iterator]();!(s=(r=a.next()).done)&&(i.push(r.value),!t||i.length!==t);s=!0);}catch(e){o=!0,n=e}finally{try{!s&&a.return&&a.return()}finally{if(o)throw n}}return i}return function(t,i){if(Array.isArray(t))return t;if(Symbol.iterator in Object(t))return e(t,i);throw new TypeError("Invalid attempt to destructure non-iterable instance")}}(),_extends=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var i=arguments[t];for(var s in i)Object.prototype.hasOwnProperty.call(i,s)&&(e[s]=i[s])}return e},_createClass=function(){function e(e,t){for(var i=0;i<t.length;i++){var s=t[i];s.enumerable=s.enumerable||!1,s.configurable=!0,"value"in s&&(s.writable=!0),Object.defineProperty(e,s.key,s)}}return function(t,i,s){return i&&e(t.prototype,i),s&&e(t,s),t}}(),_react=require("react"),_react2=_interopRequireDefault(_react),_propTypes=require("prop-types"),_globals=require("./globals"),inOut=(0,_propTypes.shape)({make:_propTypes.func,duration:_propTypes.number.isRequired,delay:_propTypes.number.isRequired,forever:_propTypes.bool,count:_propTypes.number.isRequired,style:_propTypes.object.isRequired,reverse:_propTypes.bool}),propTypes={collapse:_propTypes.bool,collapseEl:_propTypes.element,cascade:_propTypes.bool,wait:_propTypes.number,force:_propTypes.bool,disabled:_propTypes.bool,appear:_propTypes.bool,enter:_propTypes.bool,exit:_propTypes.bool,fraction:_propTypes.number,refProp:_propTypes.string,innerRef:_propTypes.func,onReveal:_propTypes.func,unmountOnExit:_propTypes.bool,mountOnEnter:_propTypes.bool,inEffect:inOut.isRequired,outEffect:(0,_propTypes.oneOfType)([inOut,(0,_propTypes.oneOf)([!1])]).isRequired,ssrReveal:_propTypes.bool,collapseOnly:_propTypes.bool,ssrFadeout:_propTypes.bool},defaultProps={fraction:.2,refProp:"ref"},contextTypes={transitionGroup:_propTypes.object},RevealBase=function(e){function t(e,i){_classCallCheck(this,t);var s=_possibleConstructorReturn(this,(t.__proto__||Object.getPrototypeOf(t)).call(this,e,i));return s.isOn=void 0===e.when||!!e.when,s.state={collapse:e.collapse?t.getInitialCollapseStyle(e):void 0,style:{opacity:s.isOn&&!e.ssrReveal||!e.outEffect?void 0:0}},s.savedChild=!1,s.isShown=!1,_globals.observerMode?s.handleObserve=s.handleObserve.bind(s):(s.revealHandler=s.makeHandler(s.reveal),s.resizeHandler=s.makeHandler(s.resize)),s.saveRef=s.saveRef.bind(s),s}return _inherits(t,e),_createClass(t,[{key:"saveRef",value:function(e){this.childRef&&this.childRef(e),this.props.innerRef&&this.props.innerRef(e),this.el!==e&&(this.el=e&&"offsetHeight"in e?e:void 0,this.observe(this.props,!0))}},{key:"invisible",value:function(){this&&this.el&&(this.savedChild=!1,this.isShown||(this.setState({hasExited:!0,collapse:this.props.collapse?_extends({},this.state.collapse,{visibility:"hidden"}):null,style:{opacity:0}}),!_globals.observerMode&&this.props.collapse&&window.document.dispatchEvent(_globals.collapseend)))}},{key:"animationEnd",value:function(e,t,i){var s=this,o=i.forever,n=i.count,r=i.delay,a=i.duration;if(!o){var l=function(){s&&s.el&&(s.animationEndTimeout=void 0,e.call(s))};this.animationEndTimeout=window.setTimeout(l,r+(a+(t?a:0)*n))}}},{key:"getDimensionValue",value:function(){return this.el.offsetHeight+parseInt(window.getComputedStyle(this.el,null).getPropertyValue("margin-top"),10)+parseInt(window.getComputedStyle(this.el,null).getPropertyValue("margin-bottom"),10)}},{key:"collapse",value:function(e,t,i){var s=i.duration+(t.cascade?i.duration:0),o=this.isOn?this.getDimensionValue():0,n=void 0,r=void 0;if(t.collapseOnly)n=i.duration/3,r=i.delay;else{var a=s>>2,l=a>>1;n=a,r=i.delay+(this.isOn?0:s-a-l),e.style.animationDuration=s-a+(this.isOn?l:-l)+"ms",e.style.animationDelay=i.delay+(this.isOn?a-l:0)+"ms"}return e.collapse={height:o,transition:"height "+n+"ms ease "+r+"ms",overflow:t.collapseOnly?"hidden":void 0},e}},{key:"animate",value:function(e){if(this&&this.el&&(this.unlisten(),this.isShown!==this.isOn)){this.isShown=this.isOn;var t=!this.isOn&&e.outEffect,i=e[t?"outEffect":"inEffect"],s="style"in i&&i.style.animationName||void 0,o=void 0;e.collapseOnly?o={hasAppeared:!0,hasExited:!1,style:{opacity:1}}:((e.outEffect||this.isOn)&&i.make&&(s=i.make),o={hasAppeared:!0,hasExited:!1,collapse:void 0,style:_extends({},i.style,{animationDuration:i.duration+"ms",animationDelay:i.delay+"ms",animationIterationCount:i.forever?"infinite":i.count,opacity:1,animationName:s}),className:i.className}),this.setState(e.collapse?this.collapse(o,e,i):o),t?(this.savedChild=_react2.default.cloneElement(this.getChild()),this.animationEnd(this.invisible,e.cascade,i)):this.savedChild=!1,this.onReveal(e)}}},{key:"onReveal",value:function(e){e.onReveal&&this.isOn&&(this.onRevealTimeout&&(this.onRevealTimeout=window.clearTimeout(this.onRevealTimeout)),e.wait?this.onRevealTimeout=window.setTimeout(e.onReveal,e.wait):e.onReveal())}},{key:"componentWillUnmount",value:function(){this.unlisten(),_globals.ssr&&(0,_globals.disableSsr)()}},{key:"handleObserve",value:function(e,t){_slicedToArray(e,1)[0].intersectionRatio>0&&(t.disconnect(),this.observer=null,this.reveal(this.props,!0))}},{key:"observe",value:function(e){var t=arguments.length>1&&void 0!==arguments[1]&&arguments[1];if(this.el&&_globals.observerMode){if(this.observer){if(!t)return;this.observer.disconnect()}else if(t)return;this.observer=new IntersectionObserver(this.handleObserve,{threshold:e.fraction}),this.observer.observe(this.el)}}},{key:"reveal",value:function(e){var t=this,i=arguments.length>1&&void 0!==arguments[1]&&arguments[1];_globals.globalHide||(0,_globals.hideAll)(),this&&this.el&&(e||(e=this.props),_globals.ssr&&(0,_globals.disableSsr)(),this.isOn&&this.isShown&&void 0!==e.spy?(this.isShown=!1,this.setState({style:{}}),window.setTimeout(function(){return t.reveal(e)},200)):i||this.inViewport(e)||e.force?this.animate(e):_globals.observerMode?this.observe(e):this.listen())}},{key:"componentDidMount",value:function(){var e=this;if(this.el&&!this.props.disabled){this.props.collapseOnly||("make"in this.props.inEffect&&this.props.inEffect.make(!1,this.props),void 0!==this.props.when&&this.props.outEffect&&"make"in this.props.outEffect&&this.props.outEffect.make(!0,this.props));var i=this.context.transitionGroup,s=i&&!i.isMounting?!("enter"in this.props&&!1===this.props.enter):this.props.appear;return this.isOn&&((void 0!==this.props.when||void 0!==this.props.spy)&&!s||_globals.ssr&&!_globals.fadeOutEnabled&&!this.props.ssrFadeout&&this.props.outEffect&&!this.props.ssrReveal&&t.getTop(this.el)<window.pageYOffset+window.innerHeight)?(this.isShown=!0,this.setState({hasAppeared:!0,collapse:this.props.collapse?{height:this.getDimensionValue()}:this.state.collapse,style:{opacity:1}}),void this.onReveal(this.props)):_globals.ssr&&(_globals.fadeOutEnabled||this.props.ssrFadeout)&&this.props.outEffect&&t.getTop(this.el)<window.pageYOffset+window.innerHeight?(this.setState({style:{opacity:0,transition:"opacity 1000ms 1000ms"}}),void window.setTimeout(function(){return e.reveal(e.props,!0)},2e3)):void(this.isOn&&(this.props.force?this.animate(this.props):this.reveal(this.props)))}}},{key:"cascade",value:function(e){var t=this,i=void 0;i="string"==typeof e?e.split("").map(function(e,t){return _react2.default.createElement("span",{key:t,style:{display:"inline-block",whiteSpace:"pre"}},e)}):_react2.default.Children.toArray(e);var s=this.props[this.isOn||!this.props.outEffect?"inEffect":"outEffect"],o=s.duration,n=s.reverse,r=i.length,a=2*o;this.props.collapse&&(a=parseInt(this.state.style.animationDuration,10),o=a/2);var l=n?r:0;return i=i.map(function(e){return"object"===(void 0===e?"undefined":_typeof(e))&&e?_react2.default.cloneElement(e,{style:_extends({},e.props.style,t.state.style,{animationDuration:Math.round((0,_globals.cascade)(n?l--:l++,0,r,o,a))+"ms"})}):e})}},{key:"componentWillReceiveProps",value:function(e){if(void 0!==e.when&&(this.isOn=!!e.when),e.fraction!==this.props.fraction&&this.observe(e,!0),!this.isOn&&e.onExited&&"exit"in e&&!1===e.exit)return void e.onExited();e.disabled||(e.collapse&&!this.props.collapse&&(this.setState({style:{},collapse:t.getInitialCollapseStyle(e)}),this.isShown=!1),e.when===this.props.when&&e.spy===this.props.spy||this.reveal(e),this.onRevealTimeout&&!this.isOn&&(this.onRevealTimeout=window.clearTimeout(this.onRevealTimeout)))}},{key:"getChild",value:function(){if(this.savedChild&&!this.props.disabled)return this.savedChild;if("object"===_typeof(this.props.children)){var e=_react2.default.Children.only(this.props.children);return"type"in e&&"string"==typeof e.type||"ref"!==this.props.refProp?e:_react2.default.createElement("div",null,e)}return _react2.default.createElement("div",null,this.props.children)}},{key:"render",value:function(){var e=void 0;e=this.state.hasAppeared?!this.props.unmountOnExit||!this.state.hasExited||this.isOn:!this.props.mountOnEnter||this.isOn;var t=this.getChild();"function"==typeof t.ref&&(this.childRef=t.ref);var i=!1,s=t.props,o=s.style,n=s.className,r=s.children,a=this.props.disabled?n:(this.props.outEffect?_globals.namespace:"")+(this.state.className?" "+this.state.className:"")+(n?" "+n:"")||void 0,l=void 0;"function"==typeof this.state.style.animationName&&(this.state.style.animationName=this.state.style.animationName(!this.isOn,this.props)),this.props.cascade&&!this.props.disabled&&r&&this.state.style.animationName?(i=this.cascade(r),l=_extends({},o,{opacity:1})):l=this.props.disabled?o:_extends({},o,this.state.style);var p=_extends({},this.props.props,_defineProperty({className:a,style:l},this.props.refProp,this.saveRef)),h=_react2.default.cloneElement(t,p,e?i||r:void 0);return void 0!==this.props.collapse?this.props.collapseEl?_react2.default.cloneElement(this.props.collapseEl,{style:_extends({},this.props.collapseEl.style,this.props.disabled?void 0:this.state.collapse),children:h}):_react2.default.createElement("div",{style:this.props.disabled?void 0:this.state.collapse,children:h}):h}},{key:"makeHandler",value:function(e){var t=this,i=function(){e.call(t,t.props),t.ticking=!1};return function(){t.ticking||((0,_globals.raf)(i),t.ticking=!0)}}},{key:"inViewport",value:function(e){if(!this.el||window.document.hidden)return!1;var i=this.el.offsetHeight,s=window.pageYOffset-t.getTop(this.el),o=Math.min(i,window.innerHeight)*(_globals.globalHide?e.fraction:0);return s>o-window.innerHeight&&s<i-o}},{key:"resize",value:function(e){this&&this.el&&this.isOn&&this.inViewport(e)&&(this.unlisten(),this.isShown=this.isOn,this.setState({hasExited:!this.isOn,hasAppeared:!0,collapse:void 0,style:{opacity:this.isOn||!e.outEffect?1:0}}),this.onReveal(e))}},{key:"listen",value:function(){_globals.observerMode||this.isListener||(this.isListener=!0,window.addEventListener("scroll",this.revealHandler,{passive:!0}),window.addEventListener("orientationchange",this.revealHandler,{passive:!0}),window.document.addEventListener("visibilitychange",this.revealHandler,{passive:!0}),window.document.addEventListener("collapseend",this.revealHandler,{passive:!0}),window.addEventListener("resize",this.resizeHandler,{passive:!0}))}},{key:"unlisten",value:function(){!_globals.observerMode&&this.isListener&&(window.removeEventListener("scroll",this.revealHandler,{passive:!0}),window.removeEventListener("orientationchange",this.revealHandler,{passive:!0}),window.document.removeEventListener("visibilitychange",this.revealHandler,{passive:!0}),window.document.removeEventListener("collapseend",this.revealHandler,{passive:!0}),window.removeEventListener("resize",this.resizeHandler,{passive:!0}),this.isListener=!1),this.onRevealTimeout&&(this.onRevealTimeout=window.clearTimeout(this.onRevealTimeout)),this.animationEndTimeout&&(this.animationEndTimeout=window.clearTimeout(this.animationEndTimeout))}}],[{key:"getInitialCollapseStyle",value:function(e){return{height:0,visibility:e.when?void 0:"hidden"}}},{key:"getTop",value:function(e){for(;void 0===e.offsetTop;)e=e.parentNode;for(var t=e.offsetTop;e.offsetParent;t+=e.offsetTop)e=e.offsetParent;return t}}]),t}(_react2.default.Component);RevealBase.propTypes=propTypes,RevealBase.defaultProps=defaultProps,RevealBase.contextTypes=contextTypes,RevealBase.displayName="RevealBase",exports.default=RevealBase,module.exports=exports.default;
+},{"react":"../node_modules/react/index.js","prop-types":"../node_modules/prop-types/index.js","./globals":"../node_modules/react-reveal/globals.js"}],"../node_modules/react-reveal/wrap.js":[function(require,module,exports) {
+"use strict";function _interopRequireDefault(e){return e&&e.__esModule?e:{default:e}}function wrap(e,t,a,r){return"in"in e&&(e.when=e.in),_react2.default.Children.count(r)<2?_react2.default.createElement(_RevealBase2.default,_extends({},e,{inEffect:t,outEffect:a,children:r})):(r=_react2.default.Children.map(r,function(r){return _react2.default.createElement(_RevealBase2.default,_extends({},e,{inEffect:t,outEffect:a,children:r}))}),"Fragment"in _react2.default?_react2.default.createElement(_react2.default.Fragment,null,r):_react2.default.createElement("span",null,r))}Object.defineProperty(exports,"__esModule",{value:!0});var _extends=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var a=arguments[t];for(var r in a)Object.prototype.hasOwnProperty.call(a,r)&&(e[r]=a[r])}return e};exports.default=wrap;var _react=require("react"),_react2=_interopRequireDefault(_react),_RevealBase=require("./RevealBase"),_RevealBase2=_interopRequireDefault(_RevealBase);module.exports=exports.default;
+},{"react":"../node_modules/react/index.js","./RevealBase":"../node_modules/react-reveal/RevealBase.js"}],"../node_modules/react-reveal/Fade.js":[function(require,module,exports) {
+"use strict";function _interopRequireDefault(o){return o&&o.__esModule?o:{default:o}}function _objectWithoutProperties(o,e){var r={};for(var t in o)e.indexOf(t)>=0||Object.prototype.hasOwnProperty.call(o,t)&&(r[t]=o[t]);return r}function make(o,e){var r=e.distance,t=e.left,p=e.right,a=e.up,l=e.down,i=e.top,u=e.bottom,n=e.big,s=e.mirror,d=e.opposite,_=(r?r.toString():0)+((t?1:0)|(p?2:0)|(i||l?4:0)|(u||a?8:0)|(s?16:0)|(d?32:0)|(o?64:0)|(n?128:0));if(lookup.hasOwnProperty(_))return lookup[_];var f=t||p||a||l||i||u,y=void 0,b=void 0;if(f){if(!s!=!(o&&d)){var v=[p,t,u,i,l,a];t=v[0],p=v[1],i=v[2],u=v[3],a=v[4],l=v[5]}var c=r||(n?"2000px":"100%");y=t?"-"+c:p?c:"0",b=l||i?"-"+c:a||u?c:"0"}return lookup[_]=(0,_globals.animation)((o?"to":"from")+" {opacity: 0;"+(f?" transform: translate3d("+y+", "+b+", 0);":"")+"}\n     "+(o?"from":"to")+" {opacity: 1;transform: none;} "),lookup[_]}function Fade(){var o=arguments.length>0&&void 0!==arguments[0]?arguments[0]:_globals.defaults,e=arguments.length>1&&void 0!==arguments[1]&&arguments[1],r=o.children,t=(o.out,o.forever),p=o.timeout,a=o.duration,l=void 0===a?_globals.defaults.duration:a,i=o.delay,u=void 0===i?_globals.defaults.delay:i,n=o.count,s=void 0===n?_globals.defaults.count:n,d=_objectWithoutProperties(o,["children","out","forever","timeout","duration","delay","count"]),_={make:make,duration:void 0===p?l:p,delay:u,forever:t,count:s,style:{animationFillMode:"both"},reverse:d.left};return e?(0,_wrap2.default)(d,_,_,r):_}Object.defineProperty(exports,"__esModule",{value:!0});var _propTypes=require("prop-types"),_globals=require("./globals"),_wrap=require("./wrap"),_wrap2=_interopRequireDefault(_wrap),propTypes={out:_propTypes.bool,left:_propTypes.bool,right:_propTypes.bool,top:_propTypes.bool,bottom:_propTypes.bool,big:_propTypes.bool,mirror:_propTypes.bool,opposite:_propTypes.bool,duration:_propTypes.number,timeout:_propTypes.number,distance:_propTypes.string,delay:_propTypes.number,count:_propTypes.number,forever:_propTypes.bool},lookup={};Fade.propTypes=propTypes,exports.default=Fade,module.exports=exports.default;
+},{"prop-types":"../node_modules/prop-types/index.js","./globals":"../node_modules/react-reveal/globals.js","./wrap":"../node_modules/react-reveal/wrap.js"}],"components/Question.tsx":[function(require,module,exports) {
 "use strict";
 
 var __importStar = this && this.__importStar || function (mod) {
@@ -86736,6 +88133,12 @@ var __importStar = this && this.__importStar || function (mod) {
   return result;
 };
 
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -86745,6 +88148,8 @@ var React = __importStar(require("react"));
 var react_1 = require("react");
 
 var react_redux_1 = require("react-redux");
+
+var Fade_1 = __importDefault(require("react-reveal/Fade"));
 
 var select = __importStar(require("../select"));
 
@@ -86758,7 +88163,15 @@ function Question(props) {
   var imageURL = react_redux_1.useSelector(function (s) {
     return selectContext.currentQuestionImageURL(s);
   });
-  return React.createElement("div", {
+  var currentQuestion = react_redux_1.useSelector(function (s) {
+    return s.currentQuestion;
+  });
+  return React.createElement(Fade_1.default, {
+    top: true,
+    appear: true,
+    duration: 600,
+    spy: currentQuestion
+  }, React.createElement("div", {
     style: {
       height: props.maxImageHeight,
       width: '95%'
@@ -86773,11 +88186,11 @@ function Question(props) {
       height: 'auto',
       border: '1px solid black'
     }
-  }));
+  })));
 }
 
 exports.Question = Question;
-},{"react":"../node_modules/react/index.js","react-redux":"../node_modules/react-redux/es/index.js","../select":"select.ts"}],"../node_modules/@material-ui/core/colors/grey.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-redux":"../node_modules/react-redux/es/index.js","react-reveal/Fade":"../node_modules/react-reveal/Fade.js","../select":"select.ts"}],"../node_modules/@material-ui/core/colors/grey.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -86846,7 +88259,9 @@ var _default = (0, _createSvgIcon.default)(_react.default.createElement("path", 
 }), 'Star');
 
 exports.default = _default;
-},{"@babel/runtime/helpers/interopRequireDefault":"../node_modules/@babel/runtime/helpers/interopRequireDefault.js","react":"../node_modules/react/index.js","./utils/createSvgIcon":"../node_modules/@material-ui/icons/utils/createSvgIcon.js"}],"components/ScoreBar.tsx":[function(require,module,exports) {
+},{"@babel/runtime/helpers/interopRequireDefault":"../node_modules/@babel/runtime/helpers/interopRequireDefault.js","react":"../node_modules/react/index.js","./utils/createSvgIcon":"../node_modules/@material-ui/icons/utils/createSvgIcon.js"}],"../node_modules/react-reveal/Flash.js":[function(require,module,exports) {
+"use strict";function _interopRequireDefault(e){return e&&e.__esModule?e:{default:e}}function _objectWithoutProperties(e,o){var r={};for(var t in e)o.indexOf(t)>=0||Object.prototype.hasOwnProperty.call(e,t)&&(r[t]=e[t]);return r}function make(){return name||(name=(0,_globals.animation)(rule))}function Flash(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:_globals.defaults,o=e.children,r=(e.out,e.timeout),t=e.duration,a=void 0===t?_globals.defaults.duration:t,u=e.delay,n=void 0===u?_globals.defaults.delay:u,p=e.count,l=void 0===p?_globals.defaults.count:p,i=e.forever,s=_objectWithoutProperties(e,["children","out","timeout","duration","delay","count","forever"]),d={make:make,duration:void 0===r?a:r,delay:n,forever:i,count:l,style:{animationFillMode:"both"}};return(0,_wrap2.default)(s,d,!1,o,!0)}Object.defineProperty(exports,"__esModule",{value:!0});var _propTypes=require("prop-types"),_wrap=require("./wrap"),_wrap2=_interopRequireDefault(_wrap),_globals=require("./globals"),propTypes={duration:_propTypes.number,timeout:_propTypes.number,delay:_propTypes.number,count:_propTypes.number,forever:_propTypes.bool},rule="\nfrom, 50%, to {\n    opacity: 1;\n  }\n\n  25%, 75% {\n    opacity: 0;\n}\n",name=!1;Flash.propTypes=propTypes,exports.default=Flash,module.exports=exports.default;
+},{"prop-types":"../node_modules/prop-types/index.js","./wrap":"../node_modules/react-reveal/wrap.js","./globals":"../node_modules/react-reveal/globals.js"}],"components/ScoreBar.tsx":[function(require,module,exports) {
 "use strict";
 
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
@@ -86893,18 +88308,22 @@ var react_1 = require("react");
 
 var react_redux_1 = require("react-redux");
 
+var Flash_1 = __importDefault(require("react-reveal/Flash"));
+
 var select = __importStar(require("../select"));
 
 function Indicator(props) {
   var style = Object.assign({
-    color: props.hit ? yellow_1.default[700] : grey_1.default[500]
+    color: props.hit ? yellow_1.default[700] : grey_1.default[100]
   }, props.current ? {
     background: 'azure',
     borderRadius: '50%'
   } : {});
-  return React.createElement(Star_1.default, {
+  return React.createElement(Flash_1.default, {
+    when: props.hit
+  }, React.createElement("span", null, React.createElement(Star_1.default, {
     style: style
-  });
+  })));
 }
 
 function Score(props) {
@@ -86941,7 +88360,7 @@ function ScoreBar() {
 }
 
 exports.ScoreBar = ScoreBar;
-},{"@material-ui/core/colors/grey":"../node_modules/@material-ui/core/colors/grey.js","@material-ui/core/colors/yellow":"../node_modules/@material-ui/core/colors/yellow.js","@material-ui/icons/Star":"../node_modules/@material-ui/icons/Star.js","react":"../node_modules/react/index.js","react-redux":"../node_modules/react-redux/es/index.js","../select":"select.ts"}],"../node_modules/@material-ui/icons/RecordVoiceOver.js":[function(require,module,exports) {
+},{"@material-ui/core/colors/grey":"../node_modules/@material-ui/core/colors/grey.js","@material-ui/core/colors/yellow":"../node_modules/@material-ui/core/colors/yellow.js","@material-ui/icons/Star":"../node_modules/@material-ui/icons/Star.js","react":"../node_modules/react/index.js","react-redux":"../node_modules/react-redux/es/index.js","react-reveal/Flash":"../node_modules/react-reveal/Flash.js","../select":"select.ts"}],"../node_modules/@material-ui/icons/RecordVoiceOver.js":[function(require,module,exports) {
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -87060,8 +88479,6 @@ var DeleteAll_1 = require("./DeleteAll");
 
 var FullScreen_1 = require("./FullScreen");
 
-var Judge_1 = require("./Judge");
-
 var NextQuestion_1 = require("./NextQuestion");
 
 var Preferences_1 = require("./Preferences");
@@ -87150,10 +88567,6 @@ function Desktop(props) {
     style: {
       marginTop: '1em'
     }
-  }, React.createElement(Judge_1.Judge, null)), React.createElement("div", {
-    style: {
-      marginTop: '1em'
-    }
   }, React.createElement(ScoreBar_1.ScoreBar, null))), React.createElement(core_1.Grid, {
     item: true,
     xs: 1
@@ -87211,7 +88624,7 @@ function useWindowSize() {
 
 function App() {
   var hasVoice = react_redux_1.useSelector(function (s) {
-    return s.voice !== undefined;
+    return s.voiceByLanguage.get(s.language) !== undefined;
   });
 
   var _useWindowSize = useWindowSize(),
@@ -87229,7 +88642,7 @@ function App() {
 }
 
 exports.App = App;
-},{"@material-ui/core":"../node_modules/@material-ui/core/esm/index.js","react":"../node_modules/react/index.js","react-redux":"../node_modules/react-redux/es/index.js","./Answer":"components/Answer.tsx","./DeleteAll":"components/DeleteAll.tsx","./FullScreen":"components/FullScreen.tsx","./Judge":"components/Judge.tsx","./NextQuestion":"components/NextQuestion.tsx","./Preferences":"components/Preferences.tsx","./PreferencesButton":"components/PreferencesButton.tsx","./PreviousQuestion":"components/PreviousQuestion.tsx","./Question":"components/Question.tsx","./ScoreBar":"components/ScoreBar.tsx","./Speaker":"components/Speaker.tsx"}],"../node_modules/@material-ui/icons/SentimentVeryDissatisfied.js":[function(require,module,exports) {
+},{"@material-ui/core":"../node_modules/@material-ui/core/esm/index.js","react":"../node_modules/react/index.js","react-redux":"../node_modules/react-redux/es/index.js","./Answer":"components/Answer.tsx","./DeleteAll":"components/DeleteAll.tsx","./FullScreen":"components/FullScreen.tsx","./NextQuestion":"components/NextQuestion.tsx","./Preferences":"components/Preferences.tsx","./PreferencesButton":"components/PreferencesButton.tsx","./PreviousQuestion":"components/PreviousQuestion.tsx","./Question":"components/Question.tsx","./ScoreBar":"components/ScoreBar.tsx","./Speaker":"components/Speaker.tsx"}],"../node_modules/@material-ui/icons/SentimentVeryDissatisfied.js":[function(require,module,exports) {
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -87760,1368 +89173,7 @@ var thunk = createThunkMiddleware();
 thunk.withExtraArgument = createThunkMiddleware;
 var _default = thunk;
 exports.default = _default;
-},{}],"../node_modules/immer/dist/immer.esm.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.castDraft = T;
-exports.castImmutable = F;
-exports.enableAllPlugins = N;
-exports.enableES5 = k;
-exports.enableMapSet = D;
-exports.enablePatches = R;
-exports.isDraft = t;
-exports.isDraftable = r;
-exports.original = e;
-exports.setUseProxies = exports.setAutoFreeze = exports.produceWithPatches = exports.produce = exports.nothing = exports.immerable = exports.finishDraft = exports.createDraft = exports.applyPatches = exports.Immer = exports.default = void 0;
-
-function n(n) {
-  for (var t = arguments.length, r = Array(t > 1 ? t - 1 : 0), e = 1; e < t; e++) r[e - 1] = arguments[e];
-
-  if ("production" !== "development") {
-    var i = H[n],
-        o = i ? "function" == typeof i ? i.apply(null, r) : i : "unknown error nr: " + n;
-    throw Error("[Immer] " + o);
-  }
-
-  throw Error("[Immer] minified error nr: " + n + (r.length ? " " + r.join(",") : "") + ". Find the full error at: https://bit.ly/3cXEKWf");
-}
-
-function t(n) {
-  return !!n && !!n[B];
-}
-
-function r(n) {
-  return !!n && (function (n) {
-    if (!n || "object" != typeof n) return !1;
-    var t = Object.getPrototypeOf(n);
-    return !t || t === Object.prototype;
-  }(n) || Array.isArray(n) || !!n[q] || !!n.constructor[q] || c(n) || s(n));
-}
-
-function e(n) {
-  if (n && n[B]) return n[B].t;
-}
-
-function i(n, t) {
-  0 === o(n) ? L(n).forEach(function (r) {
-    return t(r, n[r], n);
-  }) : n.forEach(function (r, e) {
-    return t(e, r, n);
-  });
-}
-
-function o(n) {
-  var t = n[B];
-  return t ? t.i > 3 ? t.i - 4 : t.i : Array.isArray(n) ? 1 : c(n) ? 2 : s(n) ? 3 : 0;
-}
-
-function u(n, t) {
-  return 2 === o(n) ? n.has(t) : Object.prototype.hasOwnProperty.call(n, t);
-}
-
-function a(n, t) {
-  return 2 === o(n) ? n.get(t) : n[t];
-}
-
-function f(n, t) {
-  return n === t ? 0 !== n || 1 / n == 1 / t : n != n && t != t;
-}
-
-function c(n) {
-  return $ && n instanceof Map;
-}
-
-function s(n) {
-  return U && n instanceof Set;
-}
-
-function v(n) {
-  return n.o || n.t;
-}
-
-function p(t, r) {
-  if (void 0 === r && (r = !1), Array.isArray(t)) return t.slice();
-  var e = Object.create(Object.getPrototypeOf(t));
-  return i(t, function (i) {
-    if (i !== B) {
-      var o = Object.getOwnPropertyDescriptor(t, i),
-          u = o.value;
-      o.get && (r || n(1), u = o.get.call(t)), o.enumerable ? e[i] = u : Object.defineProperty(e, i, {
-        value: u,
-        writable: !0,
-        configurable: !0
-      });
-    }
-  }), e;
-}
-
-function d(n, e) {
-  t(n) || Object.isFrozen(n) || !r(n) || (o(n) > 1 && (n.set = n.add = n.clear = n.delete = l), Object.freeze(n), e && i(n, function (n, t) {
-    return d(t, !0);
-  }));
-}
-
-function l() {
-  n(2);
-}
-
-function h(t) {
-  var r = Q[t];
-  return r || n("production" !== "development" ? 18 : 19, t), r;
-}
-
-function y(n, t) {
-  Q[n] = t;
-}
-
-function m() {
-  return "production" === "development" || J || n(0), J;
-}
-
-function b(n, t) {
-  t && (h("Patches"), n.u = [], n.s = [], n.v = t);
-}
-
-function _(n) {
-  j(n), n.p.forEach(g), n.p = null;
-}
-
-function j(n) {
-  n === J && (J = n.l);
-}
-
-function O(n) {
-  return J = {
-    p: [],
-    l: J,
-    h: n,
-    m: !0,
-    _: 0
-  };
-}
-
-function g(n) {
-  var t = n[B];
-  0 === t.i || 1 === t.i ? t.j() : t.O = !0;
-}
-
-function w(t, e) {
-  e._ = e.p.length;
-  var i = e.p[0],
-      o = void 0 !== t && t !== i;
-  return e.h.g || h("ES5").S(e, t, o), o ? (i[B].P && (_(e), n(4)), r(t) && (t = S(e, t), e.l || M(e, t)), e.u && h("Patches").M(i[B], t, e.u, e.s)) : t = S(e, i, []), _(e), e.u && e.v(e.u, e.s), t !== X ? t : void 0;
-}
-
-function S(n, t, r) {
-  if (Object.isFrozen(t)) return t;
-  var e = t[B];
-  if (!e) return i(t, function (i, o) {
-    return P(n, e, t, i, o, r);
-  }), t;
-  if (e.A !== n) return t;
-  if (!e.P) return M(n, e.t, !0), e.t;
-
-  if (!e.I) {
-    e.I = !0, e.A._--;
-    var o = 4 === e.i || 5 === e.i ? e.o = p(e.k, !0) : e.o;
-    i(o, function (t, i) {
-      return P(n, e, o, t, i, r);
-    }), M(n, o, !1), r && n.u && h("Patches").R(e, r, n.u, n.s);
-  }
-
-  return e.o;
-}
-
-function P(e, i, c, s, v, p) {
-  if ("production" !== "development" && v === c && n(5), t(v)) {
-    var d = S(e, v, p && i && 3 !== i.i && !u(i.D, s) ? p.concat(s) : void 0);
-    if (h = s, y = d, 2 === (m = o(l = c)) ? l.set(h, y) : 3 === m ? (l.delete(h), l.add(y)) : l[h] = y, !t(d)) return;
-    e.m = !1;
-  }
-
-  var l, h, y, m;
-
-  if ((!i || !f(v, a(i.t, s))) && r(v)) {
-    if (!e.h.N && e._ < 1) return;
-    S(e, v), i && i.A.l || M(e, v);
-  }
-}
-
-function M(n, t, r) {
-  void 0 === r && (r = !1), n.h.N && n.m && d(t, r);
-}
-
-function A(n, t) {
-  var r = n[B],
-      e = Reflect.getOwnPropertyDescriptor(r ? v(r) : n, t);
-  return e && e.value;
-}
-
-function z(n) {
-  if (!n.P) {
-    if (n.P = !0, 0 === n.i || 1 === n.i) {
-      var t = n.o = p(n.t);
-      i(n.p, function (n, r) {
-        t[n] = r;
-      }), n.p = void 0;
-    }
-
-    n.l && z(n.l);
-  }
-}
-
-function x(n) {
-  n.o || (n.o = p(n.t));
-}
-
-function I(n, t, r) {
-  var e = c(t) ? h("MapSet").T(t, r) : s(t) ? h("MapSet").F(t, r) : n.g ? function (n, t) {
-    var r = Array.isArray(n),
-        e = {
-      i: r ? 1 : 0,
-      A: t ? t.A : m(),
-      P: !1,
-      I: !1,
-      D: {},
-      l: t,
-      t: n,
-      k: null,
-      p: {},
-      o: null,
-      j: null,
-      C: !1
-    },
-        i = e,
-        o = V;
-    r && (i = [e], o = Y);
-    var u = Proxy.revocable(i, o),
-        a = u.revoke,
-        f = u.proxy;
-    return e.k = f, e.j = a, f;
-  }(t, r) : h("ES5").J(t, r);
-  return (r ? r.A : m()).p.push(e), e;
-}
-
-function E(n, t) {
-  n.g ? z(t) : h("ES5").K(t);
-}
-
-function k() {
-  function e(n, t) {
-    var r = n[B];
-
-    if (r && !r.$) {
-      r.$ = !0;
-      var e = n[t];
-      return r.$ = !1, e;
-    }
-
-    return n[t];
-  }
-
-  function o(n) {
-    n.P || (n.P = !0, n.l && o(n.l));
-  }
-
-  function a(n) {
-    n.o || (n.o = c(n.t));
-  }
-
-  function c(n) {
-    var t = n && n[B];
-
-    if (t) {
-      t.$ = !0;
-      var r = p(t.k, !0);
-      return t.$ = !1, r;
-    }
-
-    return p(n);
-  }
-
-  function s(n) {
-    for (var t = n.length - 1; t >= 0; t--) {
-      var r = n[t][B];
-      if (!r.P) switch (r.i) {
-        case 5:
-          l(r) && o(r);
-          break;
-
-        case 4:
-          d(r) && o(r);
-      }
-    }
-  }
-
-  function d(n) {
-    for (var t = n.t, r = n.k, e = Object.keys(r), i = e.length - 1; i >= 0; i--) {
-      var o = e[i],
-          a = t[o];
-      if (void 0 === a && !u(t, o)) return !0;
-      var c = r[o],
-          s = c && c[B];
-      if (s ? s.t !== a : !f(c, a)) return !0;
-    }
-
-    return e.length !== Object.keys(t).length;
-  }
-
-  function l(n) {
-    var t = n.k;
-    if (t.length !== n.t.length) return !0;
-    var r = Object.getOwnPropertyDescriptor(t, t.length - 1);
-    return !(!r || r.get);
-  }
-
-  function h(t) {
-    t.O && n(3, JSON.stringify(v(t)));
-  }
-
-  var b = {};
-  y("ES5", {
-    J: function (n, t) {
-      var u = Array.isArray(n),
-          s = c(n);
-      i(s, function (t) {
-        !function (n, t, i) {
-          var u = b[t];
-          u ? u.enumerable = i : b[t] = u = {
-            enumerable: i,
-            get: function () {
-              return function (n, t) {
-                h(n);
-                var i = e(v(n), t);
-                return n.$ ? i : i === e(n.t, t) && r(i) ? (a(n), n.o[t] = I(n.A.h, i, n)) : i;
-              }(this[B], t);
-            },
-            set: function (n) {
-              !function (n, t, r) {
-                if (h(n), n.D[t] = !0, !n.P) {
-                  if (f(r, e(v(n), t))) return;
-                  o(n), a(n);
-                }
-
-                n.o[t] = r;
-              }(this[B], t, n);
-            }
-          }, Object.defineProperty(n, t, u);
-        }(s, t, u || function (n, t) {
-          var r = Object.getOwnPropertyDescriptor(n, t);
-          return !(!r || !r.enumerable);
-        }(n, t));
-      });
-      var p = {
-        i: u ? 5 : 4,
-        A: t ? t.A : m(),
-        P: !1,
-        $: !1,
-        I: !1,
-        D: {},
-        l: t,
-        t: n,
-        k: s,
-        o: null,
-        O: !1,
-        C: !1
-      };
-      return Object.defineProperty(s, B, {
-        value: p,
-        writable: !0
-      }), s;
-    },
-    K: o,
-    S: function (n, r, e) {
-      n.p.forEach(function (n) {
-        n[B].$ = !0;
-      }), e ? t(r) && r[B].A === n && s(n.p) : (n.u && function n(t) {
-        if (t && "object" == typeof t) {
-          var r = t[B];
-
-          if (r) {
-            var e = r.t,
-                a = r.k,
-                f = r.D,
-                c = r.i;
-            if (4 === c) i(a, function (t) {
-              t !== B && (void 0 !== e[t] || u(e, t) ? f[t] || n(a[t]) : (f[t] = !0, o(r)));
-            }), i(e, function (n) {
-              void 0 !== a[n] || u(a, n) || (f[n] = !1, o(r));
-            });else if (5 === c) {
-              if (l(r) && (o(r), f.length = !0), a.length < e.length) for (var s = a.length; s < e.length; s++) f[s] = !1;else for (var v = e.length; v < a.length; v++) f[v] = !0;
-
-              for (var p = Math.min(a.length, e.length), d = 0; d < p; d++) void 0 === f[d] && n(a[d]);
-            }
-          }
-        }
-      }(n.p[0]), s(n.p));
-    }
-  });
-}
-
-function R() {
-  function t(n) {
-    if (!n || "object" != typeof n) return n;
-    if (Array.isArray(n)) return n.map(t);
-    if (c(n)) return new Map(Array.from(n.entries()).map(function (n) {
-      return [n[0], t(n[1])];
-    }));
-    if (s(n)) return new Set(Array.from(n).map(t));
-    var r = Object.create(Object.getPrototypeOf(n));
-
-    for (var e in n) r[e] = t(n[e]);
-
-    return r;
-  }
-
-  var r = "add";
-  y("Patches", {
-    U: function (e, i) {
-      return i.forEach(function (i) {
-        for (var u = i.path, f = i.op, c = e, s = 0; s < u.length - 1; s++) "object" != typeof (c = a(c, u[s])) && n(15, u.join("/"));
-
-        var v = o(c),
-            p = t(i.value),
-            d = u[u.length - 1];
-
-        switch (f) {
-          case "replace":
-            switch (v) {
-              case 2:
-                return c.set(d, p);
-
-              case 3:
-                n(16);
-
-              default:
-                return c[d] = p;
-            }
-
-          case r:
-            switch (v) {
-              case 1:
-                return c.splice(d, 0, p);
-
-              case 2:
-                return c.set(d, p);
-
-              case 3:
-                return c.add(p);
-
-              default:
-                return c[d] = p;
-            }
-
-          case "remove":
-            switch (v) {
-              case 1:
-                return c.splice(d, 1);
-
-              case 2:
-                return c.delete(d);
-
-              case 3:
-                return c.delete(i.value);
-
-              default:
-                return delete c[d];
-            }
-
-          default:
-            n(17, f);
-        }
-      }), e;
-    },
-    R: function (n, t, e, o) {
-      switch (n.i) {
-        case 0:
-        case 4:
-        case 2:
-          return function (n, t, e, o) {
-            var f = n.t,
-                c = n.o;
-            i(n.D, function (n, i) {
-              var s = a(f, n),
-                  v = a(c, n),
-                  p = i ? u(f, n) ? "replace" : r : "remove";
-
-              if (s !== v || "replace" !== p) {
-                var d = t.concat(n);
-                e.push("remove" === p ? {
-                  op: p,
-                  path: d
-                } : {
-                  op: p,
-                  path: d,
-                  value: v
-                }), o.push(p === r ? {
-                  op: "remove",
-                  path: d
-                } : "remove" === p ? {
-                  op: r,
-                  path: d,
-                  value: s
-                } : {
-                  op: "replace",
-                  path: d,
-                  value: s
-                });
-              }
-            });
-          }(n, t, e, o);
-
-        case 5:
-        case 1:
-          return function (n, t, e, i) {
-            var o = n.t,
-                u = n.D,
-                a = n.o;
-
-            if (a.length < o.length) {
-              var f = [a, o];
-              o = f[0], a = f[1];
-              var c = [i, e];
-              e = c[0], i = c[1];
-            }
-
-            for (var s = a.length - o.length, v = 0; o[v] === a[v] && v < o.length;) ++v;
-
-            for (var p = o.length; p > v && o[p - 1] === a[p + s - 1];) --p;
-
-            for (var d = v; d < p; ++d) if (u[d] && a[d] !== o[d]) {
-              var l = t.concat([d]);
-              e.push({
-                op: "replace",
-                path: l,
-                value: a[d]
-              }), i.push({
-                op: "replace",
-                path: l,
-                value: o[d]
-              });
-            }
-
-            for (var h = e.length, y = p + s - 1; y >= p; --y) {
-              var m = t.concat([y]);
-              e[h + y - p] = {
-                op: r,
-                path: m,
-                value: a[y]
-              }, i.push({
-                op: "remove",
-                path: m
-              });
-            }
-          }(n, t, e, o);
-
-        case 3:
-          return function (n, t, e, i) {
-            var o = n.t,
-                u = n.o,
-                a = 0;
-            o.forEach(function (n) {
-              if (!u.has(n)) {
-                var o = t.concat([a]);
-                e.push({
-                  op: "remove",
-                  path: o,
-                  value: n
-                }), i.unshift({
-                  op: r,
-                  path: o,
-                  value: n
-                });
-              }
-
-              a++;
-            }), a = 0, u.forEach(function (n) {
-              if (!o.has(n)) {
-                var u = t.concat([a]);
-                e.push({
-                  op: r,
-                  path: u,
-                  value: n
-                }), i.unshift({
-                  op: "remove",
-                  path: u,
-                  value: n
-                });
-              }
-
-              a++;
-            });
-          }(n, t, e, o);
-      }
-    },
-    M: function (n, t, r, e) {
-      r.push({
-        op: "replace",
-        path: [],
-        value: t
-      }), e.push({
-        op: "replace",
-        path: [],
-        value: n.t
-      });
-    }
-  });
-}
-
-function D() {
-  function t(n, t) {
-    function r() {
-      this.constructor = n;
-    }
-
-    u(n, t), n.prototype = (r.prototype = t.prototype, new r());
-  }
-
-  function e(n) {
-    n.o || (n.D = new Map(), n.o = new Map(n.t));
-  }
-
-  function i(n) {
-    n.o || (n.o = new Set(), n.t.forEach(function (t) {
-      if (r(t)) {
-        var e = I(n.A.h, t, n);
-        n.p.set(t, e), n.o.add(e);
-      } else n.o.add(t);
-    }));
-  }
-
-  function o(t) {
-    t.O && n(3, JSON.stringify(v(t)));
-  }
-
-  var u = function (n, t) {
-    return (u = Object.setPrototypeOf || {
-      __proto__: []
-    } instanceof Array && function (n, t) {
-      n.__proto__ = t;
-    } || function (n, t) {
-      for (var r in t) t.hasOwnProperty(r) && (n[r] = t[r]);
-    })(n, t);
-  },
-      a = function () {
-    function n(n, t) {
-      return this[B] = {
-        i: 2,
-        l: t,
-        A: t ? t.A : m(),
-        P: !1,
-        I: !1,
-        o: void 0,
-        D: void 0,
-        t: n,
-        k: this,
-        C: !1,
-        O: !1
-      }, this;
-    }
-
-    t(n, Map);
-    var i = n.prototype;
-    return Object.defineProperty(i, "size", {
-      get: function () {
-        return v(this[B]).size;
-      }
-    }), i.has = function (n) {
-      return v(this[B]).has(n);
-    }, i.set = function (n, t) {
-      var r = this[B];
-      return o(r), v(r).get(n) !== t && (e(r), E(r.A.h, r), r.D.set(n, !0), r.o.set(n, t), r.D.set(n, !0)), this;
-    }, i.delete = function (n) {
-      if (!this.has(n)) return !1;
-      var t = this[B];
-      return o(t), e(t), E(t.A.h, t), t.D.set(n, !1), t.o.delete(n), !0;
-    }, i.clear = function () {
-      var n = this[B];
-      return o(n), e(n), E(n.A.h, n), n.D = new Map(), n.o.clear();
-    }, i.forEach = function (n, t) {
-      var r = this;
-      v(this[B]).forEach(function (e, i) {
-        n.call(t, r.get(i), i, r);
-      });
-    }, i.get = function (n) {
-      var t = this[B];
-      o(t);
-      var i = v(t).get(n);
-      if (t.I || !r(i)) return i;
-      if (i !== t.t.get(n)) return i;
-      var u = I(t.A.h, i, t);
-      return e(t), t.o.set(n, u), u;
-    }, i.keys = function () {
-      return v(this[B]).keys();
-    }, i.values = function () {
-      var n,
-          t = this,
-          r = this.keys();
-      return (n = {})[G] = function () {
-        return t.values();
-      }, n.next = function () {
-        var n = r.next();
-        return n.done ? n : {
-          done: !1,
-          value: t.get(n.value)
-        };
-      }, n;
-    }, i.entries = function () {
-      var n,
-          t = this,
-          r = this.keys();
-      return (n = {})[G] = function () {
-        return t.entries();
-      }, n.next = function () {
-        var n = r.next();
-        if (n.done) return n;
-        var e = t.get(n.value);
-        return {
-          done: !1,
-          value: [n.value, e]
-        };
-      }, n;
-    }, i[G] = function () {
-      return this.entries();
-    }, n;
-  }(),
-      f = function () {
-    function n(n, t) {
-      return this[B] = {
-        i: 3,
-        l: t,
-        A: t ? t.A : m(),
-        P: !1,
-        I: !1,
-        o: void 0,
-        t: n,
-        k: this,
-        p: new Map(),
-        O: !1,
-        C: !1
-      }, this;
-    }
-
-    t(n, Set);
-    var r = n.prototype;
-    return Object.defineProperty(r, "size", {
-      get: function () {
-        return v(this[B]).size;
-      }
-    }), r.has = function (n) {
-      var t = this[B];
-      return o(t), t.o ? !!t.o.has(n) || !(!t.p.has(n) || !t.o.has(t.p.get(n))) : t.t.has(n);
-    }, r.add = function (n) {
-      var t = this[B];
-      return o(t), t.o ? t.o.add(n) : t.t.has(n) || (i(t), E(t.A.h, t), t.o.add(n)), this;
-    }, r.delete = function (n) {
-      if (!this.has(n)) return !1;
-      var t = this[B];
-      return o(t), i(t), E(t.A.h, t), t.o.delete(n) || !!t.p.has(n) && t.o.delete(t.p.get(n));
-    }, r.clear = function () {
-      var n = this[B];
-      return o(n), i(n), E(n.A.h, n), n.o.clear();
-    }, r.values = function () {
-      var n = this[B];
-      return o(n), i(n), n.o.values();
-    }, r.entries = function () {
-      var n = this[B];
-      return o(n), i(n), n.o.entries();
-    }, r.keys = function () {
-      return this.values();
-    }, r[G] = function () {
-      return this.values();
-    }, r.forEach = function (n, t) {
-      for (var r = this.values(), e = r.next(); !e.done;) n.call(t, e.value, e.value, this), e = r.next();
-    }, n;
-  }();
-
-  y("MapSet", {
-    T: function (n, t) {
-      return new a(n, t);
-    },
-    F: function (n, t) {
-      return new f(n, t);
-    }
-  });
-}
-
-function N() {
-  k(), D(), R();
-}
-
-function T(n) {
-  return n;
-}
-
-function F(n) {
-  return n;
-}
-
-var C,
-    J,
-    K = "undefined" != typeof Symbol,
-    $ = "undefined" != typeof Map,
-    U = "undefined" != typeof Set,
-    W = "undefined" != typeof Proxy && void 0 !== Proxy.revocable && "undefined" != typeof Reflect,
-    X = K ? Symbol("immer-nothing") : ((C = {})["immer-nothing"] = !0, C),
-    q = K ? Symbol("immer-draftable") : "__$immer_draftable",
-    B = K ? Symbol("immer-state") : "__$immer_state",
-    G = K ? Symbol.iterator : "@@iterator",
-    H = {
-  0: "Illegal state",
-  1: "Immer drafts cannot have computed properties",
-  2: "This object has been frozen and should not be mutated",
-  3: function (n) {
-    return "Cannot use a proxy that has been revoked. Did you pass an object from inside an immer function to an async process? " + n;
-  },
-  4: "An immer producer returned a new value *and* modified its draft. Either return a new value *or* modify the draft.",
-  5: "Immer forbids circular references",
-  6: "The first or second argument to `produce` must be a function",
-  7: "The third argument to `produce` must be a function or undefined",
-  8: "First argument to `createDraft` must be a plain object, an array, or an immerable object",
-  9: "First argument to `finishDraft` must be a draft returned by `createDraft`",
-  10: "The given draft is already finalized",
-  11: "Object.defineProperty() cannot be used on an Immer draft",
-  12: "Object.setPrototypeOf() cannot be used on an Immer draft",
-  13: "Immer only supports deleting array indices",
-  14: "Immer only supports setting array indices and the 'length' property",
-  15: function (n) {
-    return "Cannot apply patch, path doesn't resolve: " + n;
-  },
-  16: 'Sets cannot have "replace" patches.',
-  17: function (n) {
-    return "Unsupported patch operation: " + n;
-  },
-  18: function (n) {
-    return "The plugin for '" + n + "' has not been loaded into Immer. To enable the plugin, import and call `enable" + n + "()` when initializing your application.";
-  },
-  19: "plugin not loaded",
-  20: "Cannot use proxies if Proxy, Proxy.revocable or Reflect are not available"
-},
-    L = "undefined" != typeof Reflect && Reflect.ownKeys ? Reflect.ownKeys : void 0 !== Object.getOwnPropertySymbols ? function (n) {
-  return Object.getOwnPropertyNames(n).concat(Object.getOwnPropertySymbols(n));
-} : Object.getOwnPropertyNames,
-    Q = {},
-    V = {
-  get: function (n, t) {
-    if (t === B) return n;
-    var e = n.p;
-    if (!n.P && u(e, t)) return e[t];
-    var i = v(n)[t];
-    if (n.I || !r(i)) return i;
-
-    if (n.P) {
-      if (i !== A(n.t, t)) return i;
-      e = n.o;
-    }
-
-    return e[t] = I(n.A.h, i, n);
-  },
-  has: function (n, t) {
-    return t in v(n);
-  },
-  ownKeys: function (n) {
-    return Reflect.ownKeys(v(n));
-  },
-  set: function (n, t, r) {
-    if (!n.P) {
-      var e = A(n.t, t);
-      if (r ? f(e, r) || r === n.p[t] : f(e, r) && t in n.t) return !0;
-      x(n), z(n);
-    }
-
-    return n.D[t] = !0, n.o[t] = r, !0;
-  },
-  deleteProperty: function (n, t) {
-    return void 0 !== A(n.t, t) || t in n.t ? (n.D[t] = !1, x(n), z(n)) : n.D[t] && delete n.D[t], n.o && delete n.o[t], !0;
-  },
-  getOwnPropertyDescriptor: function (n, t) {
-    var r = v(n),
-        e = Reflect.getOwnPropertyDescriptor(r, t);
-    return e && (e.writable = !0, e.configurable = 1 !== n.i || "length" !== t), e;
-  },
-  defineProperty: function () {
-    n(11);
-  },
-  getPrototypeOf: function (n) {
-    return Object.getPrototypeOf(n.t);
-  },
-  setPrototypeOf: function () {
-    n(12);
-  }
-},
-    Y = {};
-exports.immerable = q;
-exports.nothing = X;
-i(V, function (n, t) {
-  Y[n] = function () {
-    return arguments[0] = arguments[0][0], t.apply(this, arguments);
-  };
-}), Y.deleteProperty = function (t, r) {
-  return "production" !== "development" && isNaN(parseInt(r)) && n(13), V.deleteProperty.call(this, t[0], r);
-}, Y.set = function (t, r, e) {
-  return "production" !== "development" && "length" !== r && isNaN(parseInt(r)) && n(14), V.set.call(this, t[0], r, e, t[0]);
-};
-
-var Z = function () {
-  function e(n) {
-    this.g = W, this.N = "production" !== "development", "boolean" == typeof (null == n ? void 0 : n.useProxies) && this.setUseProxies(n.useProxies), "boolean" == typeof (null == n ? void 0 : n.autoFreeze) && this.setAutoFreeze(n.autoFreeze), this.produce = this.produce.bind(this), this.produceWithPatches = this.produceWithPatches.bind(this);
-  }
-
-  var i = e.prototype;
-  return i.produce = function (t, e, i) {
-    if ("function" == typeof t && "function" != typeof e) {
-      var o = e;
-      e = t;
-      var u = this;
-      return function (n) {
-        var t = this;
-        void 0 === n && (n = o);
-
-        for (var r = arguments.length, i = Array(r > 1 ? r - 1 : 0), a = 1; a < r; a++) i[a - 1] = arguments[a];
-
-        return u.produce(n, function (n) {
-          var r;
-          return (r = e).call.apply(r, [t, n].concat(i));
-        });
-      };
-    }
-
-    var a;
-
-    if ("function" != typeof e && n(6), void 0 !== i && "function" != typeof i && n(7), r(t)) {
-      var f = O(this),
-          c = I(this, t, void 0),
-          s = !0;
-
-      try {
-        a = e(c), s = !1;
-      } finally {
-        s ? _(f) : j(f);
-      }
-
-      return "undefined" != typeof Promise && a instanceof Promise ? a.then(function (n) {
-        return b(f, i), w(n, f);
-      }, function (n) {
-        throw _(f), n;
-      }) : (b(f, i), w(a, f));
-    }
-
-    if ((a = e(t)) !== X) return void 0 === a && (a = t), this.N && d(a, !0), a;
-  }, i.produceWithPatches = function (n, t) {
-    var r,
-        e,
-        i = this;
-    return "function" == typeof n ? function (t) {
-      for (var r = arguments.length, e = Array(r > 1 ? r - 1 : 0), o = 1; o < r; o++) e[o - 1] = arguments[o];
-
-      return i.produceWithPatches(t, function (t) {
-        return n.apply(void 0, [t].concat(e));
-      });
-    } : [this.produce(n, t, function (n, t) {
-      r = n, e = t;
-    }), r, e];
-  }, i.createDraft = function (t) {
-    r(t) || n(8);
-    var e = O(this),
-        i = I(this, t, void 0);
-    return i[B].C = !0, j(e), i;
-  }, i.finishDraft = function (t, r) {
-    var e = t && t[B];
-    "production" !== "development" && (e && e.C || n(9), e.I && n(10));
-    var i = e.A;
-    return b(i, r), w(void 0, i);
-  }, i.setAutoFreeze = function (n) {
-    this.N = n;
-  }, i.setUseProxies = function (t) {
-    W || n(20), this.g = t;
-  }, i.applyPatches = function (n, r) {
-    var e;
-
-    for (e = r.length - 1; e >= 0; e--) {
-      var i = r[e];
-
-      if (0 === i.path.length && "replace" === i.op) {
-        n = i.value;
-        break;
-      }
-    }
-
-    var o = h("Patches").U;
-    return t(n) ? o(n, r) : this.produce(n, function (n) {
-      return o(n, r.slice(e + 1));
-    });
-  }, e;
-}(),
-    nn = new Z(),
-    tn = nn.produce,
-    rn = nn.produceWithPatches.bind(nn),
-    en = nn.setAutoFreeze.bind(nn),
-    on = nn.setUseProxies.bind(nn),
-    un = nn.applyPatches.bind(nn),
-    an = nn.createDraft.bind(nn),
-    fn = nn.finishDraft.bind(nn);
-
-exports.finishDraft = fn;
-exports.createDraft = an;
-exports.applyPatches = un;
-exports.setUseProxies = on;
-exports.setAutoFreeze = en;
-exports.produceWithPatches = rn;
-exports.produce = tn;
-exports.Immer = Z;
-var _default = tn;
-exports.default = _default;
-},{}],"stateInvariants.ts":[function(require,module,exports) {
-"use strict";
-
-function _createForOfIteratorHelper(o) { if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (o = _unsupportedIterableToArray(o))) { var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var it, normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-var __importStar = this && this.__importStar || function (mod) {
-  if (mod && mod.__esModule) return mod;
-  var result = {};
-  if (mod != null) for (var k in mod) {
-    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-  }
-  result["default"] = mod;
-  return result;
-};
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var speech = __importStar(require("./speech"));
-
-function verify(state, deps) {
-  if (!deps.translations.has(state.language)) {
-    throw Error("Language in the state is not contained in the translations: ".concat(JSON.stringify(state.language)));
-  }
-
-  if (state.voice !== undefined) {
-    if (!deps.voices.has(state.voice)) {
-      throw Error("Voice in the state is not available in the voices: (".concat(JSON.stringify(state.voice)));
-    }
-
-    var lastVoice = state.lastVoiceByLanguage.get(state.language);
-
-    if (lastVoice === undefined) {
-      throw Error("Unexpected undefined last voice for the language in the state: ".concat(state.language));
-    }
-
-    if (lastVoice.toKey() !== state.voice.toKey()) {
-      throw Error("The voice in the state (== ".concat(state.voice.toKey(), ") for the language ").concat(state.language, " ") + "must match the last voice by the same language: ".concat(lastVoice.toKey()));
-    }
-
-    if (!speech.voiceForLanguageOK(state.voice, state.language, deps.voicesByLanguage)) {
-      throw Error("Voice in the state does not match the language in the state ".concat(state.language, ": ").concat(state.voice));
-    }
-  }
-
-  var _iterator = _createForOfIteratorHelper(deps.translations.keys()),
-      _step;
-
-  try {
-    for (_iterator.s(); !(_step = _iterator.n()).done;) {
-      var language = _step.value;
-
-      if (!state.lastVoiceByLanguage.has(language)) {
-        throw Error("Unexpectedly missing an entry in lastVoiceByLanguage for: ".concat(language));
-      }
-
-      var _lastVoice = state.lastVoiceByLanguage.get(language);
-
-      if (_lastVoice !== undefined && !speech.voiceForLanguageOK(_lastVoice, language, deps.voicesByLanguage)) {
-        throw Error("The lastvoiceByLanguage for the language ".concat(language, " is invalid: ").concat(_lastVoice));
-      }
-    }
-  } catch (err) {
-    _iterator.e(err);
-  } finally {
-    _iterator.f();
-  }
-
-  if (!deps.questionBank.has(state.currentQuestion)) {
-    throw Error("Current question is not in the question bank: ".concat(state.currentQuestion));
-  }
-
-  var _iterator2 = _createForOfIteratorHelper(state.answers.keys()),
-      _step2;
-
-  try {
-    for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
-      var id = _step2.value;
-
-      if (!deps.questionBank.has(id)) {
-        throw Error("Answer is given to a question with invalid ID: ".concat(id));
-      }
-    }
-  } catch (err) {
-    _iterator2.e(err);
-  } finally {
-    _iterator2.f();
-  }
-}
-
-exports.verify = verify;
-
-function create(deps) {
-  var middleware = function middleware(api) {
-    return function (next) {
-      return function (action) {
-        // Verify before dispatching
-        verify(api.getState(), deps);
-        var result = next(action); // Verify after reducing
-
-        verify(api.getState(), deps);
-        return result;
-      };
-    };
-  };
-
-  return middleware;
-}
-
-exports.create = create;
-},{"./speech":"speech.ts"}],"autosave.ts":[function(require,module,exports) {
-"use strict";
-
-function _createForOfIteratorHelper(o) { if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (o = _unsupportedIterableToArray(o))) { var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var it, normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-var __importStar = this && this.__importStar || function (mod) {
-  if (mod && mod.__esModule) return mod;
-  var result = {};
-  if (mod != null) for (var k in mod) {
-    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-  }
-  result["default"] = mod;
-  return result;
-};
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var immer_1 = require("immer");
-
-var action = __importStar(require("./action"));
-
-var speech = __importStar(require("./speech"));
-
-var stateInvariants = __importStar(require("./stateInvariants"));
-/**
- * Patch the initialized state with the extra information from the storage.
- */
-
-
-function patchState(deps, state) {
-  // Precondition
-  stateInvariants.verify(state, deps);
-  var result = immer_1.produce(state, function (draft) {
-    ////
-    // Language and voice
-    ////
-    var maybeLanguage = deps.storage.getItem('language');
-
-    if (maybeLanguage !== null && deps.translations.has(maybeLanguage)) {
-      var language = maybeLanguage;
-      draft.language = language;
-      var voiceIDAsKey = deps.storage.getItem('voice');
-
-      if (voiceIDAsKey !== null) {
-        var voice = speech.voiceIDFromKey(voiceIDAsKey);
-
-        if (speech.voiceForLanguageOK(voice, language, deps.voicesByLanguage)) {
-          draft.voice = voice;
-        }
-      } else {
-        draft.voice = state.lastVoiceByLanguage.get(language);
-      }
-    }
-
-    var _iterator = _createForOfIteratorHelper(deps.translations.keys()),
-        _step;
-
-    try {
-      for (_iterator.s(); !(_step = _iterator.n()).done;) {
-        var _language = _step.value;
-        var storageKey = "lastVoiceByLanguage/".concat(_language);
-        var maybeLastVoiceKey = deps.storage.getItem(storageKey);
-
-        if (maybeLastVoiceKey !== null && maybeLastVoiceKey !== undefined) {
-          var _voice = speech.voiceIDFromKey(maybeLastVoiceKey);
-
-          if (speech.voiceForLanguageOK(_voice, _language, deps.voicesByLanguage)) {
-            draft.lastVoiceByLanguage.set(_language, _voice);
-          }
-        }
-      } ////
-      // Question & answers
-      ////
-
-    } catch (err) {
-      _iterator.e(err);
-    } finally {
-      _iterator.f();
-    }
-
-    var _iterator2 = _createForOfIteratorHelper(deps.questionBank.questions),
-        _step2;
-
-    try {
-      for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
-        var question = _step2.value;
-        var maybeAnswer = deps.storage.getItem("answer/".concat(question.id));
-
-        if (maybeAnswer !== null && maybeAnswer !== undefined) {
-          draft.answers.set(question.id, maybeAnswer);
-        }
-      }
-    } catch (err) {
-      _iterator2.e(err);
-    } finally {
-      _iterator2.f();
-    }
-
-    var maybeCurrentQuestion = deps.storage.getItem('currentQuestion');
-
-    if (maybeCurrentQuestion !== null && maybeCurrentQuestion !== undefined && deps.questionBank.has(maybeCurrentQuestion)) {
-      draft.currentQuestion = maybeCurrentQuestion;
-    } ////
-    // Preferences visible
-    ////
-
-
-    var maybePreferencesVisible = deps.storage.getItem('preferencesVisible');
-
-    if (maybePreferencesVisible !== null && maybePreferencesVisible !== undefined) {
-      draft.preferencesVisible = maybePreferencesVisible === 'true';
-    }
-  });
-  stateInvariants.verify(state, deps);
-  return result;
-}
-
-exports.patchState = patchState;
-
-function create(deps) {
-  /* eslint-disable @typescript-eslint/explicit-function-return-type */
-  var middleware = function middleware(api) {
-    return function (next) {
-      return function (a) {
-        var result = next(a);
-
-        switch (a.type) {
-          case action.CHANGE_TRANSLATION:
-            {
-              deps.storage.setItem('language', api.getState().language);
-              var voice = api.getState().voice;
-
-              if (voice !== undefined) {
-                deps.storage.setItem('voice', voice.toKey());
-              }
-
-              break;
-            }
-
-          case action.CHANGE_VOICE:
-            {
-              var _voice2 = api.getState().voice;
-
-              if (_voice2 !== undefined) {
-                var language = api.getState().language; // The language needs to be set as well in order to retrieve the voice afterwards.
-                // This is relevant when you have an initial storage where no language has been stored.
-
-                var maybeLanguage = deps.storage.getItem('language');
-
-                if (maybeLanguage === null || maybeLanguage === undefined) {
-                  deps.storage.setItem('language', language);
-                } else {
-                  if (maybeLanguage !== api.getState().language) {
-                    throw Error("Expected the language in the storage (== ".concat(maybeLanguage, ") to coincide ") + "with the language in the state on voice change: ".concat(api.getState().language));
-                  }
-                }
-
-                deps.storage.setItem('voice', _voice2.toKey());
-                var lastVoice = api.getState().lastVoiceByLanguage.get(language);
-
-                if (lastVoice === undefined) {
-                  throw Error("Unexpected missing last voice for language ".concat(language, " when voice was: ").concat(_voice2));
-                }
-
-                deps.storage.setItem("lastVoiceByLanguage/".concat(language), lastVoice.toKey());
-              } else {
-                deps.storage.removeItem('voice');
-              }
-
-              break;
-            }
-
-          case action.CHANGE_ANSWER:
-            {
-              var question = api.getState().currentQuestion;
-              var answer = api.getState().answers.get(question);
-
-              if (answer === undefined) {
-                throw Error("Unexpectedly no answer for the question: ".concat(question));
-              }
-
-              deps.storage.setItem("answer/".concat(question), answer);
-              break;
-            }
-
-          case action.DELETE_ALL:
-            {
-              var _iterator3 = _createForOfIteratorHelper(deps.questionBank.questions),
-                  _step3;
-
-              try {
-                for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
-                  var _question = _step3.value;
-                  deps.storage.removeItem("answer/".concat(_question.id));
-                }
-              } catch (err) {
-                _iterator3.e(err);
-              } finally {
-                _iterator3.f();
-              }
-
-              break;
-            }
-
-          case action.GOTO_QUESTION:
-            {
-              var currentQuestion = api.getState().currentQuestion;
-              deps.storage.setItem('currentQuestion', currentQuestion);
-              break;
-            }
-
-          case action.TOGGLE_PREFERENCES:
-            {
-              deps.storage.setItem('preferencesVisible', api.getState().preferencesVisible ? 'true' : 'false');
-            }
-        }
-
-        return result;
-      };
-    };
-  };
-
-  return middleware;
-}
-
-exports.create = create;
-},{"immer":"../node_modules/immer/dist/immer.esm.js","./action":"action.ts","./speech":"speech.ts","./stateInvariants":"stateInvariants.ts"}],"app.ts":[function(require,module,exports) {
+},{}],"app.ts":[function(require,module,exports) {
 "use strict";
 
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
@@ -89188,7 +89240,7 @@ function initializeState(deps) {
   }
 
   var language = i18n.inferDefault(navigator.language || '', _toConsumableArray(deps.translations.keys()).sort());
-  var lastVoiceByLanguage = new Map();
+  var voiceByLanguage = new Map();
 
   var _iterator = _createForOfIteratorHelper(deps.voicesByLanguage.entries()),
       _step;
@@ -89200,9 +89252,9 @@ function initializeState(deps) {
           voices = _step$value[1];
 
       if (voices.length > 0) {
-        lastVoiceByLanguage.set(lang, voices[0]);
+        voiceByLanguage.set(lang, voices[0]);
       } else {
-        lastVoiceByLanguage.set(lang, undefined);
+        voiceByLanguage.set(lang, undefined);
       }
     }
   } catch (err) {
@@ -89211,11 +89263,9 @@ function initializeState(deps) {
     _iterator.f();
   }
 
-  var voice = lastVoiceByLanguage.get(language);
   var defaultState = {
     language: language,
-    voice: voice,
-    lastVoiceByLanguage: lastVoiceByLanguage,
+    voiceByLanguage: voiceByLanguage,
     currentQuestion: deps.questionBank.questions[0].id,
     answers: new Map(),
     focusPending: true,
@@ -89241,7 +89291,7 @@ function createReducer(deps) {
     var result = immer_1.produce(state, function (draft) {
       switch (a.type) {
         case action.CHANGE_ANSWER:
-          draft.answers.set(state.currentQuestion, a.answer);
+          draft.answers.set(a.questionID, a.answer);
           break;
 
         case action.GOTO_QUESTION:
@@ -89261,16 +89311,11 @@ function createReducer(deps) {
           break;
 
         case action.CHANGE_TRANSLATION:
-          if (state.language !== a.language) {
-            draft.language = a.language;
-            draft.voice = state.lastVoiceByLanguage.get(a.language);
-          }
-
+          draft.language = a.language;
           break;
 
         case action.CHANGE_VOICE:
-          draft.voice = a.voice;
-          draft.lastVoiceByLanguage.set(state.language, a.voice);
+          draft.voiceByLanguage.set(a.language, a.voice);
           break;
 
         case action.DELETE_ALL:
@@ -89438,6 +89483,8 @@ var react_dom_1 = require("react-dom");
 
 var react_redux_1 = require("react-redux");
 
+var autosave = __importStar(require("./autosave"));
+
 var App_1 = require("./components/App");
 
 var ErrorBoundary_1 = require("./components/ErrorBoundary");
@@ -89454,7 +89501,7 @@ var select = __importStar(require("./select"));
 
 var storeFactory = __importStar(require("./storeFactory"));
 
-function promiseIngredients() {
+function promiseSpeechSynthesisReady() {
   // Remark (Marko Ristin, 2020-04-18): Since the voices might change *while* the application is running,
   // voices should be integrated in the application state. This is left to a future version as it is hardly
   // a real issue at the moment.
@@ -89478,38 +89525,47 @@ function promiseIngredients() {
         resolve();
       }
     }, 500);
-  }).then(function () {
-    var deps = dependency.initializeRegistry(question.initializeBank(), window.speechSynthesis, i18n.initializeTranslations(), localStorage, history_1.createBrowserHistory());
-    var store = storeFactory.produce(deps);
-    var selectWithDeps = new select.WithDeps(deps);
-    console.info('All we need has been initialized.');
-    return {
-      deps: deps,
-      store: store,
-      selectWithDeps: selectWithDeps
-    };
   });
 }
 
-speechSynthesis.onvoiceschanged = function () {
-  /* do nothing */
-};
-
 function Main() {
-  var _react_1$useState = react_1.useState(undefined),
+  var _react_1$useState = react_1.useState(false),
       _react_1$useState2 = _slicedToArray(_react_1$useState, 2),
-      ingredients = _react_1$useState2[0],
-      setIngredients = _react_1$useState2[1];
+      ready = _react_1$useState2[0],
+      setReady = _react_1$useState2[1];
 
   var _react_1$useState3 = react_1.useState(undefined),
       _react_1$useState4 = _slicedToArray(_react_1$useState3, 2),
       error = _react_1$useState4[0],
       setError = _react_1$useState4[1];
 
+  var _react_1$useState5 = react_1.useState(undefined),
+      _react_1$useState6 = _slicedToArray(_react_1$useState5, 2),
+      deps = _react_1$useState6[0],
+      setDeps = _react_1$useState6[1];
+
+  var _react_1$useState7 = react_1.useState(undefined),
+      _react_1$useState8 = _slicedToArray(_react_1$useState7, 2),
+      store = _react_1$useState8[0],
+      setStore = _react_1$useState8[1];
+
+  var _react_1$useState9 = react_1.useState(undefined),
+      _react_1$useState10 = _slicedToArray(_react_1$useState9, 2),
+      selectWithDeps = _react_1$useState10[0],
+      setSelectWithDeps = _react_1$useState10[1];
+
   react_1.useEffect(function () {
-    if (ingredients === undefined && error === undefined) {
-      promiseIngredients().then(function (youNeed) {
-        return setIngredients(youNeed);
+    if (!ready && error === undefined) {
+      promiseSpeechSynthesisReady().then(function () {
+        var aDeps = dependency.initializeRegistry(question.initializeBank(), window.speechSynthesis, i18n.initializeTranslations(), localStorage, history_1.createBrowserHistory());
+        autosave.undoPreviousDataVersions(aDeps.storage);
+        var aStore = storeFactory.produce(aDeps);
+        var aSelectWithDeps = new select.WithDeps(aDeps);
+        autosave.connectStoreToStorageEvent(aStore, aDeps);
+        setDeps(aDeps);
+        setStore(aStore);
+        setSelectWithDeps(aSelectWithDeps);
+        setReady(true);
       }).catch(function (e) {
         setError(e.toString());
       });
@@ -89521,13 +89577,25 @@ function Main() {
       error: error
     });
   } else {
-    if (ingredients !== undefined) {
+    if (ready) {
+      if (deps === undefined) {
+        throw Error('Deps are unexpectedly undefined when ready.');
+      }
+
+      if (store === undefined) {
+        throw Error('Store is unexpectedly undefined when ready.');
+      }
+
+      if (selectWithDeps === undefined) {
+        throw Error('selectWithDeps is unexpectedly undefined when ready.');
+      }
+
       return React.createElement(react_redux_1.Provider, {
-        store: ingredients.store
+        store: store
       }, React.createElement(select.Context.Provider, {
-        value: ingredients.selectWithDeps
+        value: selectWithDeps
       }, React.createElement(i18n.Context.Provider, {
-        value: ingredients.deps.translations
+        value: deps.translations
       }, React.createElement(App_1.App, null))));
     } else {
       return React.createElement(core_1.LinearProgress, null);
@@ -89536,7 +89604,7 @@ function Main() {
 }
 
 react_dom_1.render(React.createElement(ErrorBoundary_1.ErrorBoundary, null, React.createElement(Main, null)), document.getElementById('root'));
-},{"typeface-roboto":"../node_modules/typeface-roboto/index.css","@material-ui/core":"../node_modules/@material-ui/core/esm/index.js","history":"../node_modules/history/esm/history.js","react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","react-redux":"../node_modules/react-redux/es/index.js","./components/App":"components/App.tsx","./components/ErrorBoundary":"components/ErrorBoundary.tsx","./components/Unfortunately":"components/Unfortunately.tsx","./dependency":"dependency.ts","./i18n":"i18n.ts","./question":"question.ts","./select":"select.ts","./storeFactory":"storeFactory.ts"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"typeface-roboto":"../node_modules/typeface-roboto/index.css","@material-ui/core":"../node_modules/@material-ui/core/esm/index.js","history":"../node_modules/history/esm/history.js","react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","react-redux":"../node_modules/react-redux/es/index.js","./autosave":"autosave.ts","./components/App":"components/App.tsx","./components/ErrorBoundary":"components/ErrorBoundary.tsx","./components/Unfortunately":"components/Unfortunately.tsx","./dependency":"dependency.ts","./i18n":"i18n.ts","./question":"question.ts","./select":"select.ts","./storeFactory":"storeFactory.ts"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -89564,7 +89632,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "45079" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46117" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
