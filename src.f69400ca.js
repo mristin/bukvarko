@@ -83929,7 +83929,7 @@ function createSvgIcon(path, displayName) {
   Component.muiName = _SvgIcon.default.muiName;
   return Component;
 }
-},{"@babel/runtime/helpers/interopRequireDefault":"../node_modules/@babel/runtime/helpers/interopRequireDefault.js","@babel/runtime/helpers/extends":"../node_modules/@babel/runtime/helpers/extends.js","react":"../node_modules/react/index.js","@material-ui/core/SvgIcon":"../node_modules/@material-ui/core/esm/SvgIcon/index.js"}],"../node_modules/@material-ui/icons/Delete.js":[function(require,module,exports) {
+},{"@babel/runtime/helpers/interopRequireDefault":"../node_modules/@babel/runtime/helpers/interopRequireDefault.js","@babel/runtime/helpers/extends":"../node_modules/@babel/runtime/helpers/extends.js","react":"../node_modules/react/index.js","@material-ui/core/SvgIcon":"../node_modules/@material-ui/core/esm/SvgIcon/index.js"}],"../node_modules/@material-ui/icons/Replay.js":[function(require,module,exports) {
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -83944,8 +83944,8 @@ var _react = _interopRequireDefault(require("react"));
 var _createSvgIcon = _interopRequireDefault(require("./utils/createSvgIcon"));
 
 var _default = (0, _createSvgIcon.default)(_react.default.createElement("path", {
-  d: "M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
-}), 'Delete');
+  d: "M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"
+}), 'Replay');
 
 exports.default = _default;
 },{"@babel/runtime/helpers/interopRequireDefault":"../node_modules/@babel/runtime/helpers/interopRequireDefault.js","react":"../node_modules/react/index.js","./utils/createSvgIcon":"../node_modules/@material-ui/icons/utils/createSvgIcon.js"}],"components/DeleteAll.tsx":[function(require,module,exports) {
@@ -83973,7 +83973,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var core_1 = require("@material-ui/core");
 
-var Delete_1 = __importDefault(require("@material-ui/icons/Delete"));
+var Replay_1 = __importDefault(require("@material-ui/icons/Replay"));
 
 var React = __importStar(require("react"));
 
@@ -83989,11 +83989,11 @@ function DeleteAll(props) {
       return dispatch(action.deleteAll());
     },
     "data-testid": "deleteAll"
-  }, React.createElement(Delete_1.default, null));
+  }, React.createElement(Replay_1.default, null));
 }
 
 exports.DeleteAll = DeleteAll;
-},{"@material-ui/core":"../node_modules/@material-ui/core/esm/index.js","@material-ui/icons/Delete":"../node_modules/@material-ui/icons/Delete.js","react":"../node_modules/react/index.js","react-redux":"../node_modules/react-redux/es/index.js","../action":"action.ts"}],"../node_modules/@material-ui/icons/Fullscreen.js":[function(require,module,exports) {
+},{"@material-ui/core":"../node_modules/@material-ui/core/esm/index.js","@material-ui/icons/Replay":"../node_modules/@material-ui/icons/Replay.js","react":"../node_modules/react/index.js","react-redux":"../node_modules/react-redux/es/index.js","../action":"action.ts"}],"../node_modules/@material-ui/icons/Fullscreen.js":[function(require,module,exports) {
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -84505,46 +84505,6 @@ exports.croatian = {
   nothingIsWrittenHere: 'Ovdje ništa ne piše.',
   questionImageAlt: 'slika-pitanje'
 };
-},{"../expectAnswer":"expectAnswer.ts"}],"i18n/sr.ts":[function(require,module,exports) {
-"use strict";
-
-var __importStar = this && this.__importStar || function (mod) {
-  if (mod && mod.__esModule) return mod;
-  var result = {};
-  if (mod != null) for (var k in mod) {
-    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-  }
-  result["default"] = mod;
-  return result;
-};
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var expectAnswer = __importStar(require("../expectAnswer"));
-
-exports.serbian = {
-  chooseYourLanguage: 'Jezik',
-  languageName: 'Srpski',
-  chooseYourVoice: 'Glas',
-  noVoiceAvailable: 'Sistem ne podržava glas za ovaj jezik.',
-  answerCheckers: {
-    elephant: expectAnswer.ignoreCase('slon', 'слон'),
-    tiger: expectAnswer.ignoreCase('tigar', 'тигар'),
-    lion: expectAnswer.ignoreCase('lav', 'лав'),
-    dog: expectAnswer.ignoreCase('pas', 'пас'),
-    wolf: expectAnswer.ignoreCase('vuk'),
-    fox: expectAnswer.ignoreCase('lisac', 'lisica', 'лисац', 'лисица'),
-    pig: expectAnswer.ignoreCase('svinja', 'свиња'),
-    goat: expectAnswer.ignoreCase('koza', 'jarac', 'kozlić', 'коза', 'јарац', 'козлић'),
-    bear: expectAnswer.ignoreCase('medved', 'медвед'),
-    giraffe: expectAnswer.ignoreCase('žirafa', 'жирафа')
-  },
-  hereItSays: 'Ovde piše',
-  nothingIsWrittenHere: 'Ovde ništa ne piše.',
-  questionImageAlt: 'slika-pitanje'
-};
 },{"../expectAnswer":"expectAnswer.ts"}],"i18n/pl.ts":[function(require,module,exports) {
 "use strict";
 
@@ -84625,6 +84585,46 @@ exports.portuguese = {
   nothingIsWrittenHere: 'Aqui não está nada escrito.',
   questionImageAlt: 'A pergunta'
 };
+},{"../expectAnswer":"expectAnswer.ts"}],"i18n/sr.ts":[function(require,module,exports) {
+"use strict";
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+  }
+  result["default"] = mod;
+  return result;
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var expectAnswer = __importStar(require("../expectAnswer"));
+
+exports.serbian = {
+  chooseYourLanguage: 'Jezik',
+  languageName: 'Srpski',
+  chooseYourVoice: 'Glas',
+  noVoiceAvailable: 'Sistem ne podržava glas za ovaj jezik.',
+  answerCheckers: {
+    elephant: expectAnswer.ignoreCase('slon', 'слон'),
+    tiger: expectAnswer.ignoreCase('tigar', 'тигар'),
+    lion: expectAnswer.ignoreCase('lav', 'лав'),
+    dog: expectAnswer.ignoreCase('pas', 'пас'),
+    wolf: expectAnswer.ignoreCase('vuk'),
+    fox: expectAnswer.ignoreCase('lisac', 'lisica', 'лисац', 'лисица'),
+    pig: expectAnswer.ignoreCase('svinja', 'свиња'),
+    goat: expectAnswer.ignoreCase('koza', 'jarac', 'kozlić', 'коза', 'јарац', 'козлић'),
+    bear: expectAnswer.ignoreCase('medved', 'медвед'),
+    giraffe: expectAnswer.ignoreCase('žirafa', 'жирафа')
+  },
+  hereItSays: 'Ovde piše',
+  nothingIsWrittenHere: 'Ovde ništa ne piše.',
+  questionImageAlt: 'slika-pitanje'
+};
 },{"../expectAnswer":"expectAnswer.ts"}],"i18n.ts":[function(require,module,exports) {
 "use strict";
 
@@ -84662,11 +84662,11 @@ var fr_1 = require("./i18n/fr");
 
 var hr_1 = require("./i18n/hr");
 
-var sr_1 = require("./i18n/sr");
-
 var pl_1 = require("./i18n/pl");
 
 var pt_1 = require("./i18n/pt");
+
+var sr_1 = require("./i18n/sr");
 
 exports.SERBIAN = 'sr';
 exports.CROATIAN = 'hr';
@@ -84741,7 +84741,7 @@ function inferDefault(navigatorLanguage, languages) {
 
 exports.inferDefault = inferDefault;
 exports.Context = React.createContext(undefined);
-},{"react":"../node_modules/react/index.js","./bcp47":"bcp47.ts","./i18n/de":"i18n/de.ts","./i18n/en":"i18n/en.ts","./i18n/es":"i18n/es.ts","./i18n/fr":"i18n/fr.ts","./i18n/hr":"i18n/hr.ts","./i18n/sr":"i18n/sr.ts","./i18n/pl":"i18n/pl.ts","./i18n/pt":"i18n/pt.ts"}],"../node_modules/object-keys/isArguments.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","./bcp47":"bcp47.ts","./i18n/de":"i18n/de.ts","./i18n/en":"i18n/en.ts","./i18n/es":"i18n/es.ts","./i18n/fr":"i18n/fr.ts","./i18n/hr":"i18n/hr.ts","./i18n/pl":"i18n/pl.ts","./i18n/pt":"i18n/pt.ts","./i18n/sr":"i18n/sr.ts"}],"../node_modules/object-keys/isArguments.js":[function(require,module,exports) {
 'use strict';
 
 var toStr = Object.prototype.toString;
@@ -89632,7 +89632,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46117" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "37259" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
