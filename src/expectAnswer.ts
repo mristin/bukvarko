@@ -3,7 +3,7 @@ export function ignoreCase(...expected: string[]): (answer: string) => boolean {
     let result = false;
 
     for (const anExpected of expected) {
-      if (answer.toLowerCase() === anExpected.toLowerCase()) {
+      if (answer.toLowerCase().trim() === anExpected.toLowerCase().trim()) {
         result = true;
         break;
       }
