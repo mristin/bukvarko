@@ -7,7 +7,6 @@ import * as app from '../app';
 import { Answer } from './Answer';
 import { DeleteAll } from './DeleteAll';
 import { FullScreen } from './FullScreen';
-import { Judge } from './Judge';
 import { NextQuestion } from './NextQuestion';
 import { Preferences } from './Preferences';
 import { PreferencesButton } from './PreferencesButton';
@@ -78,10 +77,6 @@ function Desktop(props: { hasVoice: boolean }) {
             <Answer />
 
             {props.hasVoice ? <Speaker style={{ marginLeft: '1em' }} /> : null}
-
-            <div style={{ marginTop: '1em' }}>
-              <Judge />
-            </div>
 
             <div style={{ marginTop: '1em' }}>
               <ScoreBar />
