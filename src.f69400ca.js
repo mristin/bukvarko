@@ -81968,6 +81968,7 @@ function speak() {
     var text = answer !== '' ? "".concat(translation.hereItSays, ": ").concat(answer) : translation.nothingIsWrittenHere;
     var u = new SpeechSynthesisUtterance();
     u.voice = deps.voices.get(voice);
+    u.lang = voice.lang;
     u.text = text;
     u.volume = 1; // 0 to 1
 
@@ -85619,7 +85620,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 function primaryLanguage(tag) {
-  var parts = tag.split('-');
+  var parts = tag.split(/[_-]/);
 
   if (parts.length === 0) {
     throw Error("Unexpected language specification according to BCP 47: ".concat(tag));
@@ -85657,7 +85658,7 @@ function ignoreCase() {
       for (_iterator.s(); !(_step = _iterator.n()).done;) {
         var anExpected = _step.value;
 
-        if (answer.toLowerCase() === anExpected.toLowerCase()) {
+        if (answer.toLowerCase().trim() === anExpected.toLowerCase().trim()) {
           result = true;
           break;
         }
@@ -89458,23 +89459,23 @@ function promiseIngredients() {
   // voices should be integrated in the application state. This is left to a future version as it is hardly
   // a real issue at the moment.
   // This is necessary since Chrome needs to load the voices, while other browsers just return the getVoices.
-  speechSynthesis.onvoiceschanged = function () {};
+  speechSynthesis.onvoiceschanged = function () {
+    /* do nothing */
+  };
 
-  return new Promise(function (resolve, reject) {
+  return new Promise(function (resolve, _) {
     var retries = 0;
     var intervalID = setInterval(function () {
       if (speechSynthesis.getVoices().length > 0) {
         clearInterval(intervalID);
-        reject('# voices: ' + speechSynthesis.getVoices().map(function (v) {
-          return v.name + ' -- ' + v.lang;
-        }).join('; ')); // resolve();
+        resolve();
       }
 
       retries++;
 
       if (retries >= 10) {
         clearInterval(intervalID);
-        reject('interval at the end: # voices: ' + speechSynthesis.getVoices().length); // resolve();
+        resolve();
       }
     }, 500);
   }).then(function () {
@@ -89490,7 +89491,9 @@ function promiseIngredients() {
   });
 }
 
-speechSynthesis.onvoiceschanged = function () {};
+speechSynthesis.onvoiceschanged = function () {
+  /* do nothing */
+};
 
 function Main() {
   var _react_1$useState = react_1.useState(undefined),
@@ -89561,7 +89564,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "37615" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "45079" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
