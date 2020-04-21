@@ -84625,6 +84625,46 @@ exports.serbian = {
   nothingIsWrittenHere: 'Ovde ništa ne piše.',
   questionImageAlt: 'slika-pitanje'
 };
+},{"../expectAnswer":"expectAnswer.ts"}],"i18n/it.ts":[function(require,module,exports) {
+"use strict";
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+  }
+  result["default"] = mod;
+  return result;
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var expectAnswer = __importStar(require("../expectAnswer"));
+
+exports.italian = {
+  chooseYourLanguage: 'Lingua',
+  languageName: 'Italiano',
+  chooseYourVoice: 'Voce',
+  noVoiceAvailable: 'Il sistema non supporta la voce per questa lingua..',
+  answerCheckers: {
+    elephant: expectAnswer.ignoreCase('elefante'),
+    tiger: expectAnswer.ignoreCase('tigre'),
+    lion: expectAnswer.ignoreCase('leone'),
+    dog: expectAnswer.ignoreCase('cane'),
+    wolf: expectAnswer.ignoreCase('lupo', 'lupa'),
+    fox: expectAnswer.ignoreCase('volpe'),
+    pig: expectAnswer.ignoreCase('maiale', 'porco'),
+    goat: expectAnswer.ignoreCase('capra'),
+    bear: expectAnswer.ignoreCase('orso', 'orsa'),
+    giraffe: expectAnswer.ignoreCase('giraffa')
+  },
+  hereItSays: "Qui c'è scritto",
+  nothingIsWrittenHere: "Qui non c'è niente scritto.",
+  questionImageAlt: 'Questione'
+};
 },{"../expectAnswer":"expectAnswer.ts"}],"i18n.ts":[function(require,module,exports) {
 "use strict";
 
@@ -84668,6 +84708,8 @@ var pt_1 = require("./i18n/pt");
 
 var sr_1 = require("./i18n/sr");
 
+var it_1 = require("./i18n/it");
+
 exports.SERBIAN = 'sr';
 exports.CROATIAN = 'hr';
 exports.ENGLISH = 'en';
@@ -84676,6 +84718,7 @@ exports.FRENCH = 'fr';
 exports.SPANISH = 'es';
 exports.POLISH = 'pl';
 exports.PORTUGUESE = 'pt';
+exports.ITALIAN = 'it';
 
 function initializeTranslations() {
   var result = new Map();
@@ -84686,7 +84729,8 @@ function initializeTranslations() {
   result.set(exports.FRENCH, fr_1.french);
   result.set(exports.SPANISH, es_1.spanish);
   result.set(exports.POLISH, pl_1.polish);
-  result.set(exports.PORTUGUESE, pt_1.portuguese); // Post-condition
+  result.set(exports.PORTUGUESE, pt_1.portuguese);
+  result.set(exports.ITALIAN, it_1.italian); // Post-condition
 
   if (result.size === 0) {
     throw Error('Expected a non-empty map of translations.');
@@ -84741,7 +84785,7 @@ function inferDefault(navigatorLanguage, languages) {
 
 exports.inferDefault = inferDefault;
 exports.Context = React.createContext(undefined);
-},{"react":"../node_modules/react/index.js","./bcp47":"bcp47.ts","./i18n/de":"i18n/de.ts","./i18n/en":"i18n/en.ts","./i18n/es":"i18n/es.ts","./i18n/fr":"i18n/fr.ts","./i18n/hr":"i18n/hr.ts","./i18n/pl":"i18n/pl.ts","./i18n/pt":"i18n/pt.ts","./i18n/sr":"i18n/sr.ts"}],"../node_modules/object-keys/isArguments.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","./bcp47":"bcp47.ts","./i18n/de":"i18n/de.ts","./i18n/en":"i18n/en.ts","./i18n/es":"i18n/es.ts","./i18n/fr":"i18n/fr.ts","./i18n/hr":"i18n/hr.ts","./i18n/pl":"i18n/pl.ts","./i18n/pt":"i18n/pt.ts","./i18n/sr":"i18n/sr.ts","./i18n/it":"i18n/it.ts"}],"../node_modules/object-keys/isArguments.js":[function(require,module,exports) {
 'use strict';
 
 var toStr = Object.prototype.toString;
@@ -89632,7 +89676,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "37259" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "39789" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
