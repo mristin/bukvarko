@@ -84230,13 +84230,19 @@ var effect = __importStar(require("../effect"));
 function NextQuestion() {
   var dispatch = react_redux_1.useDispatch();
   return React.createElement(core_1.IconButton, {
+    style: {
+      padding: 0,
+      margin: 0
+    },
     onClick: function onClick() {
       dispatch(effect.nextQuestion());
       dispatch(actions.askToRefocus());
     },
     "data-testid": "nextQuestion"
   }, React.createElement(ArrowRight_1.default, {
-    fontSize: "large"
+    style: {
+      fontSize: "2.8em"
+    }
   }));
 }
 
@@ -84505,6 +84511,46 @@ exports.croatian = {
   nothingIsWrittenHere: 'Ovdje ništa ne piše.',
   questionImageAlt: 'slika-pitanje'
 };
+},{"../expectAnswer":"expectAnswer.ts"}],"i18n/it.ts":[function(require,module,exports) {
+"use strict";
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+  }
+  result["default"] = mod;
+  return result;
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var expectAnswer = __importStar(require("../expectAnswer"));
+
+exports.italian = {
+  chooseYourLanguage: 'Lingua',
+  languageName: 'Italiano',
+  chooseYourVoice: 'Voce',
+  noVoiceAvailable: 'Il sistema non supporta la voce per questa lingua..',
+  answerCheckers: {
+    elephant: expectAnswer.ignoreCase('elefante'),
+    tiger: expectAnswer.ignoreCase('tigre'),
+    lion: expectAnswer.ignoreCase('leone'),
+    dog: expectAnswer.ignoreCase('cane'),
+    wolf: expectAnswer.ignoreCase('lupo', 'lupa'),
+    fox: expectAnswer.ignoreCase('volpe'),
+    pig: expectAnswer.ignoreCase('maiale', 'porco'),
+    goat: expectAnswer.ignoreCase('capra'),
+    bear: expectAnswer.ignoreCase('orso', 'orsa'),
+    giraffe: expectAnswer.ignoreCase('giraffa')
+  },
+  hereItSays: "Qui c'è scritto",
+  nothingIsWrittenHere: "Qui non c'è niente scritto.",
+  questionImageAlt: 'Questione'
+};
 },{"../expectAnswer":"expectAnswer.ts"}],"i18n/pl.ts":[function(require,module,exports) {
 "use strict";
 
@@ -84625,46 +84671,6 @@ exports.serbian = {
   nothingIsWrittenHere: 'Ovde ništa ne piše.',
   questionImageAlt: 'slika-pitanje'
 };
-},{"../expectAnswer":"expectAnswer.ts"}],"i18n/it.ts":[function(require,module,exports) {
-"use strict";
-
-var __importStar = this && this.__importStar || function (mod) {
-  if (mod && mod.__esModule) return mod;
-  var result = {};
-  if (mod != null) for (var k in mod) {
-    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-  }
-  result["default"] = mod;
-  return result;
-};
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var expectAnswer = __importStar(require("../expectAnswer"));
-
-exports.italian = {
-  chooseYourLanguage: 'Lingua',
-  languageName: 'Italiano',
-  chooseYourVoice: 'Voce',
-  noVoiceAvailable: 'Il sistema non supporta la voce per questa lingua..',
-  answerCheckers: {
-    elephant: expectAnswer.ignoreCase('elefante'),
-    tiger: expectAnswer.ignoreCase('tigre'),
-    lion: expectAnswer.ignoreCase('leone'),
-    dog: expectAnswer.ignoreCase('cane'),
-    wolf: expectAnswer.ignoreCase('lupo', 'lupa'),
-    fox: expectAnswer.ignoreCase('volpe'),
-    pig: expectAnswer.ignoreCase('maiale', 'porco'),
-    goat: expectAnswer.ignoreCase('capra'),
-    bear: expectAnswer.ignoreCase('orso', 'orsa'),
-    giraffe: expectAnswer.ignoreCase('giraffa')
-  },
-  hereItSays: "Qui c'è scritto",
-  nothingIsWrittenHere: "Qui non c'è niente scritto.",
-  questionImageAlt: 'Questione'
-};
 },{"../expectAnswer":"expectAnswer.ts"}],"i18n.ts":[function(require,module,exports) {
 "use strict";
 
@@ -84702,13 +84708,13 @@ var fr_1 = require("./i18n/fr");
 
 var hr_1 = require("./i18n/hr");
 
+var it_1 = require("./i18n/it");
+
 var pl_1 = require("./i18n/pl");
 
 var pt_1 = require("./i18n/pt");
 
 var sr_1 = require("./i18n/sr");
-
-var it_1 = require("./i18n/it");
 
 exports.SERBIAN = 'sr';
 exports.CROATIAN = 'hr';
@@ -84785,7 +84791,7 @@ function inferDefault(navigatorLanguage, languages) {
 
 exports.inferDefault = inferDefault;
 exports.Context = React.createContext(undefined);
-},{"react":"../node_modules/react/index.js","./bcp47":"bcp47.ts","./i18n/de":"i18n/de.ts","./i18n/en":"i18n/en.ts","./i18n/es":"i18n/es.ts","./i18n/fr":"i18n/fr.ts","./i18n/hr":"i18n/hr.ts","./i18n/pl":"i18n/pl.ts","./i18n/pt":"i18n/pt.ts","./i18n/sr":"i18n/sr.ts","./i18n/it":"i18n/it.ts"}],"../node_modules/object-keys/isArguments.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","./bcp47":"bcp47.ts","./i18n/de":"i18n/de.ts","./i18n/en":"i18n/en.ts","./i18n/es":"i18n/es.ts","./i18n/fr":"i18n/fr.ts","./i18n/hr":"i18n/hr.ts","./i18n/it":"i18n/it.ts","./i18n/pl":"i18n/pl.ts","./i18n/pt":"i18n/pt.ts","./i18n/sr":"i18n/sr.ts"}],"../node_modules/object-keys/isArguments.js":[function(require,module,exports) {
 'use strict';
 
 var toStr = Object.prototype.toString;
@@ -88145,13 +88151,19 @@ var effect = __importStar(require("../effect"));
 function PreviousQuestion() {
   var dispatch = react_redux_1.useDispatch();
   return React.createElement(core_1.IconButton, {
+    style: {
+      padding: 0,
+      margin: 0
+    },
     onClick: function onClick() {
       dispatch(effect.previousQuestion());
       dispatch(actions.askToRefocus());
     },
     "data-testid": "previousQuestion"
   }, React.createElement(ArrowLeft_1.default, {
-    fontSize: "large"
+    style: {
+      fontSize: "2.7em"
+    }
   }));
 }
 
@@ -88217,6 +88229,7 @@ function Question(props) {
     spy: currentQuestion
   }, React.createElement("div", {
     style: {
+      textAlign: "center",
       height: props.maxImageHeight,
       width: '95%'
     }
@@ -89676,7 +89689,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "39789" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33071" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
