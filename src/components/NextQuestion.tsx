@@ -11,13 +11,14 @@ export function NextQuestion() {
 
   return (
     <IconButton
+      style={{ padding: 0, margin: 0 }}
       onClick={() => {
         dispatch(effect.nextQuestion());
         dispatch(actions.askToRefocus());
       }}
       data-testid="nextQuestion"
     >
-      <ArrowRight fontSize="large" />
+      <ArrowRight style={{ fontSize: '2.8em' }} />
     </IconButton>
   );
 }
