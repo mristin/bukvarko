@@ -17,7 +17,7 @@ export function Question(props: { maxImageHeight: number }) {
 
   return (
     <Fade top appear duration={600} spy={currentQuestion}>
-      <div style={{ height: props.maxImageHeight, width: '95%' }}>
+      <div style={{ textAlign: 'center', height: props.maxImageHeight, width: '95%' }}>
         <img
           src={imageURL}
           alt="question image"
