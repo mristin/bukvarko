@@ -38,7 +38,7 @@ function Mobile(props: { hasVoice: boolean }) {
         </Grid>
       </Grid>
 
-      <Grid container>
+      <Grid container style={{ marginTop: '0.5em' }}>
         <Grid item xs={12}>
           <ScoreBar />
         </Grid>
@@ -76,10 +76,10 @@ function Desktop(props: { hasVoice: boolean }) {
           <Grid item xs={7}>
             <Answer />
 
-            {props.hasVoice ? <Speaker style={{ marginLeft: '1em' }} /> : null}
+            {props.hasVoice ? <Speaker style={{ marginLeft: '1em' }} large /> : null}
 
             <div style={{ marginTop: '1em' }}>
-              <ScoreBar />
+              <ScoreBar large />
             </div>
           </Grid>
 

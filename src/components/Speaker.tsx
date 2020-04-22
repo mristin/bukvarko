@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import * as action from '../action';
 import * as effect from '../effect';
 
-export function Speaker(props: { style?: any }) {
+export function Speaker(props: { style?: any; large?: boolean }) {
   const dispatch = useDispatch();
 
   const onClick = () => {
@@ -16,7 +16,7 @@ export function Speaker(props: { style?: any }) {
 
   return (
     <IconButton style={props.style} onClick={onClick} data-testid="speak">
-      <RecordVoiceOver />
+      <RecordVoiceOver style={props.large ? { fontSize: '3em' } : {}} />
     </IconButton>
   );
 }
