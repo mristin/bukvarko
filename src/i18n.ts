@@ -3,6 +3,7 @@ import * as React from 'react';
 import * as bcp47 from './bcp47';
 import { bosnian } from './i18n/bs';
 import { german } from './i18n/de';
+import { greek } from './i18n/el';
 import { english } from './i18n/en';
 import { spanish } from './i18n/es';
 import { french } from './i18n/fr';
@@ -38,6 +39,7 @@ export const POLISH = 'pl';
 export const PORTUGUESE = 'pt';
 export const ITALIAN = 'it';
 export const BOSNIAN = 'bs';
+export const GREEK = 'el';
 
 export type LanguageID =
   | typeof SERBIAN
@@ -49,7 +51,8 @@ export type LanguageID =
   | typeof POLISH
   | typeof PORTUGUESE
   | typeof ITALIAN
-  | typeof BOSNIAN;
+  | typeof BOSNIAN
+  | typeof GREEK;
 
 export type Translations = Map<LanguageID, Translation>;
 
@@ -66,6 +69,7 @@ export function initializeTranslations(): Translations {
   result.set(PORTUGUESE, portuguese);
   result.set(ITALIAN, italian);
   result.set(BOSNIAN, bosnian);
+  result.set(GREEK, greek);
 
   // Post-condition
   if (result.size === 0) {
