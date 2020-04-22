@@ -7,8 +7,10 @@ to make the task easier for him. Different animals are shown as "questions" and
 you need to type in the animal name. You get a star for each correct answer. 
 If you are unsure about what you wrote, you can have the computer read it out for you.
 
-To avoid confusing the user, I hard-wired the language to Bosnian/Croatian/Serbian
-since this is the language in which my family primarily reads and writes.
+The game supports the following languages:
+German, English, Spanish, French, Croatian, 
+Italian, Polish, Portuguese and Serbian.
+
 
 Live demo
 ---------
