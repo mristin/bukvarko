@@ -8,7 +8,7 @@ you need to type in the animal name. You get a star for each correct answer.
 If you are unsure about what you wrote, you can have the computer read it out for you.
 
 The game supports the following languages:
-Bosnian, German, English, Spanish, French, Croatian, 
+Bosnian, German, English, Greek, Spanish, French, Croatian, 
 Italian, Polish, Portuguese and Serbian.
 
 
