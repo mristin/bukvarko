@@ -84311,7 +84311,47 @@ function ignoreCase() {
 }
 
 exports.ignoreCase = ignoreCase;
-},{}],"i18n/de.ts":[function(require,module,exports) {
+},{}],"i18n/bs.ts":[function(require,module,exports) {
+"use strict";
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+  }
+  result["default"] = mod;
+  return result;
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var expectAnswer = __importStar(require("../expectAnswer"));
+
+exports.bosnian = {
+  chooseYourLanguage: 'Jezik',
+  languageName: 'Bosanski',
+  chooseYourVoice: 'Glas',
+  noVoiceAvailable: 'Sistem ne podržava glas za ovaj jezik.',
+  answerCheckers: {
+    elephant: expectAnswer.ignoreCase('slon'),
+    tiger: expectAnswer.ignoreCase('tigar'),
+    lion: expectAnswer.ignoreCase('lav'),
+    dog: expectAnswer.ignoreCase('pas', 'cuko', 'cuka'),
+    wolf: expectAnswer.ignoreCase('vuk'),
+    fox: expectAnswer.ignoreCase('lisica', 'lisac'),
+    pig: expectAnswer.ignoreCase('svinja', 'prase'),
+    goat: expectAnswer.ignoreCase('koza', 'jarac', 'kozlić'),
+    bear: expectAnswer.ignoreCase('medvjed'),
+    giraffe: expectAnswer.ignoreCase('žirafa')
+  },
+  hereItSays: 'Ovdje piše',
+  nothingIsWrittenHere: 'Ovdje ništa ne piše.',
+  questionImageAlt: 'slika-pitanje'
+};
+},{"../expectAnswer":"expectAnswer.ts"}],"i18n/de.ts":[function(require,module,exports) {
 "use strict";
 
 var __importStar = this && this.__importStar || function (mod) {
@@ -84350,6 +84390,46 @@ exports.german = {
   hereItSays: 'Hier steht',
   nothingIsWrittenHere: 'Hier steht nichts.',
   questionImageAlt: 'Frage'
+};
+},{"../expectAnswer":"expectAnswer.ts"}],"i18n/el.ts":[function(require,module,exports) {
+"use strict";
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+  }
+  result["default"] = mod;
+  return result;
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var expectAnswer = __importStar(require("../expectAnswer"));
+
+exports.greek = {
+  chooseYourLanguage: 'Γλώσσα',
+  languageName: 'Ελληνικά',
+  chooseYourVoice: 'Φωνή',
+  noVoiceAvailable: 'Το σύστημα δεν υποστηρίζει φωνή για αυτή τη γλώσσα.',
+  answerCheckers: {
+    elephant: expectAnswer.ignoreCase('ελέφαντας', 'ο ελέφαντας'),
+    tiger: expectAnswer.ignoreCase('τίγρη', 'η τίγρη'),
+    lion: expectAnswer.ignoreCase('λιοντάρι', 'το λιοντάρι'),
+    dog: expectAnswer.ignoreCase('σκύλος', 'ο σκύλος'),
+    wolf: expectAnswer.ignoreCase('λύκος', 'ο λύκος'),
+    fox: expectAnswer.ignoreCase('αλεπού', 'η αλεπού'),
+    pig: expectAnswer.ignoreCase('γουρούνι', 'το γουρούνι'),
+    goat: expectAnswer.ignoreCase('γίδα', 'η γίδα', 'κατσίκα', 'η κατσίκα'),
+    bear: expectAnswer.ignoreCase('αρκούδα', 'η αρκούδα'),
+    giraffe: expectAnswer.ignoreCase('καμηλοπάρδαλη', 'η καμηλοπάρδαλη')
+  },
+  hereItSays: 'Εδώ λέει',
+  nothingIsWrittenHere: 'Εδώ δε λέει τίποτα.',
+  questionImageAlt: 'Ερώτηση'
 };
 },{"../expectAnswer":"expectAnswer.ts"}],"i18n/en.ts":[function(require,module,exports) {
 "use strict";
@@ -84671,46 +84751,6 @@ exports.serbian = {
   nothingIsWrittenHere: 'Ovde ništa ne piše.',
   questionImageAlt: 'slika-pitanje'
 };
-},{"../expectAnswer":"expectAnswer.ts"}],"i18n/bs.ts":[function(require,module,exports) {
-"use strict";
-
-var __importStar = this && this.__importStar || function (mod) {
-  if (mod && mod.__esModule) return mod;
-  var result = {};
-  if (mod != null) for (var k in mod) {
-    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-  }
-  result["default"] = mod;
-  return result;
-};
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var expectAnswer = __importStar(require("../expectAnswer"));
-
-exports.bosnian = {
-  chooseYourLanguage: 'Jezik',
-  languageName: 'Bosanski',
-  chooseYourVoice: 'Glas',
-  noVoiceAvailable: 'Sistem ne podržava glas za ovaj jezik.',
-  answerCheckers: {
-    elephant: expectAnswer.ignoreCase('slon'),
-    tiger: expectAnswer.ignoreCase('tigar'),
-    lion: expectAnswer.ignoreCase('lav'),
-    dog: expectAnswer.ignoreCase('pas', 'cuko', 'cuka'),
-    wolf: expectAnswer.ignoreCase('vuk'),
-    fox: expectAnswer.ignoreCase('lisica', 'lisac'),
-    pig: expectAnswer.ignoreCase('svinja', 'prase'),
-    goat: expectAnswer.ignoreCase('koza', 'jarac', 'kozlić'),
-    bear: expectAnswer.ignoreCase('medvjed'),
-    giraffe: expectAnswer.ignoreCase('žirafa')
-  },
-  hereItSays: 'Ovdje piše',
-  nothingIsWrittenHere: 'Ovdje ništa ne piše.',
-  questionImageAlt: 'slika-pitanje'
-};
 },{"../expectAnswer":"expectAnswer.ts"}],"i18n.ts":[function(require,module,exports) {
 "use strict";
 
@@ -84738,7 +84778,11 @@ var React = __importStar(require("react"));
 
 var bcp47 = __importStar(require("./bcp47"));
 
+var bs_1 = require("./i18n/bs");
+
 var de_1 = require("./i18n/de");
+
+var el_1 = require("./i18n/el");
 
 var en_1 = require("./i18n/en");
 
@@ -84756,8 +84800,6 @@ var pt_1 = require("./i18n/pt");
 
 var sr_1 = require("./i18n/sr");
 
-var bs_1 = require("./i18n/bs");
-
 exports.SERBIAN = 'sr';
 exports.CROATIAN = 'hr';
 exports.ENGLISH = 'en';
@@ -84768,6 +84810,7 @@ exports.POLISH = 'pl';
 exports.PORTUGUESE = 'pt';
 exports.ITALIAN = 'it';
 exports.BOSNIAN = 'bs';
+exports.GREEK = 'el';
 
 function initializeTranslations() {
   var result = new Map();
@@ -84780,7 +84823,8 @@ function initializeTranslations() {
   result.set(exports.POLISH, pl_1.polish);
   result.set(exports.PORTUGUESE, pt_1.portuguese);
   result.set(exports.ITALIAN, it_1.italian);
-  result.set(exports.BOSNIAN, bs_1.bosnian); // Post-condition
+  result.set(exports.BOSNIAN, bs_1.bosnian);
+  result.set(exports.GREEK, el_1.greek); // Post-condition
 
   if (result.size === 0) {
     throw Error('Expected a non-empty map of translations.');
@@ -84835,7 +84879,7 @@ function inferDefault(navigatorLanguage, languages) {
 
 exports.inferDefault = inferDefault;
 exports.Context = React.createContext(undefined);
-},{"react":"../node_modules/react/index.js","./bcp47":"bcp47.ts","./i18n/de":"i18n/de.ts","./i18n/en":"i18n/en.ts","./i18n/es":"i18n/es.ts","./i18n/fr":"i18n/fr.ts","./i18n/hr":"i18n/hr.ts","./i18n/it":"i18n/it.ts","./i18n/pl":"i18n/pl.ts","./i18n/pt":"i18n/pt.ts","./i18n/sr":"i18n/sr.ts","./i18n/bs":"i18n/bs.ts"}],"../node_modules/object-keys/isArguments.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","./bcp47":"bcp47.ts","./i18n/bs":"i18n/bs.ts","./i18n/de":"i18n/de.ts","./i18n/el":"i18n/el.ts","./i18n/en":"i18n/en.ts","./i18n/es":"i18n/es.ts","./i18n/fr":"i18n/fr.ts","./i18n/hr":"i18n/hr.ts","./i18n/it":"i18n/it.ts","./i18n/pl":"i18n/pl.ts","./i18n/pt":"i18n/pt.ts","./i18n/sr":"i18n/sr.ts"}],"../node_modules/object-keys/isArguments.js":[function(require,module,exports) {
 'use strict';
 
 var toStr = Object.prototype.toString;
@@ -88414,14 +88458,18 @@ var Flash_1 = __importDefault(require("react-reveal/Flash"));
 var select = __importStar(require("../select"));
 
 function Indicator(props) {
-  var style = Object.assign({
+  var style = Object.assign(Object.assign({
     color: props.hit ? yellow_1.default[700] : grey_1.default[100]
   }, props.current ? {
-    background: 'azure',
+    background: '#6495ED',
     borderRadius: '50%'
+  } : {}), props.large ? {
+    fontSize: '3em'
   } : {});
   return React.createElement(Flash_1.default, {
-    when: props.hit
+    when: props.hit,
+    duration: 1500,
+    count: 2
   }, React.createElement("span", null, React.createElement(Star_1.default, {
     style: style
   })));
@@ -88436,12 +88484,13 @@ function Score(props) {
     return React.createElement(Indicator, {
       key: id,
       hit: hit,
-      current: props.currentIndex === i
+      current: props.currentIndex === i,
+      large: props.large
     });
   }));
 }
 
-function ScoreBar() {
+function ScoreBar(props) {
   var selectContext = react_1.useContext(select.Context);
 
   if (selectContext === undefined) {
@@ -88456,7 +88505,8 @@ function ScoreBar() {
   });
   return React.createElement(Score, {
     hitsIDs: hitsIDs,
-    currentIndex: currentIndex
+    currentIndex: currentIndex,
+    large: props.large
   });
 }
 
@@ -88531,7 +88581,11 @@ function Speaker(props) {
     style: props.style,
     onClick: onClick,
     "data-testid": "speak"
-  }, React.createElement(RecordVoiceOver_1.default, null));
+  }, React.createElement(RecordVoiceOver_1.default, {
+    style: props.large ? {
+      fontSize: '3em'
+    } : {}
+  }));
 }
 
 exports.Speaker = Speaker;
@@ -88614,7 +88668,10 @@ function Mobile(props) {
     item: true,
     xs: 12
   }, React.createElement(Answer_1.Answer, null))), React.createElement(core_1.Grid, {
-    container: true
+    container: true,
+    style: {
+      marginTop: '0.5em'
+    }
   }, React.createElement(core_1.Grid, {
     item: true,
     xs: 12
@@ -88663,12 +88720,15 @@ function Desktop(props) {
   }, React.createElement(Answer_1.Answer, null), props.hasVoice ? React.createElement(Speaker_1.Speaker, {
     style: {
       marginLeft: '1em'
-    }
+    },
+    large: true
   }) : null, React.createElement("div", {
     style: {
       marginTop: '1em'
     }
-  }, React.createElement(ScoreBar_1.ScoreBar, null))), React.createElement(core_1.Grid, {
+  }, React.createElement(ScoreBar_1.ScoreBar, {
+    large: true
+  }))), React.createElement(core_1.Grid, {
     item: true,
     xs: 1
   }, React.createElement(NextQuestion_1.NextQuestion, null))), React.createElement("div", {
@@ -89733,7 +89793,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33115" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33777" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
