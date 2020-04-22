@@ -13,7 +13,7 @@ import * as select from '../select';
 function Indicator(props: { hit: boolean; current: boolean }) {
   const style = {
     color: props.hit ? yellow[700] : grey[100],
-    ...(props.current ? { background: 'azure', borderRadius: '50%' } : {}),
+    ...(props.current ? { background: '#6495ED', borderRadius: '50%' } : {}),
   };
 
   return (
