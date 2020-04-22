@@ -18,7 +18,7 @@ function Indicator(props: { hit: boolean; current: boolean; large?: boolean }) {
   };
 
   return (
-    <Flash when={props.hit}>
+    <Flash when={props.hit} duration={1500} count={2}>
       <span>
         <Star style={style} />
       </span>
