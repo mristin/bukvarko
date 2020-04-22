@@ -84241,7 +84241,7 @@ function NextQuestion() {
     "data-testid": "nextQuestion"
   }, React.createElement(ArrowRight_1.default, {
     style: {
-      fontSize: "2.8em"
+      fontSize: '2.8em'
     }
   }));
 }
@@ -84671,6 +84671,46 @@ exports.serbian = {
   nothingIsWrittenHere: 'Ovde ništa ne piše.',
   questionImageAlt: 'slika-pitanje'
 };
+},{"../expectAnswer":"expectAnswer.ts"}],"i18n/bs.ts":[function(require,module,exports) {
+"use strict";
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+  }
+  result["default"] = mod;
+  return result;
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var expectAnswer = __importStar(require("../expectAnswer"));
+
+exports.bosnian = {
+  chooseYourLanguage: 'Jezik',
+  languageName: 'Bosanski',
+  chooseYourVoice: 'Glas',
+  noVoiceAvailable: 'Sistem ne podržava glas za ovaj jezik.',
+  answerCheckers: {
+    elephant: expectAnswer.ignoreCase('slon'),
+    tiger: expectAnswer.ignoreCase('tigar'),
+    lion: expectAnswer.ignoreCase('lav'),
+    dog: expectAnswer.ignoreCase('pas', 'cuko', 'cuka'),
+    wolf: expectAnswer.ignoreCase('vuk'),
+    fox: expectAnswer.ignoreCase('lisica', 'lisac'),
+    pig: expectAnswer.ignoreCase('svinja', 'prase'),
+    goat: expectAnswer.ignoreCase('koza', 'jarac', 'kozlić'),
+    bear: expectAnswer.ignoreCase('medvjed'),
+    giraffe: expectAnswer.ignoreCase('žirafa')
+  },
+  hereItSays: 'Ovdje piše',
+  nothingIsWrittenHere: 'Ovdje ništa ne piše.',
+  questionImageAlt: 'slika-pitanje'
+};
 },{"../expectAnswer":"expectAnswer.ts"}],"i18n.ts":[function(require,module,exports) {
 "use strict";
 
@@ -84716,6 +84756,8 @@ var pt_1 = require("./i18n/pt");
 
 var sr_1 = require("./i18n/sr");
 
+var bs_1 = require("./i18n/bs");
+
 exports.SERBIAN = 'sr';
 exports.CROATIAN = 'hr';
 exports.ENGLISH = 'en';
@@ -84725,6 +84767,7 @@ exports.SPANISH = 'es';
 exports.POLISH = 'pl';
 exports.PORTUGUESE = 'pt';
 exports.ITALIAN = 'it';
+exports.BOSNIAN = 'bs';
 
 function initializeTranslations() {
   var result = new Map();
@@ -84736,7 +84779,8 @@ function initializeTranslations() {
   result.set(exports.SPANISH, es_1.spanish);
   result.set(exports.POLISH, pl_1.polish);
   result.set(exports.PORTUGUESE, pt_1.portuguese);
-  result.set(exports.ITALIAN, it_1.italian); // Post-condition
+  result.set(exports.ITALIAN, it_1.italian);
+  result.set(exports.BOSNIAN, bs_1.bosnian); // Post-condition
 
   if (result.size === 0) {
     throw Error('Expected a non-empty map of translations.');
@@ -84791,7 +84835,7 @@ function inferDefault(navigatorLanguage, languages) {
 
 exports.inferDefault = inferDefault;
 exports.Context = React.createContext(undefined);
-},{"react":"../node_modules/react/index.js","./bcp47":"bcp47.ts","./i18n/de":"i18n/de.ts","./i18n/en":"i18n/en.ts","./i18n/es":"i18n/es.ts","./i18n/fr":"i18n/fr.ts","./i18n/hr":"i18n/hr.ts","./i18n/it":"i18n/it.ts","./i18n/pl":"i18n/pl.ts","./i18n/pt":"i18n/pt.ts","./i18n/sr":"i18n/sr.ts"}],"../node_modules/object-keys/isArguments.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","./bcp47":"bcp47.ts","./i18n/de":"i18n/de.ts","./i18n/en":"i18n/en.ts","./i18n/es":"i18n/es.ts","./i18n/fr":"i18n/fr.ts","./i18n/hr":"i18n/hr.ts","./i18n/it":"i18n/it.ts","./i18n/pl":"i18n/pl.ts","./i18n/pt":"i18n/pt.ts","./i18n/sr":"i18n/sr.ts","./i18n/bs":"i18n/bs.ts"}],"../node_modules/object-keys/isArguments.js":[function(require,module,exports) {
 'use strict';
 
 var toStr = Object.prototype.toString;
@@ -88162,7 +88206,7 @@ function PreviousQuestion() {
     "data-testid": "previousQuestion"
   }, React.createElement(ArrowLeft_1.default, {
     style: {
-      fontSize: "2.7em"
+      fontSize: '2.7em'
     }
   }));
 }
@@ -88229,7 +88273,7 @@ function Question(props) {
     spy: currentQuestion
   }, React.createElement("div", {
     style: {
-      textAlign: "center",
+      textAlign: 'center',
       height: props.maxImageHeight,
       width: '95%'
     }
@@ -89689,7 +89733,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33071" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33115" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
