@@ -1,5 +1,6 @@
 import { History, LocationState } from 'history';
 
+import * as audio from './audio';
 import * as i18n from './i18n';
 import * as question from './question';
 import * as speech from './speech';
@@ -15,6 +16,7 @@ export interface Registry {
   voicesByLanguage: speech.VoicesByLanguage;
   storage: Storage;
   history: History<LocationState>;
+  player: audio.Player;
 }
 
 export function initializeRegistry(
@@ -23,6 +25,7 @@ export function initializeRegistry(
   translations: i18n.Translations,
   storage: Storage,
   history: History<LocationState>,
+  player: audio.Player,
 ): Registry {
   const voices = new speech.Voices(aSpeechSynthesis.getVoices());
 
@@ -36,5 +39,6 @@ export function initializeRegistry(
     voicesByLanguage,
     storage,
     history,
+    player,
   };
 }

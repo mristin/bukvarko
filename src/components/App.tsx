@@ -1,9 +1,10 @@
 import { Container, Grid, Paper } from '@material-ui/core';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import * as app from '../app';
+import * as effect from '../effect';
 import { Answer } from './Answer';
 import { DeleteAll } from './DeleteAll';
 import { FullScreen } from './FullScreen';
@@ -140,6 +141,12 @@ export function App() {
   const hasVoice = useSelector((s: app.State) => s.voiceByLanguage.get(s.language) !== undefined);
 
   const { width } = useWindowSize();
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    // Set the sound for the initial question
+    dispatch(effect.setSound());
+  }, []);
 
   if (width === undefined || width < 500) {
     return <Mobile hasVoice={hasVoice} />;

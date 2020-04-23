@@ -10,6 +10,7 @@ import { Store } from 'redux';
 
 import * as action from './action';
 import * as app from './app';
+import * as audio from './audio';
 import * as autosave from './autosave';
 import { App } from './components/App';
 import { ErrorBoundary } from './components/ErrorBoundary';
@@ -58,36 +59,38 @@ function Main() {
   const [selectWithDeps, setSelectWithDeps] = useState<select.WithDeps | undefined>(undefined);
 
   useEffect(() => {
-    if (!ready && error === undefined) {
-      promiseSpeechSynthesisReady()
-        .then(() => {
-          const aDeps = dependency.initializeRegistry(
-            question.initializeBank(),
-            window.speechSynthesis,
-            i18n.initializeTranslations(),
-            localStorage,
-            createBrowserHistory(),
-          );
+    console.info('Initializing...');
+    promiseSpeechSynthesisReady()
+      .then(() => {
+        const aDeps = dependency.initializeRegistry(
+          question.initializeBank(),
+          window.speechSynthesis,
+          i18n.initializeTranslations(),
+          localStorage,
+          createBrowserHistory(),
+          new audio.Player(),
+        );
 
-          autosave.undoPreviousDataVersions(aDeps.storage);
+        autosave.undoPreviousDataVersions(aDeps.storage);
 
-          const aStore = storeFactory.produce(aDeps);
+        const aStore = storeFactory.produce(aDeps);
 
-          const aSelectWithDeps = new select.WithDeps(aDeps);
+        const aSelectWithDeps = new select.WithDeps(aDeps);
 
-          autosave.connectStoreToStorageEvent(aStore, aDeps);
+        autosave.connectStoreToStorageEvent(aStore, aDeps);
 
-          setDeps(aDeps);
-          setStore(aStore);
-          setSelectWithDeps(aSelectWithDeps);
+        setDeps(aDeps);
+        setStore(aStore);
+        setSelectWithDeps(aSelectWithDeps);
 
-          setReady(true);
-        })
-        .catch((e: Error) => {
-          setError(e.toString());
-        });
-    }
-  });
+        setReady(true);
+        console.info('Initialized successfully.');
+      })
+      .catch((e: Error) => {
+        console.error('Failed to initialize: ' + e.toString());
+        setError(e.toString());
+      });
+  }, []);
 
   if (error !== undefined) {
     return <Unfortunately error={error} />;

@@ -9,8 +9,6 @@ export const GOAT = 'goat';
 export const BEAR = 'bear';
 export const GIRAFFE = 'giraffe';
 
-const ids = [ELEPHANT, TIGER, LION, DOG, WOLF, FOX, PIG, GOAT, BEAR, GIRAFFE];
-
 export type ID =
   | typeof ELEPHANT
   | typeof TIGER
@@ -24,7 +22,7 @@ export type ID =
   | typeof GIRAFFE;
 
 export class Question {
-  constructor(public id: ID, public imageURL: string) {}
+  constructor(public id: ID, public imageURL: string, public soundURL?: string) {}
 }
 
 function verifyThatIndicesMatch(bank: Bank) {
@@ -191,13 +189,16 @@ export class Bank {
 }
 
 export function initializeBank(): Bank {
-  return new Bank(
-    ids.map(
-      (id) =>
-        ({
-          id: id,
-          imageURL: `./media/${id}.jpeg`,
-        } as Question),
-    ),
-  );
+  return new Bank([
+    { id: ELEPHANT, imageURL: './media/elephant.jpeg', soundURL: './media/elephant.mp3' } as Question,
+    { id: TIGER, imageURL: './media/tiger.jpeg', soundURL: './media/tiger.mp3' } as Question,
+    { id: LION, imageURL: './media/lion.jpeg', soundURL: './media/lion.mp3' } as Question,
+    { id: DOG, imageURL: './media/dog.jpeg', soundURL: './media/dog.mp3' } as Question,
+    { id: WOLF, imageURL: './media/wolf.jpeg', soundURL: './media/wolf.mp3' } as Question,
+    { id: FOX, imageURL: './media/fox.jpeg', soundURL: './media/fox.mp3' } as Question,
+    { id: PIG, imageURL: './media/pig.jpeg', soundURL: './media/pig.mp3' } as Question,
+    { id: GOAT, imageURL: './media/goat.jpeg', soundURL: './media/goat.mp3' } as Question,
+    { id: BEAR, imageURL: './media/bear.jpeg', soundURL: './media/bear.mp3' } as Question,
+    { id: GIRAFFE, imageURL: './media/giraffe.jpeg' } as Question,
+  ]);
 }
