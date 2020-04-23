@@ -48,3 +48,31 @@ export function speak() {
     deps.aSpeechSynthesis.speak(u);
   };
 }
+
+export function setSound() {
+  return function (_: Dispatch, getState: () => app.State, deps: dependency.Registry): void {
+    const state = getState();
+
+    const question = deps.questionBank.get(state.currentQuestion);
+    if (question.soundURL !== undefined) {
+      deps.player.set(question.soundURL);
+    }
+  };
+}
+
+export function playSound() {
+  return function (_: Dispatch, getState: () => app.State, deps: dependency.Registry): void {
+    const state = getState();
+
+    const question = deps.questionBank.get(state.currentQuestion);
+    if (question.soundURL !== undefined) {
+      deps.player.play();
+    }
+  };
+}
+
+export function pauseSound() {
+  return function (_: Dispatch, __: () => app.State, deps: dependency.Registry): void {
+    deps.player.pause();
+  };
+}

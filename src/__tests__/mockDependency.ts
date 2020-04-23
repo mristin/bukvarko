@@ -1,5 +1,6 @@
 import { createMemoryHistory } from 'history';
 
+import * as audio from '../audio';
 import * as dependency from '../dependency';
 import * as i18n from '../i18n';
 import * as question from '../question';
@@ -18,6 +19,24 @@ const mockSpeechSynthesis = {
       { lang: 'sr', name: 'Lejla' },
     ] as unknown) as SpeechSynthesisVoice[],
 };
+
+class MockPlayer {
+  private src: string | undefined = undefined;
+
+  public set(src: string) {
+    this.src = src;
+  }
+
+  public play() {
+    if (this.src === undefined) {
+      throw Error('From MockPlayer: No audio has been set so far. Did you call set() on the player?');
+    }
+  }
+
+  public pause() {
+    // Do nothing
+  }
+}
 
 export class MockStorage {
   private map = new Map<string, string>();
@@ -50,5 +69,6 @@ export function initializeRegistry(): dependency.Registry {
     i18n.initializeTranslations(),
     (new MockStorage() as unknown) as Storage,
     createMemoryHistory(),
+    (new MockPlayer() as unknown) as audio.Player,
   );
 }
