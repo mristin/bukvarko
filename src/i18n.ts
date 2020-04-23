@@ -10,6 +10,7 @@ import { french } from './i18n/fr';
 import { croatian } from './i18n/hr';
 import { italian } from './i18n/it';
 import { macedonian } from './i18n/mk';
+import { norwegian } from './i18n/nb';
 import { polish } from './i18n/pl';
 import { portuguese } from './i18n/pt';
 import { slovenian } from './i18n/sl';
@@ -44,6 +45,7 @@ export const BOSNIAN = 'bs';
 export const GREEK = 'el';
 export const MACEDONIAN = 'mk';
 export const SLOVENIAN = 'sl';
+export const NORWEGIAN = 'nb';
 
 export type LanguageID =
   | typeof SERBIAN
@@ -58,7 +60,8 @@ export type LanguageID =
   | typeof BOSNIAN
   | typeof GREEK
   | typeof MACEDONIAN
-  | typeof SLOVENIAN;
+  | typeof SLOVENIAN
+  | typeof NORWEGIAN;
 
 export type Translations = Map<LanguageID, Translation>;
 
@@ -78,6 +81,7 @@ export function initializeTranslations(): Translations {
   result.set(GREEK, greek);
   result.set(MACEDONIAN, macedonian);
   result.set(SLOVENIAN, slovenian);
+  result.set(NORWEGIAN, norwegian);
 
   // Post-condition
   if (result.size === 0) {
