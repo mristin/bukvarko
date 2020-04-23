@@ -17,7 +17,7 @@ Live demo
 ---------
 Live demo is available at the github page: https://mristin.github.io/bukvarko/.
 
-![screenshot](https://raw.githubusercontent.com/mristin/bukvarko/master/screenshot.png)
+![screenshot](https://media.githubusercontent.com/media/mristin/bukvarko/master/screenshot.png)
 
 
 Development
