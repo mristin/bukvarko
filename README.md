@@ -39,10 +39,10 @@ Start a development server:
 npm run start
 ```
 
-Format the code:
+Format and lint the code:
 
 ```bash
-npm run format
+npm run fix
 ```
 
 To run the tests:
