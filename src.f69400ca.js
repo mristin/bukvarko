@@ -81829,7 +81829,64 @@ var _shallowEqual = _interopRequireDefault(require("./utils/shallowEqual"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 (0, _batch.setBatch)(_reactBatchedUpdates.unstable_batchedUpdates);
-},{"./components/Provider":"../node_modules/react-redux/es/components/Provider.js","./components/connectAdvanced":"../node_modules/react-redux/es/components/connectAdvanced.js","./components/Context":"../node_modules/react-redux/es/components/Context.js","./connect/connect":"../node_modules/react-redux/es/connect/connect.js","./hooks/useDispatch":"../node_modules/react-redux/es/hooks/useDispatch.js","./hooks/useSelector":"../node_modules/react-redux/es/hooks/useSelector.js","./hooks/useStore":"../node_modules/react-redux/es/hooks/useStore.js","./utils/batch":"../node_modules/react-redux/es/utils/batch.js","./utils/reactBatchedUpdates":"../node_modules/react-redux/es/utils/reactBatchedUpdates.js","./utils/shallowEqual":"../node_modules/react-redux/es/utils/shallowEqual.js"}],"../node_modules/immer/dist/immer.esm.js":[function(require,module,exports) {
+},{"./components/Provider":"../node_modules/react-redux/es/components/Provider.js","./components/connectAdvanced":"../node_modules/react-redux/es/components/connectAdvanced.js","./components/Context":"../node_modules/react-redux/es/components/Context.js","./connect/connect":"../node_modules/react-redux/es/connect/connect.js","./hooks/useDispatch":"../node_modules/react-redux/es/hooks/useDispatch.js","./hooks/useSelector":"../node_modules/react-redux/es/hooks/useSelector.js","./hooks/useStore":"../node_modules/react-redux/es/hooks/useStore.js","./utils/batch":"../node_modules/react-redux/es/utils/batch.js","./utils/reactBatchedUpdates":"../node_modules/react-redux/es/utils/reactBatchedUpdates.js","./utils/shallowEqual":"../node_modules/react-redux/es/utils/shallowEqual.js"}],"audio.ts":[function(require,module,exports) {
+"use strict";
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var Player = /*#__PURE__*/function () {
+  function Player() {
+    _classCallCheck(this, Player);
+
+    this.element = undefined;
+  }
+
+  _createClass(Player, [{
+    key: "set",
+    value: function set(src) {
+      if (this.element !== undefined) {
+        this.element.pause();
+        this.element = undefined;
+      }
+
+      this.element = new Audio(src);
+    }
+  }, {
+    key: "play",
+    value: function play() {
+      if (this.element === undefined) {
+        throw Error('No audio has been set so far. Did you call set() on the player?');
+      }
+
+      this.element.pause(); // Ignore errors so that we can re-play if the element recovers.
+      //
+      // Some browsers disallow autoplay (playing audio without first clicking somewhere in the window), so
+      // the catch also ignores these errors.
+
+      this.element.play().catch(function () {});
+    }
+  }, {
+    key: "pause",
+    value: function pause() {
+      if (this.element !== undefined) {
+        this.element.pause();
+      }
+    }
+  }]);
+
+  return Player;
+}();
+
+exports.Player = Player;
+},{}],"../node_modules/immer/dist/immer.esm.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -83794,6 +83851,40 @@ function speak() {
 }
 
 exports.speak = speak;
+
+function setSound() {
+  return function (_, getState, deps) {
+    var state = getState();
+    var question = deps.questionBank.get(state.currentQuestion);
+
+    if (question.soundURL !== undefined) {
+      deps.player.set(question.soundURL);
+    }
+  };
+}
+
+exports.setSound = setSound;
+
+function playSound() {
+  return function (_, getState, deps) {
+    var state = getState();
+    var question = deps.questionBank.get(state.currentQuestion);
+
+    if (question.soundURL !== undefined) {
+      deps.player.play();
+    }
+  };
+}
+
+exports.playSound = playSound;
+
+function pauseSound() {
+  return function (_, __, deps) {
+    deps.player.pause();
+  };
+}
+
+exports.pauseSound = pauseSound;
 },{"./action":"action.ts"}],"components/Answer.tsx":[function(require,module,exports) {
 "use strict";
 
@@ -84631,6 +84722,86 @@ exports.italian = {
   nothingIsWrittenHere: "Qui non c'è niente scritto.",
   questionImageAlt: 'Questione'
 };
+},{"../expectAnswer":"expectAnswer.ts"}],"i18n/mk.ts":[function(require,module,exports) {
+"use strict";
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+  }
+  result["default"] = mod;
+  return result;
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var expectAnswer = __importStar(require("../expectAnswer"));
+
+exports.macedonian = {
+  chooseYourLanguage: 'Одберете јазик',
+  languageName: 'Македонски',
+  chooseYourVoice: 'Одберете глас',
+  noVoiceAvailable: 'Системот не подржува глас на овој јазик.',
+  answerCheckers: {
+    elephant: expectAnswer.ignoreCase('Слон'),
+    tiger: expectAnswer.ignoreCase('Тигар'),
+    lion: expectAnswer.ignoreCase('Лав'),
+    dog: expectAnswer.ignoreCase('Куче'),
+    wolf: expectAnswer.ignoreCase('Волк'),
+    fox: expectAnswer.ignoreCase('Лисица', 'Лисац'),
+    pig: expectAnswer.ignoreCase('Свиња'),
+    goat: expectAnswer.ignoreCase('Коза'),
+    bear: expectAnswer.ignoreCase('Мечка'),
+    giraffe: expectAnswer.ignoreCase('Жирафа')
+  },
+  hereItSays: 'Тука пишува',
+  nothingIsWrittenHere: 'Тука ништо не пишува.',
+  questionImageAlt: 'Слика-Прашање'
+};
+},{"../expectAnswer":"expectAnswer.ts"}],"i18n/nb.ts":[function(require,module,exports) {
+"use strict";
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+  }
+  result["default"] = mod;
+  return result;
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var expectAnswer = __importStar(require("../expectAnswer"));
+
+exports.norwegian = {
+  chooseYourLanguage: 'Språk',
+  languageName: 'Norsk (bokmål)',
+  chooseYourVoice: 'Stemme',
+  noVoiceAvailable: 'Systemet støtter ikke talegjenkjenning på dette språket.',
+  answerCheckers: {
+    elephant: expectAnswer.ignoreCase('elefant'),
+    tiger: expectAnswer.ignoreCase('tiger'),
+    lion: expectAnswer.ignoreCase('løve'),
+    dog: expectAnswer.ignoreCase('hund'),
+    wolf: expectAnswer.ignoreCase('ulv'),
+    fox: expectAnswer.ignoreCase('rev'),
+    pig: expectAnswer.ignoreCase('gris', 'svin'),
+    goat: expectAnswer.ignoreCase('geit'),
+    bear: expectAnswer.ignoreCase('bjørn'),
+    giraffe: expectAnswer.ignoreCase('sjiraff')
+  },
+  hereItSays: 'Her står det',
+  nothingIsWrittenHere: 'Her står det ingenting.',
+  questionImageAlt: 'bilde-spørsmål'
+};
 },{"../expectAnswer":"expectAnswer.ts"}],"i18n/pl.ts":[function(require,module,exports) {
 "use strict";
 
@@ -84711,6 +84882,46 @@ exports.portuguese = {
   nothingIsWrittenHere: 'Aqui não está nada escrito.',
   questionImageAlt: 'A pergunta'
 };
+},{"../expectAnswer":"expectAnswer.ts"}],"i18n/sl.ts":[function(require,module,exports) {
+"use strict";
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+  }
+  result["default"] = mod;
+  return result;
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var expectAnswer = __importStar(require("../expectAnswer"));
+
+exports.slovenian = {
+  chooseYourLanguage: 'Jezik',
+  languageName: 'Slovenščina',
+  chooseYourVoice: 'Glas',
+  noVoiceAvailable: 'Sistem ne podpira prepoznavanja govora v tem jeziku.',
+  answerCheckers: {
+    elephant: expectAnswer.ignoreCase('slon'),
+    tiger: expectAnswer.ignoreCase('tiger'),
+    lion: expectAnswer.ignoreCase('lev'),
+    dog: expectAnswer.ignoreCase('pes'),
+    wolf: expectAnswer.ignoreCase('volk'),
+    fox: expectAnswer.ignoreCase('lisica', 'lisac'),
+    pig: expectAnswer.ignoreCase('prašič', 'prasica'),
+    goat: expectAnswer.ignoreCase('koza'),
+    bear: expectAnswer.ignoreCase('medved'),
+    giraffe: expectAnswer.ignoreCase('žirafa')
+  },
+  hereItSays: 'Tu piše',
+  nothingIsWrittenHere: 'Tu ne piše nič.',
+  questionImageAlt: 'vprašanje-slika'
+};
 },{"../expectAnswer":"expectAnswer.ts"}],"i18n/sr.ts":[function(require,module,exports) {
 "use strict";
 
@@ -84739,10 +84950,10 @@ exports.serbian = {
     elephant: expectAnswer.ignoreCase('slon', 'слон'),
     tiger: expectAnswer.ignoreCase('tigar', 'тигар'),
     lion: expectAnswer.ignoreCase('lav', 'лав'),
-    dog: expectAnswer.ignoreCase('pas', 'пас'),
-    wolf: expectAnswer.ignoreCase('vuk'),
+    dog: expectAnswer.ignoreCase('pas', 'kuče', 'kuca', 'пас', 'куче', 'куца'),
+    wolf: expectAnswer.ignoreCase('vuk', 'vučica', 'вук', 'вучица'),
     fox: expectAnswer.ignoreCase('lisac', 'lisica', 'лисац', 'лисица'),
-    pig: expectAnswer.ignoreCase('svinja', 'свиња'),
+    pig: expectAnswer.ignoreCase('svinja', 'prase', 'свиња', 'прасе'),
     goat: expectAnswer.ignoreCase('koza', 'jarac', 'kozlić', 'коза', 'јарац', 'козлић'),
     bear: expectAnswer.ignoreCase('medved', 'медвед'),
     giraffe: expectAnswer.ignoreCase('žirafa', 'жирафа')
@@ -84794,9 +85005,15 @@ var hr_1 = require("./i18n/hr");
 
 var it_1 = require("./i18n/it");
 
+var mk_1 = require("./i18n/mk");
+
+var nb_1 = require("./i18n/nb");
+
 var pl_1 = require("./i18n/pl");
 
 var pt_1 = require("./i18n/pt");
+
+var sl_1 = require("./i18n/sl");
 
 var sr_1 = require("./i18n/sr");
 
@@ -84811,6 +85028,9 @@ exports.PORTUGUESE = 'pt';
 exports.ITALIAN = 'it';
 exports.BOSNIAN = 'bs';
 exports.GREEK = 'el';
+exports.MACEDONIAN = 'mk';
+exports.SLOVENIAN = 'sl';
+exports.NORWEGIAN = 'nb';
 
 function initializeTranslations() {
   var result = new Map();
@@ -84824,7 +85044,10 @@ function initializeTranslations() {
   result.set(exports.PORTUGUESE, pt_1.portuguese);
   result.set(exports.ITALIAN, it_1.italian);
   result.set(exports.BOSNIAN, bs_1.bosnian);
-  result.set(exports.GREEK, el_1.greek); // Post-condition
+  result.set(exports.GREEK, el_1.greek);
+  result.set(exports.MACEDONIAN, mk_1.macedonian);
+  result.set(exports.SLOVENIAN, sl_1.slovenian);
+  result.set(exports.NORWEGIAN, nb_1.norwegian); // Post-condition
 
   if (result.size === 0) {
     throw Error('Expected a non-empty map of translations.');
@@ -84879,7 +85102,7 @@ function inferDefault(navigatorLanguage, languages) {
 
 exports.inferDefault = inferDefault;
 exports.Context = React.createContext(undefined);
-},{"react":"../node_modules/react/index.js","./bcp47":"bcp47.ts","./i18n/bs":"i18n/bs.ts","./i18n/de":"i18n/de.ts","./i18n/el":"i18n/el.ts","./i18n/en":"i18n/en.ts","./i18n/es":"i18n/es.ts","./i18n/fr":"i18n/fr.ts","./i18n/hr":"i18n/hr.ts","./i18n/it":"i18n/it.ts","./i18n/pl":"i18n/pl.ts","./i18n/pt":"i18n/pt.ts","./i18n/sr":"i18n/sr.ts"}],"../node_modules/object-keys/isArguments.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","./bcp47":"bcp47.ts","./i18n/bs":"i18n/bs.ts","./i18n/de":"i18n/de.ts","./i18n/el":"i18n/el.ts","./i18n/en":"i18n/en.ts","./i18n/es":"i18n/es.ts","./i18n/fr":"i18n/fr.ts","./i18n/hr":"i18n/hr.ts","./i18n/it":"i18n/it.ts","./i18n/mk":"i18n/mk.ts","./i18n/nb":"i18n/nb.ts","./i18n/pl":"i18n/pl.ts","./i18n/pt":"i18n/pt.ts","./i18n/sl":"i18n/sl.ts","./i18n/sr":"i18n/sr.ts"}],"../node_modules/object-keys/isArguments.js":[function(require,module,exports) {
 'use strict';
 
 var toStr = Object.prototype.toString;
@@ -88628,6 +88851,8 @@ var react_1 = require("react");
 
 var react_redux_1 = require("react-redux");
 
+var effect = __importStar(require("../effect"));
+
 var Answer_1 = require("./Answer");
 
 var DeleteAll_1 = require("./DeleteAll");
@@ -88791,6 +89016,12 @@ function App() {
   var _useWindowSize = useWindowSize(),
       width = _useWindowSize.width;
 
+  var dispatch = react_redux_1.useDispatch();
+  react_1.useEffect(function () {
+    // Set the sound for the initial question
+    dispatch(effect.setSound());
+  }, []);
+
   if (width === undefined || width < 500) {
     return React.createElement(Mobile, {
       hasVoice: hasVoice
@@ -88803,7 +89034,7 @@ function App() {
 }
 
 exports.App = App;
-},{"@material-ui/core":"../node_modules/@material-ui/core/esm/index.js","react":"../node_modules/react/index.js","react-redux":"../node_modules/react-redux/es/index.js","./Answer":"components/Answer.tsx","./DeleteAll":"components/DeleteAll.tsx","./FullScreen":"components/FullScreen.tsx","./NextQuestion":"components/NextQuestion.tsx","./Preferences":"components/Preferences.tsx","./PreferencesButton":"components/PreferencesButton.tsx","./PreviousQuestion":"components/PreviousQuestion.tsx","./Question":"components/Question.tsx","./ScoreBar":"components/ScoreBar.tsx","./Speaker":"components/Speaker.tsx"}],"../node_modules/@material-ui/icons/SentimentVeryDissatisfied.js":[function(require,module,exports) {
+},{"@material-ui/core":"../node_modules/@material-ui/core/esm/index.js","react":"../node_modules/react/index.js","react-redux":"../node_modules/react-redux/es/index.js","../effect":"effect.ts","./Answer":"components/Answer.tsx","./DeleteAll":"components/DeleteAll.tsx","./FullScreen":"components/FullScreen.tsx","./NextQuestion":"components/NextQuestion.tsx","./Preferences":"components/Preferences.tsx","./PreferencesButton":"components/PreferencesButton.tsx","./PreviousQuestion":"components/PreviousQuestion.tsx","./Question":"components/Question.tsx","./ScoreBar":"components/ScoreBar.tsx","./Speaker":"components/Speaker.tsx"}],"../node_modules/@material-ui/icons/SentimentVeryDissatisfied.js":[function(require,module,exports) {
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -88979,7 +89210,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var speech = __importStar(require("./speech"));
 
-function initializeRegistry(questionBank, aSpeechSynthesis, translations, storage, history) {
+function initializeRegistry(questionBank, aSpeechSynthesis, translations, storage, history, player) {
   var voices = new speech.Voices(aSpeechSynthesis.getVoices());
   var voicesByLanguage = speech.groupVoicesByLanguage(voices, translations.keys());
   return {
@@ -88989,7 +89220,8 @@ function initializeRegistry(questionBank, aSpeechSynthesis, translations, storag
     voices: voices,
     voicesByLanguage: voicesByLanguage,
     storage: storage,
-    history: history
+    history: history,
+    player: player
   };
 }
 
@@ -89038,13 +89270,13 @@ exports.PIG = 'pig';
 exports.GOAT = 'goat';
 exports.BEAR = 'bear';
 exports.GIRAFFE = 'giraffe';
-var ids = [exports.ELEPHANT, exports.TIGER, exports.LION, exports.DOG, exports.WOLF, exports.FOX, exports.PIG, exports.GOAT, exports.BEAR, exports.GIRAFFE];
 
-var Question = function Question(id, imageURL) {
+var Question = function Question(id, imageURL, soundURL) {
   _classCallCheck(this, Question);
 
   this.id = id;
   this.imageURL = imageURL;
+  this.soundURL = soundURL;
 };
 
 exports.Question = Question;
@@ -89297,12 +89529,46 @@ var Bank = /*#__PURE__*/function () {
 exports.Bank = Bank;
 
 function initializeBank() {
-  return new Bank(ids.map(function (id) {
-    return {
-      id: id,
-      imageURL: "./media/".concat(id, ".jpeg")
-    };
-  }));
+  return new Bank([{
+    id: exports.ELEPHANT,
+    imageURL: './media/elephant.jpeg',
+    soundURL: './media/elephant.mp3'
+  }, {
+    id: exports.TIGER,
+    imageURL: './media/tiger.jpeg',
+    soundURL: './media/tiger.mp3'
+  }, {
+    id: exports.LION,
+    imageURL: './media/lion.jpeg',
+    soundURL: './media/lion.mp3'
+  }, {
+    id: exports.DOG,
+    imageURL: './media/dog.jpeg',
+    soundURL: './media/dog.mp3'
+  }, {
+    id: exports.WOLF,
+    imageURL: './media/wolf.jpeg',
+    soundURL: './media/wolf.mp3'
+  }, {
+    id: exports.FOX,
+    imageURL: './media/fox.jpeg',
+    soundURL: './media/fox.mp3'
+  }, {
+    id: exports.PIG,
+    imageURL: './media/pig.jpeg',
+    soundURL: './media/pig.mp3'
+  }, {
+    id: exports.GOAT,
+    imageURL: './media/goat.jpeg',
+    soundURL: './media/goat.mp3'
+  }, {
+    id: exports.BEAR,
+    imageURL: './media/bear.jpeg',
+    soundURL: './media/bear.mp3'
+  }, {
+    id: exports.GIRAFFE,
+    imageURL: './media/giraffe.jpeg'
+  }]);
 }
 
 exports.initializeBank = initializeBank;
@@ -89491,7 +89757,73 @@ function createReducer(deps) {
 }
 
 exports.createReducer = createReducer;
-},{"deep-equal":"../node_modules/deep-equal/index.js","immer":"../node_modules/immer/dist/immer.esm.js","./action":"action.ts","./autosave":"autosave.ts","./i18n":"i18n.ts"}],"urlware.ts":[function(require,module,exports) {
+},{"deep-equal":"../node_modules/deep-equal/index.js","immer":"../node_modules/immer/dist/immer.esm.js","./action":"action.ts","./autosave":"autosave.ts","./i18n":"i18n.ts"}],"observer.ts":[function(require,module,exports) {
+"use strict";
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+  }
+  result["default"] = mod;
+  return result;
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var action = __importStar(require("./action"));
+
+var effect = __importStar(require("./effect"));
+/**
+ * Observe the state changes and dispatch effects based on them.
+ */
+
+
+function create(deps) {
+  /* eslint-disable @typescript-eslint/explicit-function-return-type */
+  var middleware = function middleware(api) {
+    return function (next) {
+      return function (a) {
+        var result = next(a); // Prepare the sound for the current question
+
+        if (a.type === action.GOTO_QUESTION) {
+          api.dispatch(effect.pauseSound());
+          api.dispatch(effect.setSound());
+        } // Play a sound on the correct answer.
+
+
+        if (a.type === action.CHANGE_ANSWER) {
+          var state = api.getState();
+          var answer = state.answers.get(state.currentQuestion);
+
+          if (answer !== undefined) {
+            var translation = deps.translations.get(state.language);
+
+            if (translation === undefined) {
+              throw Error("Unexpectedly no translation for the language in the state: ".concat(state.language));
+            }
+
+            var checker = translation.answerCheckers[state.currentQuestion];
+
+            if (checker(answer)) {
+              api.dispatch(effect.playSound());
+            }
+          }
+        }
+
+        return result;
+      };
+    };
+  };
+
+  return middleware;
+}
+
+exports.create = create;
+},{"./action":"action.ts","./effect":"effect.ts"}],"urlware.ts":[function(require,module,exports) {
 "use strict";
 
 var __importStar = this && this.__importStar || function (mod) {
@@ -89588,12 +89920,14 @@ var app = __importStar(require("./app"));
 
 var autosave = __importStar(require("./autosave"));
 
+var observer = __importStar(require("./observer"));
+
 var stateInvariants = __importStar(require("./stateInvariants"));
 
 var urlware = __importStar(require("./urlware"));
 
 function produce(deps) {
-  var store = redux_1.createStore(app.createReducer(deps), redux_1.applyMiddleware(stateInvariants.create(deps), autosave.create(deps), urlware.create(deps.history), redux_thunk_1.default.withExtraArgument(deps)));
+  var store = redux_1.createStore(app.createReducer(deps), redux_1.applyMiddleware(stateInvariants.create(deps), autosave.create(deps), urlware.create(deps.history), observer.create(deps), redux_thunk_1.default.withExtraArgument(deps)));
   urlware.connectDispatch(deps.history, function (a) {
     return store.dispatch(a);
   }, deps.translations);
@@ -89601,7 +89935,7 @@ function produce(deps) {
 }
 
 exports.produce = produce;
-},{"redux":"../node_modules/redux/es/redux.js","redux-thunk":"../node_modules/redux-thunk/es/index.js","./app":"app.ts","./autosave":"autosave.ts","./stateInvariants":"stateInvariants.ts","./urlware":"urlware.ts"}],"index.tsx":[function(require,module,exports) {
+},{"redux":"../node_modules/redux/es/redux.js","redux-thunk":"../node_modules/redux-thunk/es/index.js","./app":"app.ts","./autosave":"autosave.ts","./observer":"observer.ts","./stateInvariants":"stateInvariants.ts","./urlware":"urlware.ts"}],"index.tsx":[function(require,module,exports) {
 "use strict";
 
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
@@ -89643,6 +89977,8 @@ var react_1 = require("react");
 var react_dom_1 = require("react-dom");
 
 var react_redux_1 = require("react-redux");
+
+var audio = __importStar(require("./audio"));
 
 var autosave = __importStar(require("./autosave"));
 
@@ -89716,22 +90052,23 @@ function Main() {
       setSelectWithDeps = _react_1$useState10[1];
 
   react_1.useEffect(function () {
-    if (!ready && error === undefined) {
-      promiseSpeechSynthesisReady().then(function () {
-        var aDeps = dependency.initializeRegistry(question.initializeBank(), window.speechSynthesis, i18n.initializeTranslations(), localStorage, history_1.createBrowserHistory());
-        autosave.undoPreviousDataVersions(aDeps.storage);
-        var aStore = storeFactory.produce(aDeps);
-        var aSelectWithDeps = new select.WithDeps(aDeps);
-        autosave.connectStoreToStorageEvent(aStore, aDeps);
-        setDeps(aDeps);
-        setStore(aStore);
-        setSelectWithDeps(aSelectWithDeps);
-        setReady(true);
-      }).catch(function (e) {
-        setError(e.toString());
-      });
-    }
-  });
+    console.info('Initializing...');
+    promiseSpeechSynthesisReady().then(function () {
+      var aDeps = dependency.initializeRegistry(question.initializeBank(), window.speechSynthesis, i18n.initializeTranslations(), localStorage, history_1.createBrowserHistory(), new audio.Player());
+      autosave.undoPreviousDataVersions(aDeps.storage);
+      var aStore = storeFactory.produce(aDeps);
+      var aSelectWithDeps = new select.WithDeps(aDeps);
+      autosave.connectStoreToStorageEvent(aStore, aDeps);
+      setDeps(aDeps);
+      setStore(aStore);
+      setSelectWithDeps(aSelectWithDeps);
+      setReady(true);
+      console.info('Initialized successfully.');
+    }).catch(function (e) {
+      console.error('Failed to initialize: ' + e.toString());
+      setError(e.toString());
+    });
+  }, []);
 
   if (error !== undefined) {
     return React.createElement(Unfortunately_1.Unfortunately, {
@@ -89765,7 +90102,7 @@ function Main() {
 }
 
 react_dom_1.render(React.createElement(ErrorBoundary_1.ErrorBoundary, null, React.createElement(Main, null)), document.getElementById('root'));
-},{"typeface-roboto":"../node_modules/typeface-roboto/index.css","@material-ui/core":"../node_modules/@material-ui/core/esm/index.js","history":"../node_modules/history/esm/history.js","react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","react-redux":"../node_modules/react-redux/es/index.js","./autosave":"autosave.ts","./components/App":"components/App.tsx","./components/ErrorBoundary":"components/ErrorBoundary.tsx","./components/Unfortunately":"components/Unfortunately.tsx","./dependency":"dependency.ts","./i18n":"i18n.ts","./question":"question.ts","./select":"select.ts","./storeFactory":"storeFactory.ts"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"typeface-roboto":"../node_modules/typeface-roboto/index.css","@material-ui/core":"../node_modules/@material-ui/core/esm/index.js","history":"../node_modules/history/esm/history.js","react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","react-redux":"../node_modules/react-redux/es/index.js","./audio":"audio.ts","./autosave":"autosave.ts","./components/App":"components/App.tsx","./components/ErrorBoundary":"components/ErrorBoundary.tsx","./components/Unfortunately":"components/Unfortunately.tsx","./dependency":"dependency.ts","./i18n":"i18n.ts","./question":"question.ts","./select":"select.ts","./storeFactory":"storeFactory.ts"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -89793,7 +90130,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33777" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33697" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
