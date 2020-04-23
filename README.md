@@ -9,8 +9,8 @@ If you are unsure about what you wrote, you can have the computer read it out fo
 
 The game supports the following languages:
 Bosnian (bs), German (de), English (en), Greek (el), Spanish (es), French (fr), 
-Croatian (hr), Italian (it), Macedonian (mk), Polish (pl), Portuguese (pt) and 
-Serbian (sr).
+Croatian (hr), Italian (it), Macedonian (mk), Polish (pl), Portuguese (pt),
+ Slovenian (sl) and Serbian (sr).
 
 
 Live demo

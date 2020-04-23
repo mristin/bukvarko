@@ -12,6 +12,7 @@ import { italian } from './i18n/it';
 import { macedonian } from './i18n/mk';
 import { polish } from './i18n/pl';
 import { portuguese } from './i18n/pt';
+import { slovenian } from './i18n/sl';
 import { serbian } from './i18n/sr';
 import * as question from './question';
 
@@ -42,6 +43,7 @@ export const ITALIAN = 'it';
 export const BOSNIAN = 'bs';
 export const GREEK = 'el';
 export const MACEDONIAN = 'mk';
+export const SLOVENIAN = 'sl';
 
 export type LanguageID =
   | typeof SERBIAN
@@ -55,7 +57,8 @@ export type LanguageID =
   | typeof ITALIAN
   | typeof BOSNIAN
   | typeof GREEK
-  | typeof MACEDONIAN;
+  | typeof MACEDONIAN
+  | typeof SLOVENIAN;
 
 export type Translations = Map<LanguageID, Translation>;
 
@@ -74,6 +77,7 @@ export function initializeTranslations(): Translations {
   result.set(BOSNIAN, bosnian);
   result.set(GREEK, greek);
   result.set(MACEDONIAN, macedonian);
+  result.set(SLOVENIAN, slovenian);
 
   // Post-condition
   if (result.size === 0) {
