@@ -81871,7 +81871,9 @@ var Player = /*#__PURE__*/function () {
       // Some browsers disallow autoplay (playing audio without first clicking somewhere in the window), so
       // the catch also ignores these errors.
 
-      this.element.play().catch(function () {});
+      this.element.play().catch(function () {
+        /* do nothing */
+      });
     }
   }, {
     key: "pause",
@@ -83003,7 +83005,795 @@ function primaryLanguage(tag) {
 }
 
 exports.primaryLanguage = primaryLanguage;
-},{}],"speech.ts":[function(require,module,exports) {
+},{}],"expectAnswer.ts":[function(require,module,exports) {
+"use strict";
+
+function _createForOfIteratorHelper(o) { if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (o = _unsupportedIterableToArray(o))) { var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var it, normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+function ignoreCase() {
+  for (var _len = arguments.length, expected = new Array(_len), _key = 0; _key < _len; _key++) {
+    expected[_key] = arguments[_key];
+  }
+
+  return function (answer) {
+    var result = false;
+
+    var _iterator = _createForOfIteratorHelper(expected),
+        _step;
+
+    try {
+      for (_iterator.s(); !(_step = _iterator.n()).done;) {
+        var anExpected = _step.value;
+
+        if (answer.toLowerCase().trim() === anExpected.toLowerCase().trim()) {
+          result = true;
+          break;
+        }
+      }
+    } catch (err) {
+      _iterator.e(err);
+    } finally {
+      _iterator.f();
+    }
+
+    return result;
+  };
+}
+
+exports.ignoreCase = ignoreCase;
+},{}],"i18n/bs.ts":[function(require,module,exports) {
+"use strict";
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+  }
+  result["default"] = mod;
+  return result;
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var expectAnswer = __importStar(require("../expectAnswer"));
+
+exports.bosnian = {
+  chooseYourLanguage: 'Jezik',
+  languageName: 'Bosanski',
+  chooseYourVoice: 'Glas',
+  noVoiceAvailable: 'Sistem ne podržava glas za ovaj jezik.',
+  answerCheckers: {
+    elephant: expectAnswer.ignoreCase('slon'),
+    tiger: expectAnswer.ignoreCase('tigar'),
+    lion: expectAnswer.ignoreCase('lav'),
+    dog: expectAnswer.ignoreCase('pas', 'cuko', 'cuka'),
+    wolf: expectAnswer.ignoreCase('vuk'),
+    fox: expectAnswer.ignoreCase('lisica', 'lisac'),
+    pig: expectAnswer.ignoreCase('svinja', 'prase'),
+    goat: expectAnswer.ignoreCase('koza', 'jarac', 'kozlić'),
+    bear: expectAnswer.ignoreCase('medvjed'),
+    giraffe: expectAnswer.ignoreCase('žirafa')
+  },
+  hereItSays: 'Ovdje piše',
+  nothingIsWrittenHere: 'Ovdje ništa ne piše.',
+  questionImageAlt: 'slika-pitanje'
+};
+},{"../expectAnswer":"expectAnswer.ts"}],"i18n/de.ts":[function(require,module,exports) {
+"use strict";
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+  }
+  result["default"] = mod;
+  return result;
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var expectAnswer = __importStar(require("../expectAnswer"));
+
+exports.german = {
+  chooseYourLanguage: 'Sprache',
+  languageName: 'Deutsch',
+  chooseYourVoice: 'Stimme',
+  noVoiceAvailable: 'Das System unterstützt keine Stimme für diese Sprache.',
+  answerCheckers: {
+    elephant: expectAnswer.ignoreCase('Elefant', 'der Elefant'),
+    tiger: expectAnswer.ignoreCase('Tiger', 'der Tiger'),
+    lion: expectAnswer.ignoreCase('Löwe', 'der Löwe'),
+    dog: expectAnswer.ignoreCase('Hund', 'der Hund'),
+    wolf: expectAnswer.ignoreCase('Wolf', 'der Wolf'),
+    fox: expectAnswer.ignoreCase('Fuchs', 'der Fuchs'),
+    pig: expectAnswer.ignoreCase('Schwein', 'das Schwein', 'Sau', 'die Sau'),
+    goat: expectAnswer.ignoreCase('Ziege', 'die Ziege', 'Geiss', 'die Geiss'),
+    bear: expectAnswer.ignoreCase('Bär', 'der Bär'),
+    giraffe: expectAnswer.ignoreCase('Giraffe', 'die Giraffe')
+  },
+  hereItSays: 'Hier steht',
+  nothingIsWrittenHere: 'Hier steht nichts.',
+  questionImageAlt: 'Frage'
+};
+},{"../expectAnswer":"expectAnswer.ts"}],"i18n/el.ts":[function(require,module,exports) {
+"use strict";
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+  }
+  result["default"] = mod;
+  return result;
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var expectAnswer = __importStar(require("../expectAnswer"));
+
+exports.greek = {
+  chooseYourLanguage: 'Γλώσσα',
+  languageName: 'Ελληνικά',
+  chooseYourVoice: 'Φωνή',
+  noVoiceAvailable: 'Το σύστημα δεν υποστηρίζει φωνή για αυτή τη γλώσσα.',
+  answerCheckers: {
+    elephant: expectAnswer.ignoreCase('ελέφαντας', 'ο ελέφαντας'),
+    tiger: expectAnswer.ignoreCase('τίγρη', 'η τίγρη'),
+    lion: expectAnswer.ignoreCase('λιοντάρι', 'το λιοντάρι'),
+    dog: expectAnswer.ignoreCase('σκύλος', 'ο σκύλος'),
+    wolf: expectAnswer.ignoreCase('λύκος', 'ο λύκος'),
+    fox: expectAnswer.ignoreCase('αλεπού', 'η αλεπού'),
+    pig: expectAnswer.ignoreCase('γουρούνι', 'το γουρούνι'),
+    goat: expectAnswer.ignoreCase('γίδα', 'η γίδα', 'κατσίκα', 'η κατσίκα'),
+    bear: expectAnswer.ignoreCase('αρκούδα', 'η αρκούδα'),
+    giraffe: expectAnswer.ignoreCase('καμηλοπάρδαλη', 'η καμηλοπάρδαλη')
+  },
+  hereItSays: 'Εδώ λέει',
+  nothingIsWrittenHere: 'Εδώ δε λέει τίποτα.',
+  questionImageAlt: 'Ερώτηση'
+};
+},{"../expectAnswer":"expectAnswer.ts"}],"i18n/en.ts":[function(require,module,exports) {
+"use strict";
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+  }
+  result["default"] = mod;
+  return result;
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var expectAnswer = __importStar(require("../expectAnswer"));
+
+exports.english = {
+  chooseYourLanguage: 'Language',
+  languageName: 'English',
+  chooseYourVoice: 'Voice',
+  noVoiceAvailable: 'Your system does not provide a voice for this language.',
+  answerCheckers: {
+    elephant: expectAnswer.ignoreCase('elephant', 'the elephant'),
+    tiger: expectAnswer.ignoreCase('tiger', 'the tiger'),
+    lion: expectAnswer.ignoreCase('lion', 'the lion'),
+    dog: expectAnswer.ignoreCase('dog', 'the dog'),
+    wolf: expectAnswer.ignoreCase('wolf', 'the wolf'),
+    fox: expectAnswer.ignoreCase('fox', 'the fox'),
+    pig: expectAnswer.ignoreCase('pig', 'the pig', 'hog', 'the hog'),
+    goat: expectAnswer.ignoreCase('goat', 'the goat'),
+    bear: expectAnswer.ignoreCase('bear', 'the bear'),
+    giraffe: expectAnswer.ignoreCase('giraffe', 'the giraffe')
+  },
+  hereItSays: 'Here it says',
+  nothingIsWrittenHere: 'Nothing has been written.',
+  questionImageAlt: 'question image'
+};
+},{"../expectAnswer":"expectAnswer.ts"}],"i18n/es.ts":[function(require,module,exports) {
+"use strict";
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+  }
+  result["default"] = mod;
+  return result;
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var expectAnswer = __importStar(require("../expectAnswer"));
+
+exports.spanish = {
+  chooseYourLanguage: 'Idioma',
+  languageName: 'Castellano',
+  chooseYourVoice: 'Voz',
+  noVoiceAvailable: 'El sistema no soporta la narración en el idioma escogido.',
+  answerCheckers: {
+    elephant: expectAnswer.ignoreCase('elefante'),
+    tiger: expectAnswer.ignoreCase('tigre'),
+    lion: expectAnswer.ignoreCase('leon'),
+    dog: expectAnswer.ignoreCase('perro', 'perra'),
+    wolf: expectAnswer.ignoreCase('lobo', 'loba'),
+    fox: expectAnswer.ignoreCase('zorra', 'zorro'),
+    pig: expectAnswer.ignoreCase('cerdo'),
+    goat: expectAnswer.ignoreCase('cabra', 'cabro'),
+    bear: expectAnswer.ignoreCase('oso'),
+    giraffe: expectAnswer.ignoreCase('jirafa')
+  },
+  hereItSays: 'Aca dice',
+  nothingIsWrittenHere: 'Aca no dice nada.',
+  questionImageAlt: 'la pregunta'
+};
+},{"../expectAnswer":"expectAnswer.ts"}],"i18n/fr.ts":[function(require,module,exports) {
+"use strict";
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+  }
+  result["default"] = mod;
+  return result;
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var expectAnswer = __importStar(require("../expectAnswer"));
+
+exports.french = {
+  chooseYourLanguage: 'Langue',
+  languageName: 'Francais',
+  chooseYourVoice: 'Voix',
+  noVoiceAvailable: 'Le logiciel ne fournit pas aucune voix pour cette langue.',
+  answerCheckers: {
+    elephant: expectAnswer.ignoreCase('éléphant'),
+    tiger: expectAnswer.ignoreCase('tigre'),
+    lion: expectAnswer.ignoreCase('lion'),
+    dog: expectAnswer.ignoreCase('chien'),
+    wolf: expectAnswer.ignoreCase('loup'),
+    fox: expectAnswer.ignoreCase('renard'),
+    pig: expectAnswer.ignoreCase('cochon', 'porc'),
+    goat: expectAnswer.ignoreCase('chèvre'),
+    bear: expectAnswer.ignoreCase('ours'),
+    giraffe: expectAnswer.ignoreCase('girafe')
+  },
+  hereItSays: 'Ça dit ici',
+  nothingIsWrittenHere: 'Ça ne dit rien ici.',
+  questionImageAlt: 'question'
+};
+},{"../expectAnswer":"expectAnswer.ts"}],"i18n/gsw.ts":[function(require,module,exports) {
+"use strict";
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+  }
+  result["default"] = mod;
+  return result;
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var expectAnswer = __importStar(require("../expectAnswer"));
+
+exports.swissGerman = {
+  chooseYourLanguage: 'Sprach',
+  languageName: 'Schwyzerdütsch',
+  chooseYourVoice: 'Stimm',
+  noVoiceAvailable: 'Das System unterstützt kei Stimm für die Sprach.',
+  answerCheckers: {
+    elephant: expectAnswer.ignoreCase('Elefant'),
+    tiger: expectAnswer.ignoreCase('Tiger'),
+    lion: expectAnswer.ignoreCase('Loi', 'Leu', 'Löi'),
+    dog: expectAnswer.ignoreCase('Hund'),
+    wolf: expectAnswer.ignoreCase('Wolf'),
+    fox: expectAnswer.ignoreCase('Fuchs'),
+    pig: expectAnswer.ignoreCase('Schwein', 'Sau', 'Säuli'),
+    goat: expectAnswer.ignoreCase('Ziege', 'Geiss', 'Geissli'),
+    bear: expectAnswer.ignoreCase('Bär'),
+    giraffe: expectAnswer.ignoreCase('Giraffe', 'Giraff')
+  },
+  hereItSays: 'Da staht',
+  nothingIsWrittenHere: 'Da staht gar nüt.',
+  questionImageAlt: 'Frag'
+};
+},{"../expectAnswer":"expectAnswer.ts"}],"i18n/hr.ts":[function(require,module,exports) {
+"use strict";
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+  }
+  result["default"] = mod;
+  return result;
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var expectAnswer = __importStar(require("../expectAnswer"));
+
+exports.croatian = {
+  chooseYourLanguage: 'Jezik',
+  languageName: 'Hrvatski',
+  chooseYourVoice: 'Glas',
+  noVoiceAvailable: 'Sustav ne podržava glas za ovaj jezik.',
+  answerCheckers: {
+    elephant: expectAnswer.ignoreCase('slon'),
+    tiger: expectAnswer.ignoreCase('tigar'),
+    lion: expectAnswer.ignoreCase('lav'),
+    dog: expectAnswer.ignoreCase('pas'),
+    wolf: expectAnswer.ignoreCase('vuk'),
+    fox: expectAnswer.ignoreCase('lisica', 'lisac'),
+    pig: expectAnswer.ignoreCase('svinja'),
+    goat: expectAnswer.ignoreCase('koza', 'jarac', 'kozlić'),
+    bear: expectAnswer.ignoreCase('medvjed'),
+    giraffe: expectAnswer.ignoreCase('žirafa')
+  },
+  hereItSays: 'Ovdje piše',
+  nothingIsWrittenHere: 'Ovdje ništa ne piše.',
+  questionImageAlt: 'slika-pitanje'
+};
+},{"../expectAnswer":"expectAnswer.ts"}],"i18n/it.ts":[function(require,module,exports) {
+"use strict";
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+  }
+  result["default"] = mod;
+  return result;
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var expectAnswer = __importStar(require("../expectAnswer"));
+
+exports.italian = {
+  chooseYourLanguage: 'Lingua',
+  languageName: 'Italiano',
+  chooseYourVoice: 'Voce',
+  noVoiceAvailable: 'Il sistema non supporta la voce per questa lingua..',
+  answerCheckers: {
+    elephant: expectAnswer.ignoreCase('elefante'),
+    tiger: expectAnswer.ignoreCase('tigre'),
+    lion: expectAnswer.ignoreCase('leone'),
+    dog: expectAnswer.ignoreCase('cane'),
+    wolf: expectAnswer.ignoreCase('lupo', 'lupa'),
+    fox: expectAnswer.ignoreCase('volpe'),
+    pig: expectAnswer.ignoreCase('maiale', 'porco'),
+    goat: expectAnswer.ignoreCase('capra'),
+    bear: expectAnswer.ignoreCase('orso', 'orsa'),
+    giraffe: expectAnswer.ignoreCase('giraffa')
+  },
+  hereItSays: "Qui c'è scritto",
+  nothingIsWrittenHere: "Qui non c'è niente scritto.",
+  questionImageAlt: 'Questione'
+};
+},{"../expectAnswer":"expectAnswer.ts"}],"i18n/mk.ts":[function(require,module,exports) {
+"use strict";
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+  }
+  result["default"] = mod;
+  return result;
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var expectAnswer = __importStar(require("../expectAnswer"));
+
+exports.macedonian = {
+  chooseYourLanguage: 'Одберете јазик',
+  languageName: 'Македонски',
+  chooseYourVoice: 'Одберете глас',
+  noVoiceAvailable: 'Системот не подржува глас на овој јазик.',
+  answerCheckers: {
+    elephant: expectAnswer.ignoreCase('Слон'),
+    tiger: expectAnswer.ignoreCase('Тигар'),
+    lion: expectAnswer.ignoreCase('Лав'),
+    dog: expectAnswer.ignoreCase('Куче'),
+    wolf: expectAnswer.ignoreCase('Волк'),
+    fox: expectAnswer.ignoreCase('Лисица', 'Лисац'),
+    pig: expectAnswer.ignoreCase('Свиња'),
+    goat: expectAnswer.ignoreCase('Коза'),
+    bear: expectAnswer.ignoreCase('Мечка'),
+    giraffe: expectAnswer.ignoreCase('Жирафа')
+  },
+  hereItSays: 'Тука пишува',
+  nothingIsWrittenHere: 'Тука ништо не пишува.',
+  questionImageAlt: 'Слика-Прашање'
+};
+},{"../expectAnswer":"expectAnswer.ts"}],"i18n/nb.ts":[function(require,module,exports) {
+"use strict";
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+  }
+  result["default"] = mod;
+  return result;
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var expectAnswer = __importStar(require("../expectAnswer"));
+
+exports.norwegian = {
+  chooseYourLanguage: 'Språk',
+  languageName: 'Norsk (bokmål)',
+  chooseYourVoice: 'Stemme',
+  noVoiceAvailable: 'Systemet støtter ikke talegjenkjenning på dette språket.',
+  answerCheckers: {
+    elephant: expectAnswer.ignoreCase('elefant'),
+    tiger: expectAnswer.ignoreCase('tiger'),
+    lion: expectAnswer.ignoreCase('løve'),
+    dog: expectAnswer.ignoreCase('hund'),
+    wolf: expectAnswer.ignoreCase('ulv'),
+    fox: expectAnswer.ignoreCase('rev'),
+    pig: expectAnswer.ignoreCase('gris', 'svin'),
+    goat: expectAnswer.ignoreCase('geit'),
+    bear: expectAnswer.ignoreCase('bjørn'),
+    giraffe: expectAnswer.ignoreCase('sjiraff')
+  },
+  hereItSays: 'Her står det',
+  nothingIsWrittenHere: 'Her står det ingenting.',
+  questionImageAlt: 'bilde-spørsmål'
+};
+},{"../expectAnswer":"expectAnswer.ts"}],"i18n/pl.ts":[function(require,module,exports) {
+"use strict";
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+  }
+  result["default"] = mod;
+  return result;
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var expectAnswer = __importStar(require("../expectAnswer"));
+
+exports.polish = {
+  chooseYourLanguage: 'Język',
+  languageName: 'Polski',
+  chooseYourVoice: 'Głos',
+  noVoiceAvailable: 'System nie jest w stanie dostarczyć głosu dla tego języka.',
+  answerCheckers: {
+    elephant: expectAnswer.ignoreCase('słoń'),
+    tiger: expectAnswer.ignoreCase('tygrys'),
+    lion: expectAnswer.ignoreCase('lew'),
+    dog: expectAnswer.ignoreCase('pies', 'piesek'),
+    wolf: expectAnswer.ignoreCase('wilk'),
+    fox: expectAnswer.ignoreCase('lis'),
+    pig: expectAnswer.ignoreCase('świnia', 'świnka'),
+    goat: expectAnswer.ignoreCase('koza', 'kozioł', 'kózka', 'baran', 'baranek'),
+    bear: expectAnswer.ignoreCase('niedźwiedź', 'niedźwiadek'),
+    giraffe: expectAnswer.ignoreCase('żyrafa')
+  },
+  hereItSays: 'Napisano',
+  nothingIsWrittenHere: 'Nic nie napisano.',
+  questionImageAlt: 'obrazek-pytanie'
+};
+},{"../expectAnswer":"expectAnswer.ts"}],"i18n/pt.ts":[function(require,module,exports) {
+"use strict";
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+  }
+  result["default"] = mod;
+  return result;
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var expectAnswer = __importStar(require("../expectAnswer"));
+
+exports.portuguese = {
+  chooseYourLanguage: 'O idioma',
+  languageName: 'Português',
+  chooseYourVoice: 'A voz',
+  noVoiceAvailable: 'O sistema não suporta voz de narração para este idioma.',
+  answerCheckers: {
+    elephant: expectAnswer.ignoreCase('elefante'),
+    tiger: expectAnswer.ignoreCase('tigre'),
+    lion: expectAnswer.ignoreCase('leão'),
+    dog: expectAnswer.ignoreCase('cão'),
+    wolf: expectAnswer.ignoreCase('lobo', 'loba'),
+    fox: expectAnswer.ignoreCase('raposa', 'raposo'),
+    pig: expectAnswer.ignoreCase('porco'),
+    goat: expectAnswer.ignoreCase('cabra', 'cabro'),
+    bear: expectAnswer.ignoreCase('urso'),
+    giraffe: expectAnswer.ignoreCase('girafa')
+  },
+  hereItSays: 'Aqui está escrito',
+  nothingIsWrittenHere: 'Aqui não está nada escrito.',
+  questionImageAlt: 'A pergunta'
+};
+},{"../expectAnswer":"expectAnswer.ts"}],"i18n/sl.ts":[function(require,module,exports) {
+"use strict";
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+  }
+  result["default"] = mod;
+  return result;
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var expectAnswer = __importStar(require("../expectAnswer"));
+
+exports.slovenian = {
+  chooseYourLanguage: 'Jezik',
+  languageName: 'Slovenščina',
+  chooseYourVoice: 'Glas',
+  noVoiceAvailable: 'Sistem ne podpira prepoznavanja govora v tem jeziku.',
+  answerCheckers: {
+    elephant: expectAnswer.ignoreCase('slon'),
+    tiger: expectAnswer.ignoreCase('tiger'),
+    lion: expectAnswer.ignoreCase('lev'),
+    dog: expectAnswer.ignoreCase('pes'),
+    wolf: expectAnswer.ignoreCase('volk'),
+    fox: expectAnswer.ignoreCase('lisica', 'lisac'),
+    pig: expectAnswer.ignoreCase('prašič', 'prasica'),
+    goat: expectAnswer.ignoreCase('koza'),
+    bear: expectAnswer.ignoreCase('medved'),
+    giraffe: expectAnswer.ignoreCase('žirafa')
+  },
+  hereItSays: 'Tu piše',
+  nothingIsWrittenHere: 'Tu ne piše nič.',
+  questionImageAlt: 'vprašanje-slika'
+};
+},{"../expectAnswer":"expectAnswer.ts"}],"i18n/sr.ts":[function(require,module,exports) {
+"use strict";
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+  }
+  result["default"] = mod;
+  return result;
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var expectAnswer = __importStar(require("../expectAnswer"));
+
+exports.serbian = {
+  chooseYourLanguage: 'Jezik',
+  languageName: 'Srpski',
+  chooseYourVoice: 'Glas',
+  noVoiceAvailable: 'Sistem ne podržava glas za ovaj jezik.',
+  answerCheckers: {
+    elephant: expectAnswer.ignoreCase('slon', 'слон'),
+    tiger: expectAnswer.ignoreCase('tigar', 'тигар'),
+    lion: expectAnswer.ignoreCase('lav', 'лав'),
+    dog: expectAnswer.ignoreCase('pas', 'kuče', 'kuca', 'пас', 'куче', 'куца'),
+    wolf: expectAnswer.ignoreCase('vuk', 'vučica', 'вук', 'вучица'),
+    fox: expectAnswer.ignoreCase('lisac', 'lisica', 'лисац', 'лисица'),
+    pig: expectAnswer.ignoreCase('svinja', 'prase', 'свиња', 'прасе'),
+    goat: expectAnswer.ignoreCase('koza', 'jarac', 'kozlić', 'коза', 'јарац', 'козлић'),
+    bear: expectAnswer.ignoreCase('medved', 'медвед'),
+    giraffe: expectAnswer.ignoreCase('žirafa', 'жирафа')
+  },
+  hereItSays: 'Ovde piše',
+  nothingIsWrittenHere: 'Ovde ništa ne piše.',
+  questionImageAlt: 'slika-pitanje'
+};
+},{"../expectAnswer":"expectAnswer.ts"}],"i18n.ts":[function(require,module,exports) {
+"use strict";
+
+function _createForOfIteratorHelper(o) { if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (o = _unsupportedIterableToArray(o))) { var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var it, normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+  }
+  result["default"] = mod;
+  return result;
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var React = __importStar(require("react"));
+
+var bcp47 = __importStar(require("./bcp47"));
+
+var bs_1 = require("./i18n/bs");
+
+var de_1 = require("./i18n/de");
+
+var el_1 = require("./i18n/el");
+
+var en_1 = require("./i18n/en");
+
+var es_1 = require("./i18n/es");
+
+var fr_1 = require("./i18n/fr");
+
+var gsw_1 = require("./i18n/gsw");
+
+var hr_1 = require("./i18n/hr");
+
+var it_1 = require("./i18n/it");
+
+var mk_1 = require("./i18n/mk");
+
+var nb_1 = require("./i18n/nb");
+
+var pl_1 = require("./i18n/pl");
+
+var pt_1 = require("./i18n/pt");
+
+var sl_1 = require("./i18n/sl");
+
+var sr_1 = require("./i18n/sr");
+
+exports.SERBIAN = 'sr';
+exports.CROATIAN = 'hr';
+exports.ENGLISH = 'en';
+exports.GERMAN = 'de';
+exports.FRENCH = 'fr';
+exports.SPANISH = 'es';
+exports.POLISH = 'pl';
+exports.PORTUGUESE = 'pt';
+exports.ITALIAN = 'it';
+exports.BOSNIAN = 'bs';
+exports.GREEK = 'el';
+exports.MACEDONIAN = 'mk';
+exports.SLOVENIAN = 'sl';
+exports.NORWEGIAN = 'nb';
+exports.SWISS_GERMAN = 'gsw';
+
+function initializeTranslations() {
+  var result = new Map();
+  result.set(exports.SERBIAN, sr_1.serbian);
+  result.set(exports.CROATIAN, hr_1.croatian);
+  result.set(exports.ENGLISH, en_1.english);
+  result.set(exports.GERMAN, de_1.german);
+  result.set(exports.FRENCH, fr_1.french);
+  result.set(exports.SPANISH, es_1.spanish);
+  result.set(exports.POLISH, pl_1.polish);
+  result.set(exports.PORTUGUESE, pt_1.portuguese);
+  result.set(exports.ITALIAN, it_1.italian);
+  result.set(exports.BOSNIAN, bs_1.bosnian);
+  result.set(exports.GREEK, el_1.greek);
+  result.set(exports.MACEDONIAN, mk_1.macedonian);
+  result.set(exports.SLOVENIAN, sl_1.slovenian);
+  result.set(exports.NORWEGIAN, nb_1.norwegian);
+  result.set(exports.SWISS_GERMAN, gsw_1.swissGerman); // Post-condition
+
+  if (result.size === 0) {
+    throw Error('Expected a non-empty map of translations.');
+  }
+
+  return result;
+}
+
+exports.initializeTranslations = initializeTranslations;
+/**
+ * Infer the translation language from the navigator language.
+ *
+ * It matches first exactly, then by the primary language. If no match has been found, the first language
+ * in the given list is returned.
+ *
+ * @param navigatorLanguage language as indicated by the browser
+ * @param languages list of available translation languages
+ */
+
+function inferDefault(navigatorLanguage, languages) {
+  var result = undefined;
+
+  var _iterator = _createForOfIteratorHelper(languages),
+      _step;
+
+  try {
+    for (_iterator.s(); !(_step = _iterator.n()).done;) {
+      var lang = _step.value;
+
+      if (lang === navigatorLanguage) {
+        result = lang;
+        break;
+      }
+
+      if (bcp47.primaryLanguage(navigatorLanguage) === lang) {
+        result = lang;
+        break;
+      }
+    }
+  } catch (err) {
+    _iterator.e(err);
+  } finally {
+    _iterator.f();
+  }
+
+  if (result === undefined) {
+    return languages[0];
+  }
+
+  return result;
+}
+
+exports.inferDefault = inferDefault;
+exports.Context = React.createContext(undefined);
+},{"react":"../node_modules/react/index.js","./bcp47":"bcp47.ts","./i18n/bs":"i18n/bs.ts","./i18n/de":"i18n/de.ts","./i18n/el":"i18n/el.ts","./i18n/en":"i18n/en.ts","./i18n/es":"i18n/es.ts","./i18n/fr":"i18n/fr.ts","./i18n/gsw":"i18n/gsw.ts","./i18n/hr":"i18n/hr.ts","./i18n/it":"i18n/it.ts","./i18n/mk":"i18n/mk.ts","./i18n/nb":"i18n/nb.ts","./i18n/pl":"i18n/pl.ts","./i18n/pt":"i18n/pt.ts","./i18n/sl":"i18n/sl.ts","./i18n/sr":"i18n/sr.ts"}],"speech.ts":[function(require,module,exports) {
 "use strict";
 
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
@@ -83049,6 +83839,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 var bcp47 = __importStar(require("./bcp47"));
+
+var i18n = __importStar(require("./i18n"));
 
 var VoiceID = /*#__PURE__*/function () {
   function VoiceID(lang, name) {
@@ -83331,6 +84123,23 @@ function groupVoicesByLanguage(voices, i18nLangs) {
         // We need to filter by the primary language and accept those voices as a fallback.
         var fallbackMatches = voices.filterByPrimaryLanguage(bcp47.primaryLanguage(i18nLang));
         langVoices.push.apply(langVoices, _toConsumableArray(fallbackMatches));
+      } // Swiss German is officially denoted "gsw" according to BCP 47.
+      // See https://github.com/libyal/libfwnt/wiki/Language-Code-identifiers
+      //
+      // However, since it is still not properly coded language, it is almost impossible that there is a system
+      // out there supporting speech synthesis for it. Therefore, we pick German ("de") as a fallback language.
+
+
+      if (i18nLang === i18n.SWISS_GERMAN && langVoices.length === 0) {
+        var _exactMatches = voices.filterByExactLanguage('de-CH');
+
+        if (_exactMatches.length > 0) {
+          langVoices.push.apply(langVoices, _toConsumableArray(_exactMatches));
+        } else {
+          var _fallbackMatches = voices.filterByPrimaryLanguage(bcp47.primaryLanguage('de'));
+
+          langVoices.push.apply(langVoices, _toConsumableArray(_fallbackMatches));
+        }
       }
 
       r.set(i18nLang, langVoices);
@@ -83397,7 +84206,7 @@ function voiceForLanguageOK(voice, language, voicesByLanguage) {
 }
 
 exports.voiceForLanguageOK = voiceForLanguageOK;
-},{"./bcp47":"bcp47.ts"}],"stateInvariants.ts":[function(require,module,exports) {
+},{"./bcp47":"bcp47.ts","./i18n":"i18n.ts"}],"stateInvariants.ts":[function(require,module,exports) {
 "use strict";
 
 function _createForOfIteratorHelper(o) { if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (o = _unsupportedIterableToArray(o))) { var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var it, normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
@@ -84358,751 +85167,7 @@ var _default = (0, _createSvgIcon.default)(_react.default.createElement("path", 
 }), 'Settings');
 
 exports.default = _default;
-},{"@babel/runtime/helpers/interopRequireDefault":"../node_modules/@babel/runtime/helpers/interopRequireDefault.js","react":"../node_modules/react/index.js","./utils/createSvgIcon":"../node_modules/@material-ui/icons/utils/createSvgIcon.js"}],"expectAnswer.ts":[function(require,module,exports) {
-"use strict";
-
-function _createForOfIteratorHelper(o) { if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (o = _unsupportedIterableToArray(o))) { var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var it, normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-function ignoreCase() {
-  for (var _len = arguments.length, expected = new Array(_len), _key = 0; _key < _len; _key++) {
-    expected[_key] = arguments[_key];
-  }
-
-  return function (answer) {
-    var result = false;
-
-    var _iterator = _createForOfIteratorHelper(expected),
-        _step;
-
-    try {
-      for (_iterator.s(); !(_step = _iterator.n()).done;) {
-        var anExpected = _step.value;
-
-        if (answer.toLowerCase().trim() === anExpected.toLowerCase().trim()) {
-          result = true;
-          break;
-        }
-      }
-    } catch (err) {
-      _iterator.e(err);
-    } finally {
-      _iterator.f();
-    }
-
-    return result;
-  };
-}
-
-exports.ignoreCase = ignoreCase;
-},{}],"i18n/bs.ts":[function(require,module,exports) {
-"use strict";
-
-var __importStar = this && this.__importStar || function (mod) {
-  if (mod && mod.__esModule) return mod;
-  var result = {};
-  if (mod != null) for (var k in mod) {
-    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-  }
-  result["default"] = mod;
-  return result;
-};
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var expectAnswer = __importStar(require("../expectAnswer"));
-
-exports.bosnian = {
-  chooseYourLanguage: 'Jezik',
-  languageName: 'Bosanski',
-  chooseYourVoice: 'Glas',
-  noVoiceAvailable: 'Sistem ne podržava glas za ovaj jezik.',
-  answerCheckers: {
-    elephant: expectAnswer.ignoreCase('slon'),
-    tiger: expectAnswer.ignoreCase('tigar'),
-    lion: expectAnswer.ignoreCase('lav'),
-    dog: expectAnswer.ignoreCase('pas', 'cuko', 'cuka'),
-    wolf: expectAnswer.ignoreCase('vuk'),
-    fox: expectAnswer.ignoreCase('lisica', 'lisac'),
-    pig: expectAnswer.ignoreCase('svinja', 'prase'),
-    goat: expectAnswer.ignoreCase('koza', 'jarac', 'kozlić'),
-    bear: expectAnswer.ignoreCase('medvjed'),
-    giraffe: expectAnswer.ignoreCase('žirafa')
-  },
-  hereItSays: 'Ovdje piše',
-  nothingIsWrittenHere: 'Ovdje ništa ne piše.',
-  questionImageAlt: 'slika-pitanje'
-};
-},{"../expectAnswer":"expectAnswer.ts"}],"i18n/de.ts":[function(require,module,exports) {
-"use strict";
-
-var __importStar = this && this.__importStar || function (mod) {
-  if (mod && mod.__esModule) return mod;
-  var result = {};
-  if (mod != null) for (var k in mod) {
-    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-  }
-  result["default"] = mod;
-  return result;
-};
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var expectAnswer = __importStar(require("../expectAnswer"));
-
-exports.german = {
-  chooseYourLanguage: 'Sprache',
-  languageName: 'Deutsch',
-  chooseYourVoice: 'Stimme',
-  noVoiceAvailable: 'Das System unterstützt keine Stimme für diese Sprache.',
-  answerCheckers: {
-    elephant: expectAnswer.ignoreCase('Elefant', 'der Elefant'),
-    tiger: expectAnswer.ignoreCase('Tiger', 'der Tiger'),
-    lion: expectAnswer.ignoreCase('Löwe', 'der Löwe'),
-    dog: expectAnswer.ignoreCase('Hund', 'der Hund'),
-    wolf: expectAnswer.ignoreCase('Wolf', 'der Wolf'),
-    fox: expectAnswer.ignoreCase('Fuchs', 'der Fuchs'),
-    pig: expectAnswer.ignoreCase('Schwein', 'das Schwein', 'Sau', 'die Sau'),
-    goat: expectAnswer.ignoreCase('Ziege', 'die Ziege', 'Geiss', 'die Geiss'),
-    bear: expectAnswer.ignoreCase('Bär', 'der Bär'),
-    giraffe: expectAnswer.ignoreCase('Giraffe', 'die Giraffe')
-  },
-  hereItSays: 'Hier steht',
-  nothingIsWrittenHere: 'Hier steht nichts.',
-  questionImageAlt: 'Frage'
-};
-},{"../expectAnswer":"expectAnswer.ts"}],"i18n/el.ts":[function(require,module,exports) {
-"use strict";
-
-var __importStar = this && this.__importStar || function (mod) {
-  if (mod && mod.__esModule) return mod;
-  var result = {};
-  if (mod != null) for (var k in mod) {
-    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-  }
-  result["default"] = mod;
-  return result;
-};
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var expectAnswer = __importStar(require("../expectAnswer"));
-
-exports.greek = {
-  chooseYourLanguage: 'Γλώσσα',
-  languageName: 'Ελληνικά',
-  chooseYourVoice: 'Φωνή',
-  noVoiceAvailable: 'Το σύστημα δεν υποστηρίζει φωνή για αυτή τη γλώσσα.',
-  answerCheckers: {
-    elephant: expectAnswer.ignoreCase('ελέφαντας', 'ο ελέφαντας'),
-    tiger: expectAnswer.ignoreCase('τίγρη', 'η τίγρη'),
-    lion: expectAnswer.ignoreCase('λιοντάρι', 'το λιοντάρι'),
-    dog: expectAnswer.ignoreCase('σκύλος', 'ο σκύλος'),
-    wolf: expectAnswer.ignoreCase('λύκος', 'ο λύκος'),
-    fox: expectAnswer.ignoreCase('αλεπού', 'η αλεπού'),
-    pig: expectAnswer.ignoreCase('γουρούνι', 'το γουρούνι'),
-    goat: expectAnswer.ignoreCase('γίδα', 'η γίδα', 'κατσίκα', 'η κατσίκα'),
-    bear: expectAnswer.ignoreCase('αρκούδα', 'η αρκούδα'),
-    giraffe: expectAnswer.ignoreCase('καμηλοπάρδαλη', 'η καμηλοπάρδαλη')
-  },
-  hereItSays: 'Εδώ λέει',
-  nothingIsWrittenHere: 'Εδώ δε λέει τίποτα.',
-  questionImageAlt: 'Ερώτηση'
-};
-},{"../expectAnswer":"expectAnswer.ts"}],"i18n/en.ts":[function(require,module,exports) {
-"use strict";
-
-var __importStar = this && this.__importStar || function (mod) {
-  if (mod && mod.__esModule) return mod;
-  var result = {};
-  if (mod != null) for (var k in mod) {
-    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-  }
-  result["default"] = mod;
-  return result;
-};
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var expectAnswer = __importStar(require("../expectAnswer"));
-
-exports.english = {
-  chooseYourLanguage: 'Language',
-  languageName: 'English',
-  chooseYourVoice: 'Voice',
-  noVoiceAvailable: 'Your system does not provide a voice for this language.',
-  answerCheckers: {
-    elephant: expectAnswer.ignoreCase('elephant', 'the elephant'),
-    tiger: expectAnswer.ignoreCase('tiger', 'the tiger'),
-    lion: expectAnswer.ignoreCase('lion', 'the lion'),
-    dog: expectAnswer.ignoreCase('dog', 'the dog'),
-    wolf: expectAnswer.ignoreCase('wolf', 'the wolf'),
-    fox: expectAnswer.ignoreCase('fox', 'the fox'),
-    pig: expectAnswer.ignoreCase('pig', 'the pig', 'hog', 'the hog'),
-    goat: expectAnswer.ignoreCase('goat', 'the goat'),
-    bear: expectAnswer.ignoreCase('bear', 'the bear'),
-    giraffe: expectAnswer.ignoreCase('giraffe', 'the giraffe')
-  },
-  hereItSays: 'Here it says',
-  nothingIsWrittenHere: 'Nothing has been written.',
-  questionImageAlt: 'question image'
-};
-},{"../expectAnswer":"expectAnswer.ts"}],"i18n/es.ts":[function(require,module,exports) {
-"use strict";
-
-var __importStar = this && this.__importStar || function (mod) {
-  if (mod && mod.__esModule) return mod;
-  var result = {};
-  if (mod != null) for (var k in mod) {
-    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-  }
-  result["default"] = mod;
-  return result;
-};
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var expectAnswer = __importStar(require("../expectAnswer"));
-
-exports.spanish = {
-  chooseYourLanguage: 'Idioma',
-  languageName: 'Castellano',
-  chooseYourVoice: 'Voz',
-  noVoiceAvailable: 'El sistema no soporta la narración en el idioma escogido.',
-  answerCheckers: {
-    elephant: expectAnswer.ignoreCase('elefante'),
-    tiger: expectAnswer.ignoreCase('tigre'),
-    lion: expectAnswer.ignoreCase('leon'),
-    dog: expectAnswer.ignoreCase('perro', 'perra'),
-    wolf: expectAnswer.ignoreCase('lobo', 'loba'),
-    fox: expectAnswer.ignoreCase('zorra', 'zorro'),
-    pig: expectAnswer.ignoreCase('cerdo'),
-    goat: expectAnswer.ignoreCase('cabra', 'cabro'),
-    bear: expectAnswer.ignoreCase('oso'),
-    giraffe: expectAnswer.ignoreCase('jirafa')
-  },
-  hereItSays: 'Aca dice',
-  nothingIsWrittenHere: 'Aca no dice nada.',
-  questionImageAlt: 'la pregunta'
-};
-},{"../expectAnswer":"expectAnswer.ts"}],"i18n/fr.ts":[function(require,module,exports) {
-"use strict";
-
-var __importStar = this && this.__importStar || function (mod) {
-  if (mod && mod.__esModule) return mod;
-  var result = {};
-  if (mod != null) for (var k in mod) {
-    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-  }
-  result["default"] = mod;
-  return result;
-};
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var expectAnswer = __importStar(require("../expectAnswer"));
-
-exports.french = {
-  chooseYourLanguage: 'Langue',
-  languageName: 'Francais',
-  chooseYourVoice: 'Voix',
-  noVoiceAvailable: 'Le logiciel ne fournit pas aucune voix pour cette langue.',
-  answerCheckers: {
-    elephant: expectAnswer.ignoreCase('éléphant'),
-    tiger: expectAnswer.ignoreCase('tigre'),
-    lion: expectAnswer.ignoreCase('lion'),
-    dog: expectAnswer.ignoreCase('chien'),
-    wolf: expectAnswer.ignoreCase('loup'),
-    fox: expectAnswer.ignoreCase('renard'),
-    pig: expectAnswer.ignoreCase('cochon', 'porc'),
-    goat: expectAnswer.ignoreCase('chèvre'),
-    bear: expectAnswer.ignoreCase('ours'),
-    giraffe: expectAnswer.ignoreCase('girafe')
-  },
-  hereItSays: 'Ça dit ici',
-  nothingIsWrittenHere: 'Ça ne dit rien ici.',
-  questionImageAlt: 'question'
-};
-},{"../expectAnswer":"expectAnswer.ts"}],"i18n/hr.ts":[function(require,module,exports) {
-"use strict";
-
-var __importStar = this && this.__importStar || function (mod) {
-  if (mod && mod.__esModule) return mod;
-  var result = {};
-  if (mod != null) for (var k in mod) {
-    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-  }
-  result["default"] = mod;
-  return result;
-};
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var expectAnswer = __importStar(require("../expectAnswer"));
-
-exports.croatian = {
-  chooseYourLanguage: 'Jezik',
-  languageName: 'Hrvatski',
-  chooseYourVoice: 'Glas',
-  noVoiceAvailable: 'Sustav ne podržava glas za ovaj jezik.',
-  answerCheckers: {
-    elephant: expectAnswer.ignoreCase('slon'),
-    tiger: expectAnswer.ignoreCase('tigar'),
-    lion: expectAnswer.ignoreCase('lav'),
-    dog: expectAnswer.ignoreCase('pas'),
-    wolf: expectAnswer.ignoreCase('vuk'),
-    fox: expectAnswer.ignoreCase('lisica', 'lisac'),
-    pig: expectAnswer.ignoreCase('svinja'),
-    goat: expectAnswer.ignoreCase('koza', 'jarac', 'kozlić'),
-    bear: expectAnswer.ignoreCase('medvjed'),
-    giraffe: expectAnswer.ignoreCase('žirafa')
-  },
-  hereItSays: 'Ovdje piše',
-  nothingIsWrittenHere: 'Ovdje ništa ne piše.',
-  questionImageAlt: 'slika-pitanje'
-};
-},{"../expectAnswer":"expectAnswer.ts"}],"i18n/it.ts":[function(require,module,exports) {
-"use strict";
-
-var __importStar = this && this.__importStar || function (mod) {
-  if (mod && mod.__esModule) return mod;
-  var result = {};
-  if (mod != null) for (var k in mod) {
-    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-  }
-  result["default"] = mod;
-  return result;
-};
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var expectAnswer = __importStar(require("../expectAnswer"));
-
-exports.italian = {
-  chooseYourLanguage: 'Lingua',
-  languageName: 'Italiano',
-  chooseYourVoice: 'Voce',
-  noVoiceAvailable: 'Il sistema non supporta la voce per questa lingua..',
-  answerCheckers: {
-    elephant: expectAnswer.ignoreCase('elefante'),
-    tiger: expectAnswer.ignoreCase('tigre'),
-    lion: expectAnswer.ignoreCase('leone'),
-    dog: expectAnswer.ignoreCase('cane'),
-    wolf: expectAnswer.ignoreCase('lupo', 'lupa'),
-    fox: expectAnswer.ignoreCase('volpe'),
-    pig: expectAnswer.ignoreCase('maiale', 'porco'),
-    goat: expectAnswer.ignoreCase('capra'),
-    bear: expectAnswer.ignoreCase('orso', 'orsa'),
-    giraffe: expectAnswer.ignoreCase('giraffa')
-  },
-  hereItSays: "Qui c'è scritto",
-  nothingIsWrittenHere: "Qui non c'è niente scritto.",
-  questionImageAlt: 'Questione'
-};
-},{"../expectAnswer":"expectAnswer.ts"}],"i18n/mk.ts":[function(require,module,exports) {
-"use strict";
-
-var __importStar = this && this.__importStar || function (mod) {
-  if (mod && mod.__esModule) return mod;
-  var result = {};
-  if (mod != null) for (var k in mod) {
-    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-  }
-  result["default"] = mod;
-  return result;
-};
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var expectAnswer = __importStar(require("../expectAnswer"));
-
-exports.macedonian = {
-  chooseYourLanguage: 'Одберете јазик',
-  languageName: 'Македонски',
-  chooseYourVoice: 'Одберете глас',
-  noVoiceAvailable: 'Системот не подржува глас на овој јазик.',
-  answerCheckers: {
-    elephant: expectAnswer.ignoreCase('Слон'),
-    tiger: expectAnswer.ignoreCase('Тигар'),
-    lion: expectAnswer.ignoreCase('Лав'),
-    dog: expectAnswer.ignoreCase('Куче'),
-    wolf: expectAnswer.ignoreCase('Волк'),
-    fox: expectAnswer.ignoreCase('Лисица', 'Лисац'),
-    pig: expectAnswer.ignoreCase('Свиња'),
-    goat: expectAnswer.ignoreCase('Коза'),
-    bear: expectAnswer.ignoreCase('Мечка'),
-    giraffe: expectAnswer.ignoreCase('Жирафа')
-  },
-  hereItSays: 'Тука пишува',
-  nothingIsWrittenHere: 'Тука ништо не пишува.',
-  questionImageAlt: 'Слика-Прашање'
-};
-},{"../expectAnswer":"expectAnswer.ts"}],"i18n/nb.ts":[function(require,module,exports) {
-"use strict";
-
-var __importStar = this && this.__importStar || function (mod) {
-  if (mod && mod.__esModule) return mod;
-  var result = {};
-  if (mod != null) for (var k in mod) {
-    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-  }
-  result["default"] = mod;
-  return result;
-};
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var expectAnswer = __importStar(require("../expectAnswer"));
-
-exports.norwegian = {
-  chooseYourLanguage: 'Språk',
-  languageName: 'Norsk (bokmål)',
-  chooseYourVoice: 'Stemme',
-  noVoiceAvailable: 'Systemet støtter ikke talegjenkjenning på dette språket.',
-  answerCheckers: {
-    elephant: expectAnswer.ignoreCase('elefant'),
-    tiger: expectAnswer.ignoreCase('tiger'),
-    lion: expectAnswer.ignoreCase('løve'),
-    dog: expectAnswer.ignoreCase('hund'),
-    wolf: expectAnswer.ignoreCase('ulv'),
-    fox: expectAnswer.ignoreCase('rev'),
-    pig: expectAnswer.ignoreCase('gris', 'svin'),
-    goat: expectAnswer.ignoreCase('geit'),
-    bear: expectAnswer.ignoreCase('bjørn'),
-    giraffe: expectAnswer.ignoreCase('sjiraff')
-  },
-  hereItSays: 'Her står det',
-  nothingIsWrittenHere: 'Her står det ingenting.',
-  questionImageAlt: 'bilde-spørsmål'
-};
-},{"../expectAnswer":"expectAnswer.ts"}],"i18n/pl.ts":[function(require,module,exports) {
-"use strict";
-
-var __importStar = this && this.__importStar || function (mod) {
-  if (mod && mod.__esModule) return mod;
-  var result = {};
-  if (mod != null) for (var k in mod) {
-    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-  }
-  result["default"] = mod;
-  return result;
-};
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var expectAnswer = __importStar(require("../expectAnswer"));
-
-exports.polish = {
-  chooseYourLanguage: 'Język',
-  languageName: 'Polski',
-  chooseYourVoice: 'Głos',
-  noVoiceAvailable: 'System nie jest w stanie dostarczyć głosu dla tego języka.',
-  answerCheckers: {
-    elephant: expectAnswer.ignoreCase('słoń'),
-    tiger: expectAnswer.ignoreCase('tygrys'),
-    lion: expectAnswer.ignoreCase('lew'),
-    dog: expectAnswer.ignoreCase('pies', 'piesek'),
-    wolf: expectAnswer.ignoreCase('wilk'),
-    fox: expectAnswer.ignoreCase('lis'),
-    pig: expectAnswer.ignoreCase('świnia', 'świnka'),
-    goat: expectAnswer.ignoreCase('koza', 'kozioł', 'kózka', 'baran', 'baranek'),
-    bear: expectAnswer.ignoreCase('niedźwiedź', 'niedźwiadek'),
-    giraffe: expectAnswer.ignoreCase('żyrafa')
-  },
-  hereItSays: 'Napisano',
-  nothingIsWrittenHere: 'Nic nie napisano.',
-  questionImageAlt: 'obrazek-pytanie'
-};
-},{"../expectAnswer":"expectAnswer.ts"}],"i18n/pt.ts":[function(require,module,exports) {
-"use strict";
-
-var __importStar = this && this.__importStar || function (mod) {
-  if (mod && mod.__esModule) return mod;
-  var result = {};
-  if (mod != null) for (var k in mod) {
-    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-  }
-  result["default"] = mod;
-  return result;
-};
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var expectAnswer = __importStar(require("../expectAnswer"));
-
-exports.portuguese = {
-  chooseYourLanguage: 'O idioma',
-  languageName: 'Português',
-  chooseYourVoice: 'A voz',
-  noVoiceAvailable: 'O sistema não suporta voz de narração para este idioma.',
-  answerCheckers: {
-    elephant: expectAnswer.ignoreCase('elefante'),
-    tiger: expectAnswer.ignoreCase('tigre'),
-    lion: expectAnswer.ignoreCase('leão'),
-    dog: expectAnswer.ignoreCase('cão'),
-    wolf: expectAnswer.ignoreCase('lobo', 'loba'),
-    fox: expectAnswer.ignoreCase('raposa', 'raposo'),
-    pig: expectAnswer.ignoreCase('porco'),
-    goat: expectAnswer.ignoreCase('cabra', 'cabro'),
-    bear: expectAnswer.ignoreCase('urso'),
-    giraffe: expectAnswer.ignoreCase('girafa')
-  },
-  hereItSays: 'Aqui está escrito',
-  nothingIsWrittenHere: 'Aqui não está nada escrito.',
-  questionImageAlt: 'A pergunta'
-};
-},{"../expectAnswer":"expectAnswer.ts"}],"i18n/sl.ts":[function(require,module,exports) {
-"use strict";
-
-var __importStar = this && this.__importStar || function (mod) {
-  if (mod && mod.__esModule) return mod;
-  var result = {};
-  if (mod != null) for (var k in mod) {
-    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-  }
-  result["default"] = mod;
-  return result;
-};
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var expectAnswer = __importStar(require("../expectAnswer"));
-
-exports.slovenian = {
-  chooseYourLanguage: 'Jezik',
-  languageName: 'Slovenščina',
-  chooseYourVoice: 'Glas',
-  noVoiceAvailable: 'Sistem ne podpira prepoznavanja govora v tem jeziku.',
-  answerCheckers: {
-    elephant: expectAnswer.ignoreCase('slon'),
-    tiger: expectAnswer.ignoreCase('tiger'),
-    lion: expectAnswer.ignoreCase('lev'),
-    dog: expectAnswer.ignoreCase('pes'),
-    wolf: expectAnswer.ignoreCase('volk'),
-    fox: expectAnswer.ignoreCase('lisica', 'lisac'),
-    pig: expectAnswer.ignoreCase('prašič', 'prasica'),
-    goat: expectAnswer.ignoreCase('koza'),
-    bear: expectAnswer.ignoreCase('medved'),
-    giraffe: expectAnswer.ignoreCase('žirafa')
-  },
-  hereItSays: 'Tu piše',
-  nothingIsWrittenHere: 'Tu ne piše nič.',
-  questionImageAlt: 'vprašanje-slika'
-};
-},{"../expectAnswer":"expectAnswer.ts"}],"i18n/sr.ts":[function(require,module,exports) {
-"use strict";
-
-var __importStar = this && this.__importStar || function (mod) {
-  if (mod && mod.__esModule) return mod;
-  var result = {};
-  if (mod != null) for (var k in mod) {
-    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-  }
-  result["default"] = mod;
-  return result;
-};
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var expectAnswer = __importStar(require("../expectAnswer"));
-
-exports.serbian = {
-  chooseYourLanguage: 'Jezik',
-  languageName: 'Srpski',
-  chooseYourVoice: 'Glas',
-  noVoiceAvailable: 'Sistem ne podržava glas za ovaj jezik.',
-  answerCheckers: {
-    elephant: expectAnswer.ignoreCase('slon', 'слон'),
-    tiger: expectAnswer.ignoreCase('tigar', 'тигар'),
-    lion: expectAnswer.ignoreCase('lav', 'лав'),
-    dog: expectAnswer.ignoreCase('pas', 'kuče', 'kuca', 'пас', 'куче', 'куца'),
-    wolf: expectAnswer.ignoreCase('vuk', 'vučica', 'вук', 'вучица'),
-    fox: expectAnswer.ignoreCase('lisac', 'lisica', 'лисац', 'лисица'),
-    pig: expectAnswer.ignoreCase('svinja', 'prase', 'свиња', 'прасе'),
-    goat: expectAnswer.ignoreCase('koza', 'jarac', 'kozlić', 'коза', 'јарац', 'козлић'),
-    bear: expectAnswer.ignoreCase('medved', 'медвед'),
-    giraffe: expectAnswer.ignoreCase('žirafa', 'жирафа')
-  },
-  hereItSays: 'Ovde piše',
-  nothingIsWrittenHere: 'Ovde ništa ne piše.',
-  questionImageAlt: 'slika-pitanje'
-};
-},{"../expectAnswer":"expectAnswer.ts"}],"i18n.ts":[function(require,module,exports) {
-"use strict";
-
-function _createForOfIteratorHelper(o) { if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (o = _unsupportedIterableToArray(o))) { var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var it, normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-var __importStar = this && this.__importStar || function (mod) {
-  if (mod && mod.__esModule) return mod;
-  var result = {};
-  if (mod != null) for (var k in mod) {
-    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-  }
-  result["default"] = mod;
-  return result;
-};
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var React = __importStar(require("react"));
-
-var bcp47 = __importStar(require("./bcp47"));
-
-var bs_1 = require("./i18n/bs");
-
-var de_1 = require("./i18n/de");
-
-var el_1 = require("./i18n/el");
-
-var en_1 = require("./i18n/en");
-
-var es_1 = require("./i18n/es");
-
-var fr_1 = require("./i18n/fr");
-
-var hr_1 = require("./i18n/hr");
-
-var it_1 = require("./i18n/it");
-
-var mk_1 = require("./i18n/mk");
-
-var nb_1 = require("./i18n/nb");
-
-var pl_1 = require("./i18n/pl");
-
-var pt_1 = require("./i18n/pt");
-
-var sl_1 = require("./i18n/sl");
-
-var sr_1 = require("./i18n/sr");
-
-exports.SERBIAN = 'sr';
-exports.CROATIAN = 'hr';
-exports.ENGLISH = 'en';
-exports.GERMAN = 'de';
-exports.FRENCH = 'fr';
-exports.SPANISH = 'es';
-exports.POLISH = 'pl';
-exports.PORTUGUESE = 'pt';
-exports.ITALIAN = 'it';
-exports.BOSNIAN = 'bs';
-exports.GREEK = 'el';
-exports.MACEDONIAN = 'mk';
-exports.SLOVENIAN = 'sl';
-exports.NORWEGIAN = 'nb';
-
-function initializeTranslations() {
-  var result = new Map();
-  result.set(exports.SERBIAN, sr_1.serbian);
-  result.set(exports.CROATIAN, hr_1.croatian);
-  result.set(exports.ENGLISH, en_1.english);
-  result.set(exports.GERMAN, de_1.german);
-  result.set(exports.FRENCH, fr_1.french);
-  result.set(exports.SPANISH, es_1.spanish);
-  result.set(exports.POLISH, pl_1.polish);
-  result.set(exports.PORTUGUESE, pt_1.portuguese);
-  result.set(exports.ITALIAN, it_1.italian);
-  result.set(exports.BOSNIAN, bs_1.bosnian);
-  result.set(exports.GREEK, el_1.greek);
-  result.set(exports.MACEDONIAN, mk_1.macedonian);
-  result.set(exports.SLOVENIAN, sl_1.slovenian);
-  result.set(exports.NORWEGIAN, nb_1.norwegian); // Post-condition
-
-  if (result.size === 0) {
-    throw Error('Expected a non-empty map of translations.');
-  }
-
-  return result;
-}
-
-exports.initializeTranslations = initializeTranslations;
-/**
- * Infer the translation language from the navigator language.
- *
- * It matches first exactly, then by the primary language. If no match has been found, the first language
- * in the given list is returned.
- *
- * @param navigatorLanguage language as indicated by the browser
- * @param languages list of available translation languages
- */
-
-function inferDefault(navigatorLanguage, languages) {
-  var result = undefined;
-
-  var _iterator = _createForOfIteratorHelper(languages),
-      _step;
-
-  try {
-    for (_iterator.s(); !(_step = _iterator.n()).done;) {
-      var lang = _step.value;
-
-      if (lang === navigatorLanguage) {
-        result = lang;
-        break;
-      }
-
-      if (bcp47.primaryLanguage(navigatorLanguage) === lang) {
-        result = lang;
-        break;
-      }
-    }
-  } catch (err) {
-    _iterator.e(err);
-  } finally {
-    _iterator.f();
-  }
-
-  if (result === undefined) {
-    return languages[0];
-  }
-
-  return result;
-}
-
-exports.inferDefault = inferDefault;
-exports.Context = React.createContext(undefined);
-},{"react":"../node_modules/react/index.js","./bcp47":"bcp47.ts","./i18n/bs":"i18n/bs.ts","./i18n/de":"i18n/de.ts","./i18n/el":"i18n/el.ts","./i18n/en":"i18n/en.ts","./i18n/es":"i18n/es.ts","./i18n/fr":"i18n/fr.ts","./i18n/hr":"i18n/hr.ts","./i18n/it":"i18n/it.ts","./i18n/mk":"i18n/mk.ts","./i18n/nb":"i18n/nb.ts","./i18n/pl":"i18n/pl.ts","./i18n/pt":"i18n/pt.ts","./i18n/sl":"i18n/sl.ts","./i18n/sr":"i18n/sr.ts"}],"../node_modules/object-keys/isArguments.js":[function(require,module,exports) {
+},{"@babel/runtime/helpers/interopRequireDefault":"../node_modules/@babel/runtime/helpers/interopRequireDefault.js","react":"../node_modules/react/index.js","./utils/createSvgIcon":"../node_modules/@material-ui/icons/utils/createSvgIcon.js"}],"../node_modules/object-keys/isArguments.js":[function(require,module,exports) {
 'use strict';
 
 var toStr = Object.prototype.toString;
@@ -90130,7 +90195,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33697" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "42295" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
