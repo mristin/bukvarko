@@ -9,8 +9,8 @@ out for you.
 
 The game supports the following languages:
 Bosnian (bs), German (de), English (en), Greek (el), Spanish (es), French (fr), 
-Croatian (hr), Italian (it), Macedonian (mk), Norwegian (nb), Polish (pl), 
-Portuguese (pt), Slovenian (sl) and Serbian (sr).
+Swiss German (gsw), Croatian (hr), Italian (it), Macedonian (mk), Norwegian (nb), 
+Polish (pl), Portuguese (pt), Slovenian (sl) and Serbian (sr).
 
 Live demo
 ---------
