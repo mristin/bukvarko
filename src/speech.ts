@@ -156,6 +156,21 @@ export function groupVoicesByLanguage(voices: Voices, i18nLangs: IterableIterato
       langVoices.push(...fallbackMatches);
     }
 
+    // Swiss German is officially denoted "gsw" according to BCP 47.
+    // See https://github.com/libyal/libfwnt/wiki/Language-Code-identifiers
+    //
+    // However, since it is still not properly coded language, it is almost impossible that there is a system
+    // out there supporting speech synthesis for it. Therefore, we pick German ("de") as a fallback language.
+    if (i18nLang === i18n.SWISS_GERMAN && langVoices.length === 0) {
+      const exactMatches = voices.filterByExactLanguage('de-CH');
+      if (exactMatches.length > 0) {
+        langVoices.push(...exactMatches);
+      } else {
+        const fallbackMatches = voices.filterByPrimaryLanguage(bcp47.primaryLanguage('de'));
+        langVoices.push(...fallbackMatches);
+      }
+    }
+
     r.set(i18nLang, langVoices);
   }
 
