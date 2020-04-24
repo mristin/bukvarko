@@ -2,16 +2,15 @@ Bukvarko
 ========
 Bukvarko helps your kids learn the alphabet in a fun way with synthetic speech.
 
-My son started learning how to read and write so I created this simple game
-to make the task easier for him. Different animals are shown as "questions" and 
-you need to type in the animal name. You get a star for each correct answer. 
-If you are unsure about what you wrote, you can have the computer read it out for you.
+My son wanted to learn the alphabet so I created this game for him. Different animals 
+are shown and you need to type the animal name. You get a star for each
+correct answer. If you are unsure about what you wrote, you let the computer read it 
+out for you.
 
 The game supports the following languages:
 Bosnian (bs), German (de), English (en), Greek (el), Spanish (es), French (fr), 
 Croatian (hr), Italian (it), Macedonian (mk), Norwegian (nb), Polish (pl), 
 Portuguese (pt), Slovenian (sl) and Serbian (sr).
-
 
 Live demo
 ---------
