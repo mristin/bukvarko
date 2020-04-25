@@ -18,6 +18,19 @@ Live demo is available at the github page: https://mristin.github.io/bukvarko/.
 
 ![screenshot](https://media.githubusercontent.com/media/mristin/bukvarko/master/screenshot.png)
 
+Educational advice
+------------------
+Don't force your kid to learn alphabet if s/he does not show
+proper interest. It will just kill the motivation.
+
+Help your kid with the game. It is inteded as a group activity
+for both the parent and the child.
+
+It is intentional that the giraffe makes no sound. The lack of sound
+will surprise the child and give you the opportunity to 
+explain why giraffes generally do not produce any vocalization we can hear. 
+For example, see this short video: 
+[https://youtu.be/6VOF6vZ078M](https://youtu.be/6VOF6vZ078M).
 
 Development
 -----------
