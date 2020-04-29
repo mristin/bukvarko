@@ -15,12 +15,14 @@ export function Question(props: { maxImageHeight: number }) {
   const imageURL = useSelector((s: app.State) => selectContext.currentQuestionImageURL(s));
   const currentQuestion = useSelector((s: app.State) => s.currentQuestion);
 
+  const translation = useSelector((s: app.State) => selectContext.resolveTranslation(s));
+
   return (
     <Fade top appear duration={600} spy={currentQuestion}>
       <div style={{ textAlign: 'center', height: props.maxImageHeight, width: '95%' }}>
         <img
           src={imageURL}
-          alt="question image"
+          alt={translation.questionImageAlt}
           style={{ maxWidth: '95%', maxHeight: '95%', width: 'auto', height: 'auto', border: '1px solid black' }}
         />
       </div>
