@@ -88287,6 +88287,8 @@ var react_1 = require("react");
 
 var react_redux_1 = require("react-redux");
 
+var IconButton_1 = __importDefault(require("@material-ui/core/IconButton"));
+
 var action = __importStar(require("../action"));
 
 var i18n = __importStar(require("../i18n"));
@@ -88402,11 +88404,15 @@ function Preferences() {
     style: {
       textAlign: 'center'
     }
+  }, React.createElement(IconButton_1.default, {
+    onClick: function onClick() {
+      return dispatch(action.togglePreferences(false));
+    }
   }, React.createElement(Settings_1.default, {
     style: {
       fontSize: '3em'
     }
-  })), React.createElement("div", {
+  }))), React.createElement("div", {
     style: {
       marginTop: '0.5em'
     }
@@ -88427,7 +88433,7 @@ function Preferences() {
 }
 
 exports.Preferences = Preferences;
-},{"@material-ui/core":"../node_modules/@material-ui/core/esm/index.js","@material-ui/core/Drawer":"../node_modules/@material-ui/core/esm/Drawer/index.js","@material-ui/core/MenuItem":"../node_modules/@material-ui/core/esm/MenuItem/index.js","@material-ui/icons/Settings":"../node_modules/@material-ui/icons/Settings.js","react":"../node_modules/react/index.js","react-redux":"../node_modules/react-redux/es/index.js","../action":"action.ts","../i18n":"i18n.ts","../select":"select.ts","../speech":"speech.ts"}],"components/PreferencesButton.tsx":[function(require,module,exports) {
+},{"@material-ui/core":"../node_modules/@material-ui/core/esm/index.js","@material-ui/core/Drawer":"../node_modules/@material-ui/core/esm/Drawer/index.js","@material-ui/core/MenuItem":"../node_modules/@material-ui/core/esm/MenuItem/index.js","@material-ui/icons/Settings":"../node_modules/@material-ui/icons/Settings.js","react":"../node_modules/react/index.js","react-redux":"../node_modules/react-redux/es/index.js","@material-ui/core/IconButton":"../node_modules/@material-ui/core/esm/IconButton/index.js","../action":"action.ts","../i18n":"i18n.ts","../select":"select.ts","../speech":"speech.ts"}],"components/PreferencesButton.tsx":[function(require,module,exports) {
 "use strict";
 
 var __importDefault = this && this.__importDefault || function (mod) {
@@ -90195,7 +90201,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "42295" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "41561" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
