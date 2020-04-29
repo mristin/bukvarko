@@ -1,5 +1,6 @@
 import { Select } from '@material-ui/core';
 import Drawer from '@material-ui/core/Drawer';
+import ButtonIcon from '@material-ui/core/IconButton';
 import MenuItem from '@material-ui/core/MenuItem';
 import SettingsIcon from '@material-ui/icons/Settings';
 import * as React from 'react';
@@ -111,7 +112,9 @@ export function Preferences() {
     <Drawer anchor={'left'} open={preferencesVisible} onClose={() => dispatch(action.togglePreferences(false))}>
       <div style={{ padding: '1em', width: '18em' }}>
         <div style={{ textAlign: 'center' }}>
-          <SettingsIcon style={{ fontSize: '3em' }} />
+          <ButtonIcon onClick={() => dispatch(action.togglePreferences(false))}>
+            <SettingsIcon style={{ fontSize: '3em' }} />
+          </ButtonIcon>
         </div>
 
         <div style={{ marginTop: '0.5em' }}>{translation.chooseYourLanguage}</div>
