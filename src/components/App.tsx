@@ -2,6 +2,7 @@ import { Container, Grid, Paper } from '@material-ui/core';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Swipeable } from 'react-swipeable';
 
 import * as app from '../app';
 import * as effect from '../effect';
@@ -148,9 +149,20 @@ export function App() {
     dispatch(effect.setSound());
   }, []);
 
+  let mobileOrDesktop: any = undefined;
+
   if (width === undefined || width < 500) {
-    return <Mobile hasVoice={hasVoice} />;
+    mobileOrDesktop = <Mobile hasVoice={hasVoice} />;
   } else {
-    return <Desktop hasVoice={hasVoice} />;
+    mobileOrDesktop = <Desktop hasVoice={hasVoice} />;
   }
+
+  return (
+    <Swipeable
+      onSwipedRight={() => dispatch(effect.previousQuestion())}
+      onSwipedLeft={() => dispatch(effect.nextQuestion())}
+    >
+      {mobileOrDesktop}
+    </Swipeable>
+  );
 }

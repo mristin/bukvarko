@@ -4,7 +4,6 @@ import { Provider } from 'react-redux';
 import configureMockFactory from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
-import * as action from '../../action';
 import { PreviousQuestion } from '../../components/PreviousQuestion';
 import * as effect from '../../effect';
 
@@ -28,7 +27,6 @@ it('provokes the state change.', async () => {
 
   fireEvent.click(rendered.getByTestId('previousQuestion'));
 
-  expect(mockDispatch).toHaveBeenCalledTimes(2);
+  expect(mockDispatch).toHaveBeenCalledTimes(1);
   expect(await mockDispatch.mock.calls[0][0]).toBe(dummy);
-  expect(mockDispatch.mock.calls[1][0].type).toBe(action.ASK_TO_REFOCUS);
 });

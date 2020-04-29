@@ -1,7 +1,7 @@
 import { Select } from '@material-ui/core';
-import Drawer from '@material-ui/core/Drawer';
 import ButtonIcon from '@material-ui/core/IconButton';
 import MenuItem from '@material-ui/core/MenuItem';
+import DrawerSwipable from '@material-ui/core/SwipeableDrawer';
 import SettingsIcon from '@material-ui/icons/Settings';
 import * as React from 'react';
 import { useContext } from 'react';
@@ -109,7 +109,12 @@ export function Preferences() {
   const currentVoice = useSelector((s: app.State) => s.voiceByLanguage.get(s.language));
 
   return (
-    <Drawer anchor={'left'} open={preferencesVisible} onClose={() => dispatch(action.togglePreferences(false))}>
+    <DrawerSwipable
+      anchor={'left'}
+      open={preferencesVisible}
+      onOpen={() => void 0}
+      onClose={() => dispatch(action.togglePreferences(false))}
+    >
       <div style={{ padding: '1em', width: '18em' }}>
         <div style={{ textAlign: 'center' }}>
           <ButtonIcon onClick={() => dispatch(action.togglePreferences(false))}>
@@ -130,6 +135,6 @@ export function Preferences() {
           />
         </div>
       </div>
-    </Drawer>
+    </DrawerSwipable>
   );
 }
