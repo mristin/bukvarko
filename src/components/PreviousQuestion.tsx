@@ -3,7 +3,6 @@ import ArrowLeft from '@material-ui/icons/ArrowLeft';
 import * as React from 'react';
 import { useDispatch } from 'react-redux';
 
-import * as actions from '../action';
 import * as effect from '../effect';
 
 export function PreviousQuestion() {
@@ -13,7 +12,6 @@ export function PreviousQuestion() {
       style={{ padding: 0, margin: 0 }}
       onClick={() => {
         dispatch(effect.previousQuestion());
-        dispatch(actions.askToRefocus());
       }}
       data-testid="previousQuestion"
     >

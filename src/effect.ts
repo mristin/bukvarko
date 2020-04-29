@@ -8,6 +8,7 @@ export function nextQuestion() {
   return function (dispatch: Dispatch, getState: () => app.State, deps: dependency.Registry): void {
     const questionID = deps.questionBank.next(getState().currentQuestion);
     dispatch(action.gotoQuestion(questionID));
+    dispatch(action.askToRefocus());
   };
 }
 
@@ -15,6 +16,7 @@ export function previousQuestion() {
   return function (dispatch: Dispatch, getState: () => app.State, deps: dependency.Registry): void {
     const questionID = deps.questionBank.previous(getState().currentQuestion);
     dispatch(action.gotoQuestion(questionID));
+    dispatch(action.askToRefocus());
   };
 }
 
