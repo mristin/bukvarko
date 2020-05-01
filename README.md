@@ -69,7 +69,7 @@ Build for production:
 npm run build
 ```
 
-Image were taken from http://www.wikipedia.org.
+Images were taken from http://www.wikipedia.org.
 
 The sounds were taken from:
 * http://soundbible.com/821-Bleat.html (goat bleat, Mike Koenig)
