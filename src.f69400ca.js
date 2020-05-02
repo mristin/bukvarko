@@ -83569,6 +83569,46 @@ exports.portuguese = {
   nothingIsWrittenHere: 'Aqui não está nada escrito.',
   questionImageAlt: 'A pergunta'
 };
+},{"../expectAnswer":"expectAnswer.ts"}],"i18n/ru.ts":[function(require,module,exports) {
+"use strict";
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+  }
+  result["default"] = mod;
+  return result;
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var expectAnswer = __importStar(require("../expectAnswer"));
+
+exports.russian = {
+  chooseYourLanguage: 'Выбери язык',
+  languageName: 'Русский',
+  chooseYourVoice: 'Выбери голос',
+  noVoiceAvailable: 'Твоя система не предоставляет голос для этого языка.',
+  answerCheckers: {
+    elephant: expectAnswer.ignoreCase('слон'),
+    tiger: expectAnswer.ignoreCase('тигр'),
+    lion: expectAnswer.ignoreCase('лев'),
+    dog: expectAnswer.ignoreCase('собака'),
+    wolf: expectAnswer.ignoreCase('волк'),
+    fox: expectAnswer.ignoreCase('лиса'),
+    pig: expectAnswer.ignoreCase('свинья', 'боров'),
+    goat: expectAnswer.ignoreCase('коза'),
+    bear: expectAnswer.ignoreCase('медведь'),
+    giraffe: expectAnswer.ignoreCase('жираф')
+  },
+  hereItSays: 'Это значит',
+  nothingIsWrittenHere: 'Ничего не написано.',
+  questionImageAlt: 'Вопрос-Изображение'
+};
 },{"../expectAnswer":"expectAnswer.ts"}],"i18n/sl.ts":[function(require,module,exports) {
 "use strict";
 
@@ -83702,6 +83742,8 @@ var pl_1 = require("./i18n/pl");
 
 var pt_1 = require("./i18n/pt");
 
+var ru_1 = require("./i18n/ru");
+
 var sl_1 = require("./i18n/sl");
 
 var sr_1 = require("./i18n/sr");
@@ -83721,6 +83763,7 @@ exports.MACEDONIAN = 'mk';
 exports.SLOVENIAN = 'sl';
 exports.NORWEGIAN = 'nb';
 exports.SWISS_GERMAN = 'gsw';
+exports.RUSSIAN = 'ru';
 
 function initializeTranslations() {
   var result = new Map();
@@ -83738,7 +83781,8 @@ function initializeTranslations() {
   result.set(exports.MACEDONIAN, mk_1.macedonian);
   result.set(exports.SLOVENIAN, sl_1.slovenian);
   result.set(exports.NORWEGIAN, nb_1.norwegian);
-  result.set(exports.SWISS_GERMAN, gsw_1.swissGerman); // Post-condition
+  result.set(exports.SWISS_GERMAN, gsw_1.swissGerman);
+  result.set(exports.RUSSIAN, ru_1.russian); // Post-condition
 
   if (result.size === 0) {
     throw Error('Expected a non-empty map of translations.');
@@ -83793,7 +83837,7 @@ function inferDefault(navigatorLanguage, languages) {
 
 exports.inferDefault = inferDefault;
 exports.Context = React.createContext(undefined);
-},{"react":"../node_modules/react/index.js","./bcp47":"bcp47.ts","./i18n/bs":"i18n/bs.ts","./i18n/de":"i18n/de.ts","./i18n/el":"i18n/el.ts","./i18n/en":"i18n/en.ts","./i18n/es":"i18n/es.ts","./i18n/fr":"i18n/fr.ts","./i18n/gsw":"i18n/gsw.ts","./i18n/hr":"i18n/hr.ts","./i18n/it":"i18n/it.ts","./i18n/mk":"i18n/mk.ts","./i18n/nb":"i18n/nb.ts","./i18n/pl":"i18n/pl.ts","./i18n/pt":"i18n/pt.ts","./i18n/sl":"i18n/sl.ts","./i18n/sr":"i18n/sr.ts"}],"speech.ts":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","./bcp47":"bcp47.ts","./i18n/bs":"i18n/bs.ts","./i18n/de":"i18n/de.ts","./i18n/el":"i18n/el.ts","./i18n/en":"i18n/en.ts","./i18n/es":"i18n/es.ts","./i18n/fr":"i18n/fr.ts","./i18n/gsw":"i18n/gsw.ts","./i18n/hr":"i18n/hr.ts","./i18n/it":"i18n/it.ts","./i18n/mk":"i18n/mk.ts","./i18n/nb":"i18n/nb.ts","./i18n/pl":"i18n/pl.ts","./i18n/pt":"i18n/pt.ts","./i18n/ru":"i18n/ru.ts","./i18n/sl":"i18n/sl.ts","./i18n/sr":"i18n/sr.ts"}],"speech.ts":[function(require,module,exports) {
 "use strict";
 
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
@@ -84590,7 +84634,372 @@ function create(deps) {
 }
 
 exports.create = create;
-},{"immer":"../node_modules/immer/dist/immer.esm.js","./action":"action.ts","./speech":"speech.ts","./stateInvariants":"stateInvariants.ts"}],"effect.ts":[function(require,module,exports) {
+},{"immer":"../node_modules/immer/dist/immer.esm.js","./action":"action.ts","./speech":"speech.ts","./stateInvariants":"stateInvariants.ts"}],"../node_modules/react-swipeable/es/index.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.useSwipeable = useSwipeable;
+exports.UP = exports.Swipeable = exports.RIGHT = exports.LEFT = exports.DOWN = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _propTypes = _interopRequireDefault(require("prop-types"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _extends() {
+  _extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+
+  return _extends.apply(this, arguments);
+}
+
+function _inheritsLoose(subClass, superClass) {
+  subClass.prototype = Object.create(superClass.prototype);
+  subClass.prototype.constructor = subClass;
+  subClass.__proto__ = superClass;
+}
+
+var defaultProps = {
+  preventDefaultTouchmoveEvent: false,
+  delta: 10,
+  rotationAngle: 0,
+  trackMouse: false,
+  trackTouch: true
+};
+var initialState = {
+  xy: [0, 0],
+  swiping: false,
+  eventData: undefined,
+  start: undefined
+};
+var LEFT = 'Left';
+exports.LEFT = LEFT;
+var RIGHT = 'Right';
+exports.RIGHT = RIGHT;
+var UP = 'Up';
+exports.UP = UP;
+var DOWN = 'Down';
+exports.DOWN = DOWN;
+var touchStart = 'touchstart';
+var touchMove = 'touchmove';
+var touchEnd = 'touchend';
+var mouseMove = 'mousemove';
+var mouseUp = 'mouseup';
+
+function getDirection(absX, absY, deltaX, deltaY) {
+  if (absX > absY) {
+    if (deltaX > 0) {
+      return LEFT;
+    }
+
+    return RIGHT;
+  } else if (deltaY > 0) {
+    return UP;
+  }
+
+  return DOWN;
+}
+
+function rotateXYByAngle(pos, angle) {
+  if (angle === 0) return pos;
+  var angleInRadians = Math.PI / 180 * angle;
+  var x = pos[0] * Math.cos(angleInRadians) + pos[1] * Math.sin(angleInRadians);
+  var y = pos[1] * Math.cos(angleInRadians) - pos[0] * Math.sin(angleInRadians);
+  return [x, y];
+}
+
+function getHandlers(set, handlerProps) {
+  var onStart = function onStart(event) {
+    // if more than a single touch don't track, for now...
+    if (event.touches && event.touches.length > 1) return;
+    set(function (state, props) {
+      // setup mouse listeners on document to track swipe since swipe can leave container
+      if (props.trackMouse) {
+        document.addEventListener(mouseMove, onMove);
+        document.addEventListener(mouseUp, onUp);
+      }
+
+      var _ref = event.touches ? event.touches[0] : event,
+          clientX = _ref.clientX,
+          clientY = _ref.clientY;
+
+      var xy = rotateXYByAngle([clientX, clientY], props.rotationAngle);
+      return _extends({}, state, initialState, {
+        eventData: {
+          initial: [].concat(xy),
+          first: true
+        },
+        xy: xy,
+        start: event.timeStamp || 0
+      });
+    });
+  };
+
+  var onMove = function onMove(event) {
+    set(function (state, props) {
+      if (!state.xy[0] || !state.xy[1] || event.touches && event.touches.length > 1) {
+        return state;
+      }
+
+      var _ref2 = event.touches ? event.touches[0] : event,
+          clientX = _ref2.clientX,
+          clientY = _ref2.clientY;
+
+      var _rotateXYByAngle = rotateXYByAngle([clientX, clientY], props.rotationAngle),
+          x = _rotateXYByAngle[0],
+          y = _rotateXYByAngle[1];
+
+      var deltaX = state.xy[0] - x;
+      var deltaY = state.xy[1] - y;
+      var absX = Math.abs(deltaX);
+      var absY = Math.abs(deltaY);
+      var time = (event.timeStamp || 0) - state.start;
+      var velocity = Math.sqrt(absX * absX + absY * absY) / (time || 1); // if swipe is under delta and we have not started to track a swipe: skip update
+
+      if (absX < props.delta && absY < props.delta && !state.swiping) return state;
+      var dir = getDirection(absX, absY, deltaX, deltaY);
+
+      var eventData = _extends({}, state.eventData, {
+        event: event,
+        absX: absX,
+        absY: absY,
+        deltaX: deltaX,
+        deltaY: deltaY,
+        velocity: velocity,
+        dir: dir
+      });
+
+      props.onSwiping && props.onSwiping(eventData); // track if a swipe is cancelable(handler for swiping or swiped(dir) exists)
+      // so we can call preventDefault if needed
+
+      var cancelablePageSwipe = false;
+
+      if (props.onSwiping || props.onSwiped || props["onSwiped" + dir]) {
+        cancelablePageSwipe = true;
+      }
+
+      if (cancelablePageSwipe && props.preventDefaultTouchmoveEvent && props.trackTouch && event.cancelable) event.preventDefault(); // first is now always false
+
+      return _extends({}, state, {
+        eventData: _extends({}, eventData, {
+          first: false
+        }),
+        swiping: true
+      });
+    });
+  };
+
+  var onEnd = function onEnd(event) {
+    set(function (state, props) {
+      var eventData;
+
+      if (state.swiping) {
+        eventData = _extends({}, state.eventData, {
+          event: event
+        });
+        props.onSwiped && props.onSwiped(eventData);
+        props["onSwiped" + eventData.dir] && props["onSwiped" + eventData.dir](eventData);
+      }
+
+      return _extends({}, state, initialState, {
+        eventData: eventData
+      });
+    });
+  };
+
+  var cleanUpMouse = function cleanUpMouse() {
+    // safe to just call removeEventListener
+    document.removeEventListener(mouseMove, onMove);
+    document.removeEventListener(mouseUp, onUp);
+  };
+
+  var onUp = function onUp(e) {
+    cleanUpMouse();
+    onEnd(e);
+  };
+
+  var attachTouch = function attachTouch(el) {
+    if (el && el.addEventListener) {
+      // attach touch event listeners and handlers
+      var tls = [[touchStart, onStart], [touchMove, onMove], [touchEnd, onEnd]];
+      tls.forEach(function (_ref3) {
+        var e = _ref3[0],
+            h = _ref3[1];
+        return el.addEventListener(e, h);
+      }); // return properly scoped cleanup method for removing listeners
+
+      return function () {
+        return tls.forEach(function (_ref4) {
+          var e = _ref4[0],
+              h = _ref4[1];
+          return el.removeEventListener(e, h);
+        });
+      };
+    }
+  };
+
+  var onRef = function onRef(el) {
+    // "inline" ref functions are called twice on render, once with null then again with DOM element
+    // ignore null here
+    if (el === null) return;
+    set(function (state, props) {
+      // if the same DOM el as previous just return state
+      if (state.el === el) return state;
+      var addState = {}; // if new DOM el clean up old DOM and reset cleanUpTouch
+
+      if (state.el && state.el !== el && state.cleanUpTouch) {
+        state.cleanUpTouch();
+        addState.cleanUpTouch = null;
+      } // only attach if we want to track touch
+
+
+      if (props.trackTouch && el) {
+        addState.cleanUpTouch = attachTouch(el);
+      } // store event attached DOM el for comparison, clean up, and re-attachment
+
+
+      return _extends({}, state, {
+        el: el
+      }, addState);
+    });
+  }; // set ref callback to attach touch event listeners
+
+
+  var output = {
+    ref: onRef // if track mouse attach mouse down listener
+
+  };
+
+  if (handlerProps.trackMouse) {
+    output.onMouseDown = onStart;
+  }
+
+  return [output, attachTouch];
+}
+
+function updateTransientState(state, props, attachTouch) {
+  var addState = {}; // clean up touch handlers if no longer tracking touches
+
+  if (!props.trackTouch && state.cleanUpTouch) {
+    state.cleanUpTouch();
+    addState.cleanUpTouch = null;
+  } else if (props.trackTouch && !state.cleanUpTouch) {
+    // attach/re-attach touch handlers
+    if (state.el) {
+      addState.cleanUpTouch = attachTouch(state.el);
+    }
+  }
+
+  return _extends({}, state, addState);
+}
+
+function useSwipeable(props) {
+  var trackMouse = props.trackMouse;
+
+  var transientState = _react.default.useRef(_extends({}, initialState, {
+    type: 'hook'
+  }));
+
+  var transientProps = _react.default.useRef();
+
+  transientProps.current = _extends({}, defaultProps, props);
+
+  var _React$useMemo = _react.default.useMemo(function () {
+    return getHandlers(function (cb) {
+      return transientState.current = cb(transientState.current, transientProps.current);
+    }, {
+      trackMouse: trackMouse
+    });
+  }, [trackMouse]),
+      handlers = _React$useMemo[0],
+      attachTouch = _React$useMemo[1];
+
+  transientState.current = updateTransientState(transientState.current, transientProps.current, attachTouch);
+  return handlers;
+}
+
+var Swipeable = /*#__PURE__*/function (_React$PureComponent) {
+  _inheritsLoose(Swipeable, _React$PureComponent);
+
+  function Swipeable(props) {
+    var _this;
+
+    _this = _React$PureComponent.call(this, props) || this;
+
+    _this._set = function (cb) {
+      _this.transientState = cb(_this.transientState, _this.props);
+    };
+
+    _this.transientState = _extends({}, initialState, {
+      type: 'class'
+    });
+    return _this;
+  }
+
+  var _proto = Swipeable.prototype;
+
+  _proto.render = function render() {
+    var _this$props = this.props,
+        className = _this$props.className,
+        style = _this$props.style,
+        _this$props$nodeName = _this$props.nodeName,
+        nodeName = _this$props$nodeName === void 0 ? 'div' : _this$props$nodeName,
+        innerRef = _this$props.innerRef,
+        children = _this$props.children,
+        trackMouse = _this$props.trackMouse;
+
+    var _getHandlers = getHandlers(this._set, {
+      trackMouse: trackMouse
+    }),
+        handlers = _getHandlers[0],
+        attachTouch = _getHandlers[1];
+
+    this.transientState = updateTransientState(this.transientState, this.props, attachTouch);
+    var ref = innerRef ? function (el) {
+      return innerRef(el), handlers.ref(el);
+    } : handlers.ref;
+    return _react.default.createElement(nodeName, _extends({}, handlers, {
+      className: className,
+      style: style,
+      ref: ref
+    }), children);
+  };
+
+  return Swipeable;
+}(_react.default.PureComponent);
+
+exports.Swipeable = Swipeable;
+Swipeable.propTypes = {
+  onSwiped: _propTypes.default.func,
+  onSwiping: _propTypes.default.func,
+  onSwipedUp: _propTypes.default.func,
+  onSwipedRight: _propTypes.default.func,
+  onSwipedDown: _propTypes.default.func,
+  onSwipedLeft: _propTypes.default.func,
+  delta: _propTypes.default.number,
+  preventDefaultTouchmoveEvent: _propTypes.default.bool,
+  nodeName: _propTypes.default.string,
+  trackMouse: _propTypes.default.bool,
+  trackTouch: _propTypes.default.bool,
+  innerRef: _propTypes.default.func,
+  rotationAngle: _propTypes.default.number
+};
+Swipeable.defaultProps = defaultProps;
+},{"react":"../node_modules/react/index.js","prop-types":"../node_modules/prop-types/index.js"}],"effect.ts":[function(require,module,exports) {
 "use strict";
 
 var __importStar = this && this.__importStar || function (mod) {
@@ -88274,11 +88683,11 @@ Object.defineProperty(exports, "__esModule", {
 
 var core_1 = require("@material-ui/core");
 
-var SwipeableDrawer_1 = __importDefault(require("@material-ui/core/SwipeableDrawer"));
-
 var IconButton_1 = __importDefault(require("@material-ui/core/IconButton"));
 
 var MenuItem_1 = __importDefault(require("@material-ui/core/MenuItem"));
+
+var SwipeableDrawer_1 = __importDefault(require("@material-ui/core/SwipeableDrawer"));
 
 var Settings_1 = __importDefault(require("@material-ui/icons/Settings"));
 
@@ -88435,7 +88844,7 @@ function Preferences() {
 }
 
 exports.Preferences = Preferences;
-},{"@material-ui/core":"../node_modules/@material-ui/core/esm/index.js","@material-ui/core/SwipeableDrawer":"../node_modules/@material-ui/core/esm/SwipeableDrawer/index.js","@material-ui/core/IconButton":"../node_modules/@material-ui/core/esm/IconButton/index.js","@material-ui/core/MenuItem":"../node_modules/@material-ui/core/esm/MenuItem/index.js","@material-ui/icons/Settings":"../node_modules/@material-ui/icons/Settings.js","react":"../node_modules/react/index.js","react-redux":"../node_modules/react-redux/es/index.js","../action":"action.ts","../i18n":"i18n.ts","../select":"select.ts","../speech":"speech.ts"}],"components/PreferencesButton.tsx":[function(require,module,exports) {
+},{"@material-ui/core":"../node_modules/@material-ui/core/esm/index.js","@material-ui/core/IconButton":"../node_modules/@material-ui/core/esm/IconButton/index.js","@material-ui/core/MenuItem":"../node_modules/@material-ui/core/esm/MenuItem/index.js","@material-ui/core/SwipeableDrawer":"../node_modules/@material-ui/core/esm/SwipeableDrawer/index.js","@material-ui/icons/Settings":"../node_modules/@material-ui/icons/Settings.js","react":"../node_modules/react/index.js","react-redux":"../node_modules/react-redux/es/index.js","../action":"action.ts","../i18n":"i18n.ts","../select":"select.ts","../speech":"speech.ts"}],"components/PreferencesButton.tsx":[function(require,module,exports) {
 "use strict";
 
 var __importDefault = this && this.__importDefault || function (mod) {
@@ -88603,6 +89012,9 @@ function Question(props) {
   var currentQuestion = react_redux_1.useSelector(function (s) {
     return s.currentQuestion;
   });
+  var translation = react_redux_1.useSelector(function (s) {
+    return selectContext.resolveTranslation(s);
+  });
   return React.createElement(Fade_1.default, {
     top: true,
     appear: true,
@@ -88616,7 +89028,7 @@ function Question(props) {
     }
   }, React.createElement("img", {
     src: imageURL,
-    alt: "question image",
+    alt: translation.questionImageAlt,
     style: {
       maxWidth: '95%',
       maxHeight: '95%',
@@ -88882,372 +89294,7 @@ function Speaker(props) {
 }
 
 exports.Speaker = Speaker;
-},{"@material-ui/core":"../node_modules/@material-ui/core/esm/index.js","@material-ui/icons/RecordVoiceOver":"../node_modules/@material-ui/icons/RecordVoiceOver.js","react":"../node_modules/react/index.js","react-redux":"../node_modules/react-redux/es/index.js","../action":"action.ts","../effect":"effect.ts"}],"../node_modules/react-swipeable/es/index.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.useSwipeable = useSwipeable;
-exports.UP = exports.Swipeable = exports.RIGHT = exports.LEFT = exports.DOWN = void 0;
-
-var _react = _interopRequireDefault(require("react"));
-
-var _propTypes = _interopRequireDefault(require("prop-types"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _extends() {
-  _extends = Object.assign || function (target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i];
-
-      for (var key in source) {
-        if (Object.prototype.hasOwnProperty.call(source, key)) {
-          target[key] = source[key];
-        }
-      }
-    }
-
-    return target;
-  };
-
-  return _extends.apply(this, arguments);
-}
-
-function _inheritsLoose(subClass, superClass) {
-  subClass.prototype = Object.create(superClass.prototype);
-  subClass.prototype.constructor = subClass;
-  subClass.__proto__ = superClass;
-}
-
-var defaultProps = {
-  preventDefaultTouchmoveEvent: false,
-  delta: 10,
-  rotationAngle: 0,
-  trackMouse: false,
-  trackTouch: true
-};
-var initialState = {
-  xy: [0, 0],
-  swiping: false,
-  eventData: undefined,
-  start: undefined
-};
-var LEFT = 'Left';
-exports.LEFT = LEFT;
-var RIGHT = 'Right';
-exports.RIGHT = RIGHT;
-var UP = 'Up';
-exports.UP = UP;
-var DOWN = 'Down';
-exports.DOWN = DOWN;
-var touchStart = 'touchstart';
-var touchMove = 'touchmove';
-var touchEnd = 'touchend';
-var mouseMove = 'mousemove';
-var mouseUp = 'mouseup';
-
-function getDirection(absX, absY, deltaX, deltaY) {
-  if (absX > absY) {
-    if (deltaX > 0) {
-      return LEFT;
-    }
-
-    return RIGHT;
-  } else if (deltaY > 0) {
-    return UP;
-  }
-
-  return DOWN;
-}
-
-function rotateXYByAngle(pos, angle) {
-  if (angle === 0) return pos;
-  var angleInRadians = Math.PI / 180 * angle;
-  var x = pos[0] * Math.cos(angleInRadians) + pos[1] * Math.sin(angleInRadians);
-  var y = pos[1] * Math.cos(angleInRadians) - pos[0] * Math.sin(angleInRadians);
-  return [x, y];
-}
-
-function getHandlers(set, handlerProps) {
-  var onStart = function onStart(event) {
-    // if more than a single touch don't track, for now...
-    if (event.touches && event.touches.length > 1) return;
-    set(function (state, props) {
-      // setup mouse listeners on document to track swipe since swipe can leave container
-      if (props.trackMouse) {
-        document.addEventListener(mouseMove, onMove);
-        document.addEventListener(mouseUp, onUp);
-      }
-
-      var _ref = event.touches ? event.touches[0] : event,
-          clientX = _ref.clientX,
-          clientY = _ref.clientY;
-
-      var xy = rotateXYByAngle([clientX, clientY], props.rotationAngle);
-      return _extends({}, state, initialState, {
-        eventData: {
-          initial: [].concat(xy),
-          first: true
-        },
-        xy: xy,
-        start: event.timeStamp || 0
-      });
-    });
-  };
-
-  var onMove = function onMove(event) {
-    set(function (state, props) {
-      if (!state.xy[0] || !state.xy[1] || event.touches && event.touches.length > 1) {
-        return state;
-      }
-
-      var _ref2 = event.touches ? event.touches[0] : event,
-          clientX = _ref2.clientX,
-          clientY = _ref2.clientY;
-
-      var _rotateXYByAngle = rotateXYByAngle([clientX, clientY], props.rotationAngle),
-          x = _rotateXYByAngle[0],
-          y = _rotateXYByAngle[1];
-
-      var deltaX = state.xy[0] - x;
-      var deltaY = state.xy[1] - y;
-      var absX = Math.abs(deltaX);
-      var absY = Math.abs(deltaY);
-      var time = (event.timeStamp || 0) - state.start;
-      var velocity = Math.sqrt(absX * absX + absY * absY) / (time || 1); // if swipe is under delta and we have not started to track a swipe: skip update
-
-      if (absX < props.delta && absY < props.delta && !state.swiping) return state;
-      var dir = getDirection(absX, absY, deltaX, deltaY);
-
-      var eventData = _extends({}, state.eventData, {
-        event: event,
-        absX: absX,
-        absY: absY,
-        deltaX: deltaX,
-        deltaY: deltaY,
-        velocity: velocity,
-        dir: dir
-      });
-
-      props.onSwiping && props.onSwiping(eventData); // track if a swipe is cancelable(handler for swiping or swiped(dir) exists)
-      // so we can call preventDefault if needed
-
-      var cancelablePageSwipe = false;
-
-      if (props.onSwiping || props.onSwiped || props["onSwiped" + dir]) {
-        cancelablePageSwipe = true;
-      }
-
-      if (cancelablePageSwipe && props.preventDefaultTouchmoveEvent && props.trackTouch && event.cancelable) event.preventDefault(); // first is now always false
-
-      return _extends({}, state, {
-        eventData: _extends({}, eventData, {
-          first: false
-        }),
-        swiping: true
-      });
-    });
-  };
-
-  var onEnd = function onEnd(event) {
-    set(function (state, props) {
-      var eventData;
-
-      if (state.swiping) {
-        eventData = _extends({}, state.eventData, {
-          event: event
-        });
-        props.onSwiped && props.onSwiped(eventData);
-        props["onSwiped" + eventData.dir] && props["onSwiped" + eventData.dir](eventData);
-      }
-
-      return _extends({}, state, initialState, {
-        eventData: eventData
-      });
-    });
-  };
-
-  var cleanUpMouse = function cleanUpMouse() {
-    // safe to just call removeEventListener
-    document.removeEventListener(mouseMove, onMove);
-    document.removeEventListener(mouseUp, onUp);
-  };
-
-  var onUp = function onUp(e) {
-    cleanUpMouse();
-    onEnd(e);
-  };
-
-  var attachTouch = function attachTouch(el) {
-    if (el && el.addEventListener) {
-      // attach touch event listeners and handlers
-      var tls = [[touchStart, onStart], [touchMove, onMove], [touchEnd, onEnd]];
-      tls.forEach(function (_ref3) {
-        var e = _ref3[0],
-            h = _ref3[1];
-        return el.addEventListener(e, h);
-      }); // return properly scoped cleanup method for removing listeners
-
-      return function () {
-        return tls.forEach(function (_ref4) {
-          var e = _ref4[0],
-              h = _ref4[1];
-          return el.removeEventListener(e, h);
-        });
-      };
-    }
-  };
-
-  var onRef = function onRef(el) {
-    // "inline" ref functions are called twice on render, once with null then again with DOM element
-    // ignore null here
-    if (el === null) return;
-    set(function (state, props) {
-      // if the same DOM el as previous just return state
-      if (state.el === el) return state;
-      var addState = {}; // if new DOM el clean up old DOM and reset cleanUpTouch
-
-      if (state.el && state.el !== el && state.cleanUpTouch) {
-        state.cleanUpTouch();
-        addState.cleanUpTouch = null;
-      } // only attach if we want to track touch
-
-
-      if (props.trackTouch && el) {
-        addState.cleanUpTouch = attachTouch(el);
-      } // store event attached DOM el for comparison, clean up, and re-attachment
-
-
-      return _extends({}, state, {
-        el: el
-      }, addState);
-    });
-  }; // set ref callback to attach touch event listeners
-
-
-  var output = {
-    ref: onRef // if track mouse attach mouse down listener
-
-  };
-
-  if (handlerProps.trackMouse) {
-    output.onMouseDown = onStart;
-  }
-
-  return [output, attachTouch];
-}
-
-function updateTransientState(state, props, attachTouch) {
-  var addState = {}; // clean up touch handlers if no longer tracking touches
-
-  if (!props.trackTouch && state.cleanUpTouch) {
-    state.cleanUpTouch();
-    addState.cleanUpTouch = null;
-  } else if (props.trackTouch && !state.cleanUpTouch) {
-    // attach/re-attach touch handlers
-    if (state.el) {
-      addState.cleanUpTouch = attachTouch(state.el);
-    }
-  }
-
-  return _extends({}, state, addState);
-}
-
-function useSwipeable(props) {
-  var trackMouse = props.trackMouse;
-
-  var transientState = _react.default.useRef(_extends({}, initialState, {
-    type: 'hook'
-  }));
-
-  var transientProps = _react.default.useRef();
-
-  transientProps.current = _extends({}, defaultProps, props);
-
-  var _React$useMemo = _react.default.useMemo(function () {
-    return getHandlers(function (cb) {
-      return transientState.current = cb(transientState.current, transientProps.current);
-    }, {
-      trackMouse: trackMouse
-    });
-  }, [trackMouse]),
-      handlers = _React$useMemo[0],
-      attachTouch = _React$useMemo[1];
-
-  transientState.current = updateTransientState(transientState.current, transientProps.current, attachTouch);
-  return handlers;
-}
-
-var Swipeable = /*#__PURE__*/function (_React$PureComponent) {
-  _inheritsLoose(Swipeable, _React$PureComponent);
-
-  function Swipeable(props) {
-    var _this;
-
-    _this = _React$PureComponent.call(this, props) || this;
-
-    _this._set = function (cb) {
-      _this.transientState = cb(_this.transientState, _this.props);
-    };
-
-    _this.transientState = _extends({}, initialState, {
-      type: 'class'
-    });
-    return _this;
-  }
-
-  var _proto = Swipeable.prototype;
-
-  _proto.render = function render() {
-    var _this$props = this.props,
-        className = _this$props.className,
-        style = _this$props.style,
-        _this$props$nodeName = _this$props.nodeName,
-        nodeName = _this$props$nodeName === void 0 ? 'div' : _this$props$nodeName,
-        innerRef = _this$props.innerRef,
-        children = _this$props.children,
-        trackMouse = _this$props.trackMouse;
-
-    var _getHandlers = getHandlers(this._set, {
-      trackMouse: trackMouse
-    }),
-        handlers = _getHandlers[0],
-        attachTouch = _getHandlers[1];
-
-    this.transientState = updateTransientState(this.transientState, this.props, attachTouch);
-    var ref = innerRef ? function (el) {
-      return innerRef(el), handlers.ref(el);
-    } : handlers.ref;
-    return _react.default.createElement(nodeName, _extends({}, handlers, {
-      className: className,
-      style: style,
-      ref: ref
-    }), children);
-  };
-
-  return Swipeable;
-}(_react.default.PureComponent);
-
-exports.Swipeable = Swipeable;
-Swipeable.propTypes = {
-  onSwiped: _propTypes.default.func,
-  onSwiping: _propTypes.default.func,
-  onSwipedUp: _propTypes.default.func,
-  onSwipedRight: _propTypes.default.func,
-  onSwipedDown: _propTypes.default.func,
-  onSwipedLeft: _propTypes.default.func,
-  delta: _propTypes.default.number,
-  preventDefaultTouchmoveEvent: _propTypes.default.bool,
-  nodeName: _propTypes.default.string,
-  trackMouse: _propTypes.default.bool,
-  trackTouch: _propTypes.default.bool,
-  innerRef: _propTypes.default.func,
-  rotationAngle: _propTypes.default.number
-};
-Swipeable.defaultProps = defaultProps;
-},{"react":"../node_modules/react/index.js","prop-types":"../node_modules/prop-types/index.js"}],"components/App.tsx":[function(require,module,exports) {
+},{"@material-ui/core":"../node_modules/@material-ui/core/esm/index.js","@material-ui/icons/RecordVoiceOver":"../node_modules/@material-ui/icons/RecordVoiceOver.js","react":"../node_modules/react/index.js","react-redux":"../node_modules/react-redux/es/index.js","../action":"action.ts","../effect":"effect.ts"}],"components/App.tsx":[function(require,module,exports) {
 "use strict";
 
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
@@ -89286,6 +89333,8 @@ var react_1 = require("react");
 
 var react_redux_1 = require("react-redux");
 
+var react_swipeable_1 = require("react-swipeable");
+
 var effect = __importStar(require("../effect"));
 
 var Answer_1 = require("./Answer");
@@ -89307,8 +89356,6 @@ var Question_1 = require("./Question");
 var ScoreBar_1 = require("./ScoreBar");
 
 var Speaker_1 = require("./Speaker");
-
-var react_swipeable_1 = require("react-swipeable");
 
 function Mobile(props) {
   return React.createElement(core_1.Container, null, React.createElement(core_1.Grid, {
@@ -89481,7 +89528,7 @@ function App() {
 }
 
 exports.App = App;
-},{"@material-ui/core":"../node_modules/@material-ui/core/esm/index.js","react":"../node_modules/react/index.js","react-redux":"../node_modules/react-redux/es/index.js","../effect":"effect.ts","./Answer":"components/Answer.tsx","./DeleteAll":"components/DeleteAll.tsx","./FullScreen":"components/FullScreen.tsx","./NextQuestion":"components/NextQuestion.tsx","./Preferences":"components/Preferences.tsx","./PreferencesButton":"components/PreferencesButton.tsx","./PreviousQuestion":"components/PreviousQuestion.tsx","./Question":"components/Question.tsx","./ScoreBar":"components/ScoreBar.tsx","./Speaker":"components/Speaker.tsx","react-swipeable":"../node_modules/react-swipeable/es/index.js"}],"../node_modules/@material-ui/icons/SentimentVeryDissatisfied.js":[function(require,module,exports) {
+},{"@material-ui/core":"../node_modules/@material-ui/core/esm/index.js","react":"../node_modules/react/index.js","react-redux":"../node_modules/react-redux/es/index.js","react-swipeable":"../node_modules/react-swipeable/es/index.js","../effect":"effect.ts","./Answer":"components/Answer.tsx","./DeleteAll":"components/DeleteAll.tsx","./FullScreen":"components/FullScreen.tsx","./NextQuestion":"components/NextQuestion.tsx","./Preferences":"components/Preferences.tsx","./PreferencesButton":"components/PreferencesButton.tsx","./PreviousQuestion":"components/PreviousQuestion.tsx","./Question":"components/Question.tsx","./ScoreBar":"components/ScoreBar.tsx","./Speaker":"components/Speaker.tsx"}],"../node_modules/@material-ui/icons/SentimentVeryDissatisfied.js":[function(require,module,exports) {
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -90577,7 +90624,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "36351" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46465" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
