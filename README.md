@@ -12,6 +12,8 @@ Bosnian (bs), German (de), English (en), Greek (el), Spanish (es), French (fr),
 Swiss German (gsw), Croatian (hr), Italian (it), Macedonian (mk), Norwegian (nb), 
 Polish (pl), Portuguese (pt), Russian (ru), Slovenian (sl) and Serbian (sr).
 
+(See https://github.com/mristin/brojko for numbers.)
+
 Live demo
 ---------
 Live demo is available at the github page: https://mristin.github.io/bukvarko/.
