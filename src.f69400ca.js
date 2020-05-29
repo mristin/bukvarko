@@ -83082,6 +83082,7 @@ exports.bosnian = {
     fox: expectAnswer.ignoreCase('lisica', 'lisac'),
     pig: expectAnswer.ignoreCase('svinja', 'prase'),
     goat: expectAnswer.ignoreCase('koza', 'jarac', 'kozlić'),
+    sheep: expectAnswer.ignoreCase('ovca'),
     bear: expectAnswer.ignoreCase('medvjed'),
     giraffe: expectAnswer.ignoreCase('žirafa')
   },
@@ -83122,6 +83123,7 @@ exports.german = {
     fox: expectAnswer.ignoreCase('Fuchs', 'der Fuchs'),
     pig: expectAnswer.ignoreCase('Schwein', 'das Schwein', 'Sau', 'die Sau'),
     goat: expectAnswer.ignoreCase('Ziege', 'die Ziege', 'Geiss', 'die Geiss'),
+    sheep: expectAnswer.ignoreCase('Schaf', 'das Schaf'),
     bear: expectAnswer.ignoreCase('Bär', 'der Bär'),
     giraffe: expectAnswer.ignoreCase('Giraffe', 'die Giraffe')
   },
@@ -83162,6 +83164,7 @@ exports.greek = {
     fox: expectAnswer.ignoreCase('αλεπού', 'η αλεπού'),
     pig: expectAnswer.ignoreCase('γουρούνι', 'το γουρούνι'),
     goat: expectAnswer.ignoreCase('γίδα', 'η γίδα', 'κατσίκα', 'η κατσίκα'),
+    sheep: expectAnswer.ignoreCase('πρόβατα', 'η πρόβατα'),
     bear: expectAnswer.ignoreCase('αρκούδα', 'η αρκούδα'),
     giraffe: expectAnswer.ignoreCase('καμηλοπάρδαλη', 'η καμηλοπάρδαλη')
   },
@@ -83202,6 +83205,7 @@ exports.english = {
     fox: expectAnswer.ignoreCase('fox', 'the fox'),
     pig: expectAnswer.ignoreCase('pig', 'the pig', 'hog', 'the hog'),
     goat: expectAnswer.ignoreCase('goat', 'the goat'),
+    sheep: expectAnswer.ignoreCase('sheep', 'the sheep'),
     bear: expectAnswer.ignoreCase('bear', 'the bear'),
     giraffe: expectAnswer.ignoreCase('giraffe', 'the giraffe')
   },
@@ -83242,6 +83246,7 @@ exports.spanish = {
     fox: expectAnswer.ignoreCase('zorra', 'zorro'),
     pig: expectAnswer.ignoreCase('cerdo'),
     goat: expectAnswer.ignoreCase('cabra', 'cabro'),
+    sheep: expectAnswer.ignoreCase('oveja'),
     bear: expectAnswer.ignoreCase('oso'),
     giraffe: expectAnswer.ignoreCase('jirafa')
   },
@@ -83282,6 +83287,7 @@ exports.french = {
     fox: expectAnswer.ignoreCase('renard'),
     pig: expectAnswer.ignoreCase('cochon', 'porc'),
     goat: expectAnswer.ignoreCase('chèvre'),
+    sheep: expectAnswer.ignoreCase('brebis', 'mouton'),
     bear: expectAnswer.ignoreCase('ours'),
     giraffe: expectAnswer.ignoreCase('girafe')
   },
@@ -83322,6 +83328,7 @@ exports.swissGerman = {
     fox: expectAnswer.ignoreCase('Fuchs'),
     pig: expectAnswer.ignoreCase('Schwein', 'Sau', 'Säuli'),
     goat: expectAnswer.ignoreCase('Ziege', 'Geiss', 'Geissli'),
+    sheep: expectAnswer.ignoreCase('Schaf', 'Schäfli'),
     bear: expectAnswer.ignoreCase('Bär'),
     giraffe: expectAnswer.ignoreCase('Giraffe', 'Giraff')
   },
@@ -83362,6 +83369,7 @@ exports.croatian = {
     fox: expectAnswer.ignoreCase('lisica', 'lisac'),
     pig: expectAnswer.ignoreCase('svinja'),
     goat: expectAnswer.ignoreCase('koza', 'jarac', 'kozlić'),
+    sheep: expectAnswer.ignoreCase('ovca'),
     bear: expectAnswer.ignoreCase('medvjed'),
     giraffe: expectAnswer.ignoreCase('žirafa')
   },
@@ -83402,6 +83410,7 @@ exports.italian = {
     fox: expectAnswer.ignoreCase('volpe'),
     pig: expectAnswer.ignoreCase('maiale', 'porco'),
     goat: expectAnswer.ignoreCase('capra'),
+    sheep: expectAnswer.ignoreCase('pecora'),
     bear: expectAnswer.ignoreCase('orso', 'orsa'),
     giraffe: expectAnswer.ignoreCase('giraffa')
   },
@@ -83442,6 +83451,7 @@ exports.macedonian = {
     fox: expectAnswer.ignoreCase('Лисица', 'Лисац'),
     pig: expectAnswer.ignoreCase('Свиња'),
     goat: expectAnswer.ignoreCase('Коза'),
+    sheep: expectAnswer.ignoreCase('овца'),
     bear: expectAnswer.ignoreCase('Мечка'),
     giraffe: expectAnswer.ignoreCase('Жирафа')
   },
@@ -83482,6 +83492,7 @@ exports.norwegian = {
     fox: expectAnswer.ignoreCase('rev'),
     pig: expectAnswer.ignoreCase('gris', 'svin'),
     goat: expectAnswer.ignoreCase('geit'),
+    sheep: expectAnswer.ignoreCase('sau', 'får'),
     bear: expectAnswer.ignoreCase('bjørn'),
     giraffe: expectAnswer.ignoreCase('sjiraff')
   },
@@ -83522,6 +83533,7 @@ exports.polish = {
     fox: expectAnswer.ignoreCase('lis'),
     pig: expectAnswer.ignoreCase('świnia', 'świnka'),
     goat: expectAnswer.ignoreCase('koza', 'kozioł', 'kózka', 'baran', 'baranek'),
+    sheep: expectAnswer.ignoreCase('owca'),
     bear: expectAnswer.ignoreCase('niedźwiedź', 'niedźwiadek'),
     giraffe: expectAnswer.ignoreCase('żyrafa')
   },
@@ -83562,6 +83574,7 @@ exports.portuguese = {
     fox: expectAnswer.ignoreCase('raposa', 'raposo'),
     pig: expectAnswer.ignoreCase('porco'),
     goat: expectAnswer.ignoreCase('cabra', 'cabro'),
+    sheep: expectAnswer.ignoreCase('ovelha'),
     bear: expectAnswer.ignoreCase('urso'),
     giraffe: expectAnswer.ignoreCase('girafa')
   },
@@ -83602,6 +83615,7 @@ exports.russian = {
     fox: expectAnswer.ignoreCase('лиса'),
     pig: expectAnswer.ignoreCase('свинья', 'боров'),
     goat: expectAnswer.ignoreCase('коза'),
+    sheep: expectAnswer.ignoreCase('овца'),
     bear: expectAnswer.ignoreCase('медведь'),
     giraffe: expectAnswer.ignoreCase('жираф')
   },
@@ -83642,6 +83656,7 @@ exports.slovenian = {
     fox: expectAnswer.ignoreCase('lisica', 'lisac'),
     pig: expectAnswer.ignoreCase('prašič', 'prasica'),
     goat: expectAnswer.ignoreCase('koza'),
+    sheep: expectAnswer.ignoreCase('ovca'),
     bear: expectAnswer.ignoreCase('medved'),
     giraffe: expectAnswer.ignoreCase('žirafa')
   },
@@ -83682,6 +83697,7 @@ exports.serbian = {
     fox: expectAnswer.ignoreCase('lisac', 'lisica', 'лисац', 'лисица'),
     pig: expectAnswer.ignoreCase('svinja', 'prase', 'свиња', 'прасе'),
     goat: expectAnswer.ignoreCase('koza', 'jarac', 'kozlić', 'коза', 'јарац', 'козлић'),
+    sheep: expectAnswer.ignoreCase('ovca', 'овца'),
     bear: expectAnswer.ignoreCase('medved', 'медвед'),
     giraffe: expectAnswer.ignoreCase('žirafa', 'жирафа')
   },
@@ -89762,6 +89778,7 @@ exports.WOLF = 'wolf';
 exports.FOX = 'fox';
 exports.PIG = 'pig';
 exports.GOAT = 'goat';
+exports.SHEEP = 'sheep';
 exports.BEAR = 'bear';
 exports.GIRAFFE = 'giraffe';
 
@@ -90055,6 +90072,10 @@ function initializeBank() {
     id: exports.GOAT,
     imageURL: './media/goat.jpeg',
     soundURL: './media/goat.mp3'
+  }, {
+    id: exports.SHEEP,
+    imageURL: './media/sheep.jpeg',
+    soundURL: './media/sheep.mp3'
   }, {
     id: exports.BEAR,
     imageURL: './media/bear.jpeg',
@@ -90624,7 +90645,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46465" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33033" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
