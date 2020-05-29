@@ -15,6 +15,7 @@ export const greek: Translation = {
     fox: expectAnswer.ignoreCase('αλεπού', 'η αλεπού'),
     pig: expectAnswer.ignoreCase('γουρούνι', 'το γουρούνι'),
     goat: expectAnswer.ignoreCase('γίδα', 'η γίδα', 'κατσίκα', 'η κατσίκα'),
+    sheep: expectAnswer.ignoreCase('πρόβατα', 'η πρόβατα'),
     bear: expectAnswer.ignoreCase('αρκούδα', 'η αρκούδα'),
     giraffe: expectAnswer.ignoreCase('καμηλοπάρδαλη', 'η καμηλοπάρδαλη'),
   },

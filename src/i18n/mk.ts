@@ -15,6 +15,7 @@ export const macedonian: Translation = {
     fox: expectAnswer.ignoreCase('Лисица', 'Лисац'),
     pig: expectAnswer.ignoreCase('Свиња'),
     goat: expectAnswer.ignoreCase('Коза'),
+    sheep: expectAnswer.ignoreCase('овца'),
     bear: expectAnswer.ignoreCase('Мечка'),
     giraffe: expectAnswer.ignoreCase('Жирафа'),
   },

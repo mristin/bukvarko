@@ -15,6 +15,7 @@ export const norwegian: Translation = {
     fox: expectAnswer.ignoreCase('rev'),
     pig: expectAnswer.ignoreCase('gris', 'svin'),
     goat: expectAnswer.ignoreCase('geit'),
+    sheep: expectAnswer.ignoreCase('sau', 'får'),
     bear: expectAnswer.ignoreCase('bjørn'),
     giraffe: expectAnswer.ignoreCase('sjiraff'),
   },

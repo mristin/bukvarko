@@ -15,6 +15,7 @@ export const serbian: Translation = {
     fox: expectAnswer.ignoreCase('lisac', 'lisica', 'лисац', 'лисица'),
     pig: expectAnswer.ignoreCase('svinja', 'prase', 'свиња', 'прасе'),
     goat: expectAnswer.ignoreCase('koza', 'jarac', 'kozlić', 'коза', 'јарац', 'козлић'),
+    sheep: expectAnswer.ignoreCase('ovca', 'овца'),
     bear: expectAnswer.ignoreCase('medved', 'медвед'),
     giraffe: expectAnswer.ignoreCase('žirafa', 'жирафа'),
   },

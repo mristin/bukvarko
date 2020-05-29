@@ -15,6 +15,7 @@ export const polish: Translation = {
     fox: expectAnswer.ignoreCase('lis'),
     pig: expectAnswer.ignoreCase('świnia', 'świnka'),
     goat: expectAnswer.ignoreCase('koza', 'kozioł', 'kózka', 'baran', 'baranek'),
+    sheep: expectAnswer.ignoreCase('owca'),
     bear: expectAnswer.ignoreCase('niedźwiedź', 'niedźwiadek'),
     giraffe: expectAnswer.ignoreCase('żyrafa'),
   },
