@@ -15,6 +15,7 @@ export const swissGerman: Translation = {
     fox: expectAnswer.ignoreCase('Fuchs'),
     pig: expectAnswer.ignoreCase('Schwein', 'Sau', 'Säuli'),
     goat: expectAnswer.ignoreCase('Ziege', 'Geiss', 'Geissli'),
+    sheep: expectAnswer.ignoreCase('Schaf', 'Schäfli'),
     bear: expectAnswer.ignoreCase('Bär'),
     giraffe: expectAnswer.ignoreCase('Giraffe', 'Giraff'),
   },

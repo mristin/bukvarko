@@ -15,6 +15,7 @@ export const slovenian: Translation = {
     fox: expectAnswer.ignoreCase('lisica', 'lisac'),
     pig: expectAnswer.ignoreCase('prašič', 'prasica'),
     goat: expectAnswer.ignoreCase('koza'),
+    sheep: expectAnswer.ignoreCase('ovca'),
     bear: expectAnswer.ignoreCase('medved'),
     giraffe: expectAnswer.ignoreCase('žirafa'),
   },

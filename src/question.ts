@@ -6,6 +6,7 @@ export const WOLF = 'wolf';
 export const FOX = 'fox';
 export const PIG = 'pig';
 export const GOAT = 'goat';
+export const SHEEP = 'sheep';
 export const BEAR = 'bear';
 export const GIRAFFE = 'giraffe';
 
@@ -18,6 +19,7 @@ export type ID =
   | typeof FOX
   | typeof PIG
   | typeof GOAT
+  | typeof SHEEP
   | typeof BEAR
   | typeof GIRAFFE;
 
@@ -198,6 +200,7 @@ export function initializeBank(): Bank {
     { id: FOX, imageURL: './media/fox.jpeg', soundURL: './media/fox.mp3' } as Question,
     { id: PIG, imageURL: './media/pig.jpeg', soundURL: './media/pig.mp3' } as Question,
     { id: GOAT, imageURL: './media/goat.jpeg', soundURL: './media/goat.mp3' } as Question,
+    { id: SHEEP, imageURL: './media/sheep.jpeg', soundURL: './media/sheep.mp3' } as Question,
     { id: BEAR, imageURL: './media/bear.jpeg', soundURL: './media/bear.mp3' } as Question,
     { id: GIRAFFE, imageURL: './media/giraffe.jpeg' } as Question,
   ]);

@@ -15,6 +15,7 @@ export const french: Translation = {
     fox: expectAnswer.ignoreCase('renard'),
     pig: expectAnswer.ignoreCase('cochon', 'porc'),
     goat: expectAnswer.ignoreCase('chèvre'),
+    sheep: expectAnswer.ignoreCase('brebis', 'mouton'),
     bear: expectAnswer.ignoreCase('ours'),
     giraffe: expectAnswer.ignoreCase('girafe'),
   },
