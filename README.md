@@ -8,9 +8,23 @@ correct answer. If you are unsure about what you wrote, you let the computer rea
 out for you.
 
 The game supports the following languages:
-Bosnian (bs), German (de), English (en), Greek (el), Spanish (es), French (fr), 
-Swiss German (gsw), Croatian (hr), Italian (it), Macedonian (mk), Norwegian (nb), 
-Polish (pl), Portuguese (pt), Russian (ru), Slovenian (sl) and Serbian (sr).
+Bosnian (bs), 
+German (de), 
+English (en), 
+Greek (el), 
+Spanish (es), 
+French (fr), 
+Swiss German (gsw), 
+Croatian (hr), 
+Italian (it), 
+Macedonian (mk), 
+Norwegian (nb),
+Dutch (nl), 
+Polish (pl), 
+Portuguese (pt), 
+Russian (ru), 
+Slovenian (sl) and 
+Serbian (sr).
 
 (See https://github.com/mristin/brojko for numbers.)
 
